@@ -226,6 +226,7 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | Variable | Suggested value | Purpose |
 |---|---|---|
 | `AUTO_POST_TO_INSTAGRAM` | `false` initially | Set to `true` only after manual posting works. |
+| `TIMEZONE` | `America/New_York` | Local timezone for dates, tide windows, filenames, and generated metadata. |
 | `NWS_USER_AGENT` | `marblehead-tidegram/0.1 (you@example.com)` | NWS API contact string. |
 | `IG_USER_ID` | Your IG business account ID | Instagram Professional Account ID. |
 | `NOAA_STATION_ID` | `8442645` | Salem Harbor station used for Marblehead-area tides. |
@@ -234,6 +235,8 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | `DAYS_TO_FORECAST` | `5` | Forecast horizon. |
 | `GRAPH_API_VERSION` | `v23.0` | Meta Graph API version to call. |
 | `ALT_TEXT` | `Marblehead tide and weather outlook infographic` | Optional Instagram alt text. |
+
+Use `America/New_York`, not `EST`, so daylight saving time is handled correctly. GitHub Actions cron still uses UTC, but the generator converts dates and recommendations to Marblehead local time.
 
 ### 5. Run the workflow manually
 

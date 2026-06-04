@@ -274,6 +274,7 @@ def main() -> None:
     metadata = {
         "generated_at": generated_at,
         "location_name": settings.get("location_name", "Marblehead, MA"),
+        "timezone": tz_name,
         "latitude": settings.get("latitude"),
         "longitude": settings.get("longitude"),
         "noaa_station_id": settings.get("noaa_station_id"),

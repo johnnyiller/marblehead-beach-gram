@@ -23,6 +23,8 @@ def load_settings() -> dict[str, Any]:
     settings = load_json(CONFIG_DIR / "settings.json")
 
     # Environment overrides make GitHub Actions and local testing easier.
+    if os.getenv("TIMEZONE"):
+        settings["timezone"] = os.environ["TIMEZONE"]
     if os.getenv("NOAA_STATION_ID"):
         settings["noaa_station_id"] = os.environ["NOAA_STATION_ID"]
     if os.getenv("LOCATION_LAT"):

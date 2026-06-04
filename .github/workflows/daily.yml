@@ -11,6 +11,10 @@ on:
   schedule:
     - cron: "30 11 * * *"
 
+env:
+  TZ: ${{ vars.TIMEZONE || 'America/New_York' }}
+  TIMEZONE: ${{ vars.TIMEZONE || 'America/New_York' }}
+
 concurrency:
   group: gh-pages
   cancel-in-progress: false
