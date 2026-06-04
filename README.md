@@ -212,9 +212,9 @@ Go to **Settings → Secrets and variables → Actions → Secrets** and add:
 | Secret | Required? | Purpose |
 |---|---:|---|
 | `OPENAI_API_KEY` | Yes | Generates the finished Instagram image. |
-| `NWS_USER_AGENT` | Yes | NWS API contact string, e.g. `marblehead-tidegram/0.1 (you@example.com)`. |
-| `IG_USER_ID` | Only for Instagram | Instagram Professional Account ID. |
 | `IG_ACCESS_TOKEN` | Only for Instagram | Access token with publishing permissions. |
+
+`OPENAI_API_KEY` and `IG_ACCESS_TOKEN` should be secrets, not plain repository variables. The workflow can read them from variables while you are testing, but secrets are safer for production.
 
 ### 4. Add repository variables
 
@@ -223,6 +223,8 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | Variable | Suggested value | Purpose |
 |---|---|---|
 | `AUTO_POST_TO_INSTAGRAM` | `false` initially | Set to `true` only after manual posting works. |
+| `NWS_USER_AGENT` | `marblehead-tidegram/0.1 (you@example.com)` | NWS API contact string. |
+| `IG_USER_ID` | Your IG business account ID | Instagram Professional Account ID. |
 | `NOAA_STATION_ID` | `8442645` | Salem Harbor station used for Marblehead-area tides. |
 | `LOCATION_LAT` | `42.5051` | Marblehead latitude. |
 | `LOCATION_LON` | `-70.8578` | Marblehead longitude. |
