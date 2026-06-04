@@ -1,0 +1,609 @@
+{
+  "generated_at": "2026-06-04T14:33:06.088416-04:00",
+  "location_name": "Marblehead, MA",
+  "latitude": 42.5051,
+  "longitude": -70.8578,
+  "noaa_station_id": "8442645",
+  "noaa_station_label": "Salem, Salem Harbor, MA",
+  "days_to_forecast": 5,
+  "caption": "Marblehead, MA tide + weather outlook 🌊☀️\nBest window: Tue Jun 9, 4:30 PM–8:30 PM at Gas House.\nPaddle board / harbor float. High 6:52 PM · 8.9 ft.\n\nBuilt from NOAA tides + NWS hourly weather.\n#MarbleheadMA #NorthShoreMA #LowTide #BeachWalk",
+  "recommendations": [
+    {
+      "date": "2026-06-04",
+      "day_label": "Thu Jun 4",
+      "start": "2026-06-04T17:30:00-04:00",
+      "end": "2026-06-04T21:30:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-06-04T20:42:00-04:00",
+      "tide_height_ft": 1.845,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 84,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 0,
+      "score": 139.0,
+      "note": "Best when the tide is already out and continuing out, or has only been coming in for an hour or so.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-04T17:00:00-04:00",
+          "temperature_f": 84,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-06-04T19:00:00-04:00",
+          "temperature_f": 80,
+          "forecast": "Partly Cloudy",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-06-04T21:00:00-04:00",
+          "temperature_f": 70,
+          "forecast": "Partly Cloudy",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [
+        {
+          "beach_name": "Gas House Beach",
+          "beach_short_name": "Gas House",
+          "activity": "Walk to Brown's Island",
+          "start": "2026-06-04T17:30:00-04:00",
+          "end": "2026-06-04T21:30:00-04:00",
+          "score": 135.0,
+          "note": "Best around low tide when the route is exposed. Leave margin for the tide turning.",
+          "window_label": "5:30 PM–9:30 PM"
+        }
+      ],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-06-04T02:11:00-04:00",
+          "height_ft": 9.001,
+          "display_label": "High 2:11 AM 9.0 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-04T08:38:00-04:00",
+          "height_ft": 0.655,
+          "display_label": "Low 8:38 AM 0.7 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-04T14:51:00-04:00",
+          "height_ft": 7.699,
+          "display_label": "High 2:51 PM 7.7 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-04T20:42:00-04:00",
+          "height_ft": 1.845,
+          "display_label": "Low 8:42 PM 1.8 ft"
+        }
+      ],
+      "window_label": "5:30 PM–9:30 PM",
+      "tide_label_full": "Low 8:42 PM · 1.8 ft",
+      "daily_tides_label": "High: 2:11 AM, 2:51 PM; Low: 8:38 AM, 8:42 PM",
+      "weather": "84°F · Mostly Sunny · 8 mph"
+    },
+    {
+      "date": "2026-06-05",
+      "day_label": "Fri Jun 5",
+      "start": "2026-06-05T13:30:00-04:00",
+      "end": "2026-06-05T17:30:00-04:00",
+      "beach_name": "Gas House Beach",
+      "beach_short_name": "Gas House",
+      "activity": "Paddle board / harbor float",
+      "tide_label": "High",
+      "tide_time": "2026-06-05T15:34:00-04:00",
+      "tide_height_ft": 7.778,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 84,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 0,
+      "score": 146.8,
+      "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-05T13:00:00-04:00",
+          "temperature_f": 85,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-06-05T15:00:00-04:00",
+          "temperature_f": 84,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-06-05T17:00:00-04:00",
+          "temperature_f": 86,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-06-05T02:53:00-04:00",
+          "height_ft": 8.912,
+          "display_label": "High 2:53 AM 8.9 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-05T09:21:00-04:00",
+          "height_ft": 0.69,
+          "display_label": "Low 9:21 AM 0.7 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-05T15:34:00-04:00",
+          "height_ft": 7.778,
+          "display_label": "High 3:34 PM 7.8 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-05T21:29:00-04:00",
+          "height_ft": 1.826,
+          "display_label": "Low 9:29 PM 1.8 ft"
+        }
+      ],
+      "window_label": "1:30 PM–5:30 PM",
+      "tide_label_full": "High 3:34 PM · 7.8 ft",
+      "daily_tides_label": "High: 2:53 AM, 3:34 PM; Low: 9:21 AM, 9:29 PM",
+      "weather": "84°F · Mostly Sunny · 8 mph"
+    },
+    {
+      "date": "2026-06-06",
+      "day_label": "Sat Jun 6",
+      "start": "2026-06-06T07:00:00-04:00",
+      "end": "2026-06-06T11:00:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-06-06T10:06:00-04:00",
+      "tide_height_ft": 0.729,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 73,
+      "wind_speed_text": "6 mph",
+      "precip_probability": 0,
+      "score": 146.8,
+      "note": "Best when the tide is already out and continuing out, or has only been coming in for an hour or so.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-06T07:00:00-04:00",
+          "temperature_f": 68,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "5 mph"
+        },
+        {
+          "time": "2026-06-06T09:00:00-04:00",
+          "temperature_f": 73,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-06-06T11:00:00-04:00",
+          "temperature_f": 78,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        }
+      ],
+      "alternate_beaches": [
+        {
+          "beach_name": "Gas House Beach",
+          "beach_short_name": "Gas House",
+          "activity": "Walk to Brown's Island",
+          "start": "2026-06-06T07:00:00-04:00",
+          "end": "2026-06-06T11:00:00-04:00",
+          "score": 142.8,
+          "note": "Best around low tide when the route is exposed. Leave margin for the tide turning.",
+          "window_label": "7:00 AM–11:00 AM"
+        }
+      ],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-06-06T03:38:00-04:00",
+          "height_ft": 8.79,
+          "display_label": "High 3:38 AM 8.8 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-06T10:06:00-04:00",
+          "height_ft": 0.729,
+          "display_label": "Low 10:06 AM 0.7 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-06T16:20:00-04:00",
+          "height_ft": 7.923,
+          "display_label": "High 4:20 PM 7.9 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-06T22:19:00-04:00",
+          "height_ft": 1.756,
+          "display_label": "Low 10:19 PM 1.8 ft"
+        }
+      ],
+      "window_label": "7:00 AM–11:00 AM",
+      "tide_label_full": "Low 10:06 AM · 0.7 ft",
+      "daily_tides_label": "High: 3:38 AM, 4:20 PM; Low: 10:06 AM, 10:19 PM",
+      "weather": "73°F · Mostly Sunny · 6 mph"
+    },
+    {
+      "date": "2026-06-07",
+      "day_label": "Sun Jun 7",
+      "start": "2026-06-07T02:00:00-04:00",
+      "end": "2026-06-07T06:00:00-04:00",
+      "beach_name": "Gas House Beach",
+      "beach_short_name": "Gas House",
+      "activity": "Paddle board / harbor float",
+      "tide_label": "High",
+      "tide_time": "2026-06-07T04:27:00-04:00",
+      "tide_height_ft": 8.645,
+      "forecast": "Slight Chance Rain Showers",
+      "temperature_f": 68,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 17,
+      "score": 68.3,
+      "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-07T02:00:00-04:00",
+          "temperature_f": 70,
+          "forecast": "Chance Showers And Thunderstorms",
+          "precip_probability": 35,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-06-07T04:00:00-04:00",
+          "temperature_f": 69,
+          "forecast": "Slight Chance Showers And Thunderstorms",
+          "precip_probability": 22,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-06-07T06:00:00-04:00",
+          "temperature_f": 68,
+          "forecast": "Slight Chance Rain Showers",
+          "precip_probability": 17,
+          "wind_speed_text": "8 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-06-07T04:27:00-04:00",
+          "height_ft": 8.645,
+          "display_label": "High 4:27 AM 8.6 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-07T10:52:00-04:00",
+          "height_ft": 0.772,
+          "display_label": "Low 10:52 AM 0.8 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-07T17:08:00-04:00",
+          "height_ft": 8.15,
+          "display_label": "High 5:08 PM 8.2 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-07T23:12:00-04:00",
+          "height_ft": 1.603,
+          "display_label": "Low 11:12 PM 1.6 ft"
+        }
+      ],
+      "window_label": "2:00 AM–6:00 AM",
+      "tide_label_full": "High 4:27 AM · 8.6 ft",
+      "daily_tides_label": "High: 4:27 AM, 5:08 PM; Low: 10:52 AM, 11:12 PM",
+      "weather": "68°F · Slight Chance Rain Showers · 8 mph · 17% rain"
+    },
+    {
+      "date": "2026-06-08",
+      "day_label": "Mon Jun 8",
+      "start": "2026-06-08T15:30:00-04:00",
+      "end": "2026-06-08T19:30:00-04:00",
+      "beach_name": "Gas House Beach",
+      "beach_short_name": "Gas House",
+      "activity": "Paddle board / harbor float",
+      "tide_label": "High",
+      "tide_time": "2026-06-08T17:59:00-04:00",
+      "tide_height_ft": 8.471,
+      "forecast": "Sunny",
+      "temperature_f": 68,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 6,
+      "score": 146.2,
+      "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-08T15:00:00-04:00",
+          "temperature_f": 67,
+          "forecast": "Sunny",
+          "precip_probability": 6,
+          "wind_speed_text": "10 mph"
+        },
+        {
+          "time": "2026-06-08T17:00:00-04:00",
+          "temperature_f": 68,
+          "forecast": "Sunny",
+          "precip_probability": 6,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-06-08T19:00:00-04:00",
+          "temperature_f": 65,
+          "forecast": "Mostly Clear",
+          "precip_probability": 5,
+          "wind_speed_text": "6 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-06-08T05:20:00-04:00",
+          "height_ft": 8.501,
+          "display_label": "High 5:20 AM 8.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-08T11:41:00-04:00",
+          "height_ft": 0.811,
+          "display_label": "Low 11:41 AM 0.8 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-08T17:59:00-04:00",
+          "height_ft": 8.471,
+          "display_label": "High 5:59 PM 8.5 ft"
+        }
+      ],
+      "window_label": "3:30 PM–7:30 PM",
+      "tide_label_full": "High 5:59 PM · 8.5 ft",
+      "daily_tides_label": "High: 5:20 AM, 5:59 PM; Low: 11:41 AM",
+      "weather": "68°F · Sunny · 8 mph · 6% rain"
+    },
+    {
+      "date": "2026-06-09",
+      "day_label": "Tue Jun 9",
+      "start": "2026-06-09T16:30:00-04:00",
+      "end": "2026-06-09T20:30:00-04:00",
+      "beach_name": "Gas House Beach",
+      "beach_short_name": "Gas House",
+      "activity": "Paddle board / harbor float",
+      "tide_label": "High",
+      "tide_time": "2026-06-09T18:52:00-04:00",
+      "tide_height_ft": 8.892,
+      "forecast": "Sunny",
+      "temperature_f": 77,
+      "wind_speed_text": "7 mph",
+      "precip_probability": 3,
+      "score": 147.9,
+      "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-06-09T16:00:00-04:00",
+          "temperature_f": 77,
+          "forecast": "Sunny",
+          "precip_probability": 3,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-06-09T18:00:00-04:00",
+          "temperature_f": 76,
+          "forecast": "Mostly Clear",
+          "precip_probability": 3,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-06-09T20:00:00-04:00",
+          "temperature_f": 71,
+          "forecast": "Mostly Clear",
+          "precip_probability": 3,
+          "wind_speed_text": "6 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-06-09T00:09:00-04:00",
+          "height_ft": 1.335,
+          "display_label": "Low 12:09 AM 1.3 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-09T06:18:00-04:00",
+          "height_ft": 8.405,
+          "display_label": "High 6:18 AM 8.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-06-09T12:32:00-04:00",
+          "height_ft": 0.823,
+          "display_label": "Low 12:32 PM 0.8 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-06-09T18:52:00-04:00",
+          "height_ft": 8.892,
+          "display_label": "High 6:52 PM 8.9 ft"
+        }
+      ],
+      "window_label": "4:30 PM–8:30 PM",
+      "tide_label_full": "High 6:52 PM · 8.9 ft",
+      "daily_tides_label": "High: 6:18 AM, 6:52 PM; Low: 12:09 AM, 12:32 PM",
+      "weather": "77°F · Sunny · 7 mph · 3% rain"
+    }
+  ],
+  "tide_events": [
+    {
+      "time": "2026-06-04T02:11:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.001,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-04T08:38:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.655,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-04T14:51:00-04:00",
+      "event_type": "H",
+      "height_ft": 7.699,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-04T20:42:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.845,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-05T02:53:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.912,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-05T09:21:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.69,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-05T15:34:00-04:00",
+      "event_type": "H",
+      "height_ft": 7.778,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-05T21:29:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.826,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-06T03:38:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.79,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-06T10:06:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.729,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-06T16:20:00-04:00",
+      "event_type": "H",
+      "height_ft": 7.923,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-06T22:19:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.756,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-07T04:27:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.645,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-07T10:52:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.772,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-07T17:08:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.15,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-07T23:12:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.603,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-08T05:20:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.501,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-08T11:41:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.811,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-08T17:59:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.471,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-09T00:09:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.335,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-09T06:18:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.405,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-09T12:32:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.823,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-06-09T18:52:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.892,
+      "station_id": "8442645"
+    }
+  ],
+  "weather_period_count": 145,
+  "image_generation_mode": "openai_full_post",
+  "image_model": "gpt-image-2",
+  "art_direction": "a polished top coastal papercraft band with granite-gray shoreline, muted teal water layers, cream sky, soft sun, and one tiny distant sail; no town, lighthouse, church, houses, or large sailboat",
+  "sources": {
+    "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
+    "weather": "National Weather Service hourly forecast API",
+    "beach_rules": "User-provided Marblehead beach preferences in config/beaches.json"
+  }
+}

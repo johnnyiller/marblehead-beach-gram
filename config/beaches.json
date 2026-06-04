@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "notes": "Starter beach logic based on user preferences from the planning thread. Edit rules as you learn more about each beach.",
+  "beaches": [
+    {
+      "name": "Gas House Beach",
+      "short_name": "Gas House",
+      "display_note": "High tide: paddle boarding. Low tide: Brown's Island walk.",
+      "rules": [
+        {
+          "event_type": "H",
+          "activity": "Paddle board / harbor float",
+          "start_minutes": -120,
+          "end_minutes": 120,
+          "base_score": 75,
+          "wind_profile": "paddle",
+          "sun_required": true,
+          "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong."
+        },
+        {
+          "event_type": "L",
+          "activity": "Walk to Brown's Island",
+          "start_minutes": -180,
+          "end_minutes": 60,
+          "base_score": 78,
+          "wind_profile": "walk",
+          "sun_required": true,
+          "note": "Best around low tide when the route is exposed. Leave margin for the tide turning."
+        }
+      ]
+    },
+    {
+      "name": "Preston Beach",
+      "short_name": "Preston",
+      "display_note": "Avoid high tide. Best once tide is out and still dropping, or within about an hour after low.",
+      "rules": [
+        {
+          "event_type": "L",
+          "activity": "Low-tide walk / tide pools",
+          "start_minutes": -180,
+          "end_minutes": 60,
+          "base_score": 82,
+          "wind_profile": "walk",
+          "sun_required": true,
+          "note": "Best when the tide is already out and continuing out, or has only been coming in for an hour or so."
+        }
+      ]
+    },
+    {
+      "name": "Devereux Beach",
+      "short_name": "Devereux",
+      "display_note": "Good at most tide stages, with bathrooms and showers; parking may cost money in season.",
+      "rules": [
+        {
+          "event_type": "L",
+          "activity": "Easy beach walk with facilities",
+          "start_minutes": -180,
+          "end_minutes": 180,
+          "base_score": 66,
+          "wind_profile": "walk",
+          "sun_required": false,
+          "note": "Reliable any-tide fallback with facilities; low tide still adds beach space."
+        },
+        {
+          "event_type": "H",
+          "activity": "Any-tide beach visit with facilities",
+          "start_minutes": -120,
+          "end_minutes": 120,
+          "base_score": 58,
+          "wind_profile": "walk",
+          "sun_required": false,
+          "note": "Use when the weather is great but the low-tide-special beaches are not lined up."
+        }
+      ]
+    }
+  ]
+}
