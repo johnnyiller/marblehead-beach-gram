@@ -198,12 +198,15 @@ git remote add origin git@github.com:YOUR_GITHUB_USERNAME/marblehead-tidegram.gi
 git push -u origin main
 ```
 
-### 2. Enable GitHub Pages from Actions
+### 2. Enable GitHub Pages from the deploy branch
 
 In the GitHub repo:
 
 1. Go to **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Set **Branch** to `gh-pages` and **Folder** to `/ (root)`.
+
+The workflow generates `site/` on `main`, publishes those generated files to the `gh-pages` branch, and GitHub Pages serves that branch.
 
 ### 3. Add repository secrets
 
@@ -238,7 +241,7 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 2. Click **Run workflow**.
 3. Leave `post_to_instagram` unchecked for the first run.
 4. Wait for the deploy job to finish.
-5. Open the GitHub Pages URL shown in the deployment summary.
+5. Open the GitHub Pages site URL.
 6. Confirm `latest.jpg` loads directly in the browser.
 
 Your direct image URL should look like:

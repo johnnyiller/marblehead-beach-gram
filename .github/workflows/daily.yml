@@ -12,21 +12,16 @@ on:
     - cron: "30 11 * * *"
 
 concurrency:
-  group: github-pages
+  group: gh-pages
   cancel-in-progress: false
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
   generate-deploy-post:
     name: Generate, deploy, and optionally post
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -51,24 +46,18 @@ jobs:
           DAYS_TO_FORECAST: ${{ vars.DAYS_TO_FORECAST }}
         run: python scripts/generate.py
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./site
+          force_orphan: true
 
       - name: Post to Instagram
         if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
         env:
-          PUBLIC_IMAGE_URL: ${{ steps.deployment.outputs.page_url }}latest.jpg
+          PUBLIC_IMAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/latest.jpg
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION }}
