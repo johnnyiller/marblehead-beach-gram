@@ -214,7 +214,7 @@ Go to **Settings → Secrets and variables → Actions → Secrets** and add:
 | `OPENAI_API_KEY` | Yes | Generates the finished Instagram image. |
 | `IG_ACCESS_TOKEN` | Only for Instagram | Access token with publishing permissions. |
 
-The workflow reads these values from repository variables. Secrets are safer for `OPENAI_API_KEY` and `IG_ACCESS_TOKEN`, but variables are supported if you prefer to keep all configuration in one place.
+The workflow reads `OPENAI_API_KEY` and `IG_ACCESS_TOKEN` from secrets so they are masked in Actions logs.
 
 ### 4. Add repository variables
 

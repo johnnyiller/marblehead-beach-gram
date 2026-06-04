@@ -16,7 +16,6 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  actions: read
   contents: read
   pages: write
   id-token: write
@@ -42,42 +41,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Load repository variables
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-
-          require_variable() {
-            name="$1"
-            value="$(gh variable get "$name" 2>/dev/null || true)"
-            if [ -z "$value" ]; then
-              echo "Missing required GitHub Actions variable: $name" >&2
-              exit 1
-            fi
-            printf '%s=%s\n' "$name" "$value" >> "$GITHUB_ENV"
-          }
-
-          optional_variable() {
-            name="$1"
-            value="$(gh variable get "$name" 2>/dev/null || true)"
-            if [ -n "$value" ]; then
-              printf '%s=%s\n' "$name" "$value" >> "$GITHUB_ENV"
-            fi
-          }
-
-          require_variable OPENAI_API_KEY
-          require_variable NWS_USER_AGENT
-          optional_variable NOAA_STATION_ID
-          optional_variable LOCATION_LAT
-          optional_variable LOCATION_LON
-          optional_variable DAYS_TO_FORECAST
-          optional_variable IG_USER_ID
-          optional_variable IG_ACCESS_TOKEN
-          optional_variable GRAPH_API_VERSION
-          optional_variable ALT_TEXT
-
       - name: Generate Tidegram
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NWS_USER_AGENT: ${{ vars.NWS_USER_AGENT }}
+          NOAA_STATION_ID: ${{ vars.NOAA_STATION_ID }}
+          LOCATION_LAT: ${{ vars.LOCATION_LAT }}
+          LOCATION_LON: ${{ vars.LOCATION_LON }}
+          DAYS_TO_FORECAST: ${{ vars.DAYS_TO_FORECAST }}
         run: python scripts/generate.py
 
       - name: Configure Pages
@@ -98,5 +69,9 @@ jobs:
         if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
         env:
           PUBLIC_IMAGE_URL: ${{ steps.deployment.outputs.page_url }}latest.jpg
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION }}
+          ALT_TEXT: ${{ vars.ALT_TEXT }}
           DRY_RUN: "false"
         run: python scripts/post_instagram.py
