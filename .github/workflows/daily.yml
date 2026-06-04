@@ -43,8 +43,8 @@ jobs:
 
       - name: Generate Tidegram
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || vars.OPENAI_API_KEY }}
-          NWS_USER_AGENT: ${{ secrets.NWS_USER_AGENT || vars.NWS_USER_AGENT }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NWS_USER_AGENT: ${{ vars.NWS_USER_AGENT || secrets.NWS_USER_AGENT }}
           NOAA_STATION_ID: ${{ vars.NOAA_STATION_ID }}
           LOCATION_LAT: ${{ vars.LOCATION_LAT }}
           LOCATION_LON: ${{ vars.LOCATION_LON }}
@@ -53,6 +53,8 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -68,9 +70,8 @@ jobs:
         env:
           PUBLIC_IMAGE_URL: ${{ steps.deployment.outputs.page_url }}latest.jpg
           IG_USER_ID: ${{ secrets.IG_USER_ID || vars.IG_USER_ID }}
-          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN || vars.IG_ACCESS_TOKEN }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION }}
           ALT_TEXT: ${{ vars.ALT_TEXT }}
           DRY_RUN: "false"
         run: python scripts/post_instagram.py
-
