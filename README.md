@@ -63,6 +63,8 @@ The generator can show more than one beach on a day card when another beach is g
 
 - `recommended_window_min_minutes`: minimum recommendation window to try to show.
 - `recommended_window_max_minutes`: maximum recommendation window to try to show, currently four hours.
+- `preferred_window_start_hour`: earliest local hour to recommend, currently `9`.
+- `preferred_window_end_hour`: latest local hour to recommend, currently `21`.
 - `max_beach_options_per_day`: total beach options to show on a card, including the primary pick.
 - `alternate_beach_min_score`: minimum score for an alternate.
 - `alternate_beach_max_score_gap`: maximum score gap from the day winner.

@@ -175,6 +175,8 @@ def main() -> None:
         alternate_min_overlap_minutes=int(settings.get("alternate_beach_min_overlap_minutes", 60)),
         recommended_window_min_minutes=int(settings.get("recommended_window_min_minutes", 120)),
         recommended_window_max_minutes=int(settings.get("recommended_window_max_minutes", 240)),
+        preferred_start_hour=int(settings.get("preferred_window_start_hour", 9)),
+        preferred_end_hour=int(settings.get("preferred_window_end_hour", 21)),
     )
     if not recommendations:
         raise RuntimeError("No beach recommendations were produced. Check tide/weather data and beach rules.")

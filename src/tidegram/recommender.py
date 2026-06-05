@@ -241,6 +241,42 @@ def _best_weather_period(
     return scored[0][1], scored[0][0]
 
 
+def _time_of_day_window(
+    value: dt.datetime,
+    start_hour: int,
+    end_hour: int,
+) -> tuple[dt.datetime, dt.datetime]:
+    day_start = value.replace(hour=start_hour, minute=0, second=0, microsecond=0)
+    day_end = value.replace(hour=end_hour, minute=0, second=0, microsecond=0)
+    if day_end <= day_start:
+        day_end += dt.timedelta(days=1)
+    return day_start, day_end
+
+
+def _clip_to_preferred_visit_hours(
+    start: dt.datetime,
+    end: dt.datetime,
+    start_hour: int,
+    end_hour: int,
+) -> tuple[dt.datetime, dt.datetime] | None:
+    best_overlap: tuple[dt.datetime, dt.datetime] | None = None
+    best_minutes = 0.0
+    for day_offset in range(-1, 2):
+        visit_start, visit_end = _time_of_day_window(
+            start + dt.timedelta(days=day_offset),
+            start_hour,
+            end_hour,
+        )
+        clipped_start = max(start, visit_start)
+        clipped_end = min(end, visit_end)
+        overlap = _overlap_minutes(clipped_start, clipped_end, clipped_start, clipped_end)
+        if overlap > best_minutes:
+            best_minutes = overlap
+            best_overlap = (clipped_start, clipped_end)
+
+    return best_overlap
+
+
 def _clip_recommended_window(
     rule_start: dt.datetime,
     rule_end: dt.datetime,
@@ -405,6 +441,8 @@ def build_recommendations(
     alternate_min_overlap_minutes: int = 60,
     recommended_window_min_minutes: int = 120,
     recommended_window_max_minutes: int = 240,
+    preferred_start_hour: int = 9,
+    preferred_end_hour: int = 21,
 ) -> list[BeachRecommendation]:
     zone = ZoneInfo(tz_name)
     today = dt.datetime.now(zone).date()
@@ -421,6 +459,17 @@ def build_recommendations(
                     continue
                 start = tide.time + dt.timedelta(minutes=int(rule["start_minutes"]))
                 end = tide.time + dt.timedelta(minutes=int(rule["end_minutes"]))
+                preferred_window = _clip_to_preferred_visit_hours(
+                    start,
+                    end,
+                    start_hour=preferred_start_hour,
+                    end_hour=preferred_end_hour,
+                )
+                if preferred_window is None:
+                    continue
+                start, end = preferred_window
+                if _overlap_minutes(start, end, start, end) < max(30, recommended_window_min_minutes // 2):
+                    continue
                 best_period, wx_score = _best_weather_period(
                     weather,
                     start,
