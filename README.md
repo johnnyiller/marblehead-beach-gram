@@ -90,6 +90,10 @@ Useful docs:
 
 ## Local setup
 
+### 0. Codespaces/devcontainer
+
+The repository includes a devcontainer that installs Python 3.12, GitHub CLI, and `ffmpeg`. `ffmpeg` is only needed for optional Reel/video generation; the normal image workflow does not need it.
+
 ### 1. Create and activate a virtual environment
 
 ```bash
@@ -155,7 +159,40 @@ python scripts/generate.py
 
 This will fetch live tide/weather data, call the OpenAI Images API, and save the finished Instagram image.
 
-### 6. Try different background directions
+### 6. Optionally generate a narrated Reel
+
+The image post remains the default. After `site/latest.json` and the 9:16 `site/latest-reel.jpg` exist, you can generate a separate MP4 Reel for testing:
+
+```bash
+python scripts/generate_reel.py
+```
+
+This creates:
+
+```text
+site/latest-reel.jpg
+site/latest-reel.png
+site/latest-reel.mp4
+site/latest-reel-audio.mp3
+site/reel-preview.html
+```
+
+Preview the exact narration without creating audio/video:
+
+```bash
+python scripts/generate_reel.py --dry-run
+python scripts/generate_reel.py --print-script
+```
+
+`python scripts/generate.py` creates both the normal 4:5 feed image and a separate 9:16 Reel still. The Reel command uses the 9:16 still, generates a calm OpenAI TTS voiceover from the same `latest.json` data, and mixes in a quiet public-domain wave recording. The generated Reel caption includes an AI voiceover disclosure.
+
+The default wave bed is `assets/audio/waves-public-domain.mp3`, sourced from Wikimedia Commons `File:Waves.ogg` by Dsw4, public domain. Override it with:
+
+```bash
+python scripts/generate_reel.py --wave-audio path/to/waves.mp3
+```
+
+### 7. Try different background directions
 
 List the built-in background/art-direction prompts:
 
@@ -216,7 +253,7 @@ Go to **Settings → Secrets and variables → Actions → Secrets** and add:
 
 | Secret | Required? | Purpose |
 |---|---:|---|
-| `OPENAI_API_KEY` | Yes | Generates the finished Instagram image. |
+| `OPENAI_API_KEY` | Yes | Generates the finished Instagram images and Reel voiceover. |
 | `IG_ACCESS_TOKEN` | Only for Instagram | Access token with publishing permissions. |
 
 The workflow reads `OPENAI_API_KEY` and `IG_ACCESS_TOKEN` from secrets so they are masked in Actions logs.
@@ -237,7 +274,7 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | `DAYS_TO_FORECAST` | `5` | Forecast horizon. |
 | `IG_GRAPH_API_BASE_URL` | `https://graph.instagram.com` | Instagram API endpoint for Instagram Login tokens. |
 | `GRAPH_API_VERSION` | `v23.0` | Meta Graph API version to call. |
-| `ALT_TEXT` | `Marblehead tide and weather outlook infographic` | Optional Instagram alt text. |
+| `IG_REEL_SHARE_TO_FEED` | `true` | Whether Instagram should also share the Reel to the feed. |
 
 Use `America/New_York`, not `EST`, so daylight saving time is handled correctly. GitHub Actions cron still uses UTC, but the generator converts dates and recommendations to Marblehead local time.
 
@@ -248,23 +285,23 @@ Use `America/New_York`, not `EST`, so daylight saving time is handled correctly.
 3. Leave `post_to_instagram` unchecked for the first run.
 4. Wait for the deploy job to finish.
 5. Open the GitHub Pages site URL.
-6. Confirm `latest.jpg` loads directly in the browser.
+6. Confirm `latest-reel.mp4` loads directly in the browser.
 
-Your direct image URL should look like:
+Your direct Reel URL should look like:
 
 ```text
-https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg
+https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest-reel.mp4
 ```
 
-The generated site cache-busts `latest.jpg` in `index.html`, and Instagram posting uses the versioned asset path from `latest.json` (for example `assets/tidegram-YYYY-MM-DD-YYYYMMDDHHMMSS.jpg`) so Meta does not fetch a stale mutable image.
+The generated site cache-busts `latest.jpg` in `index.html`, and Instagram Reel posting uses the versioned MP4 asset path from `latest.json` (for example `assets/tidegram-YYYY-MM-DD-YYYYMMDDHHMMSS-reel.mp4`) so Meta does not fetch a stale mutable video.
 
-When posting, the workflow waits for the versioned image URL to become public on GitHub Pages. Brand-new Pages assets can briefly return `404` right after the `gh-pages` branch updates.
+When posting, the workflow waits for the versioned Reel URL to become public on GitHub Pages. Brand-new Pages assets can briefly return `404` right after the `gh-pages` branch updates.
 
 ## Instagram setup notes
 
 The script posts through the Instagram Graph API with:
 
-1. `POST /{ig-user-id}/media` with `image_url` and `caption`.
+1. `POST /{ig-user-id}/media` with `media_type=REELS`, `video_url`, and `caption`.
 2. Wait/poll briefly.
 3. `POST /{ig-user-id}/media_publish` with the returned `creation_id`.
 
@@ -276,16 +313,17 @@ Before enabling automation, make sure you have:
 - A Meta developer app.
 - The correct permissions/scopes approved for publishing.
 - A working long-lived token.
-- A public direct image URL. GitHub Pages should work because `latest.jpg` is a direct static file.
+- A public direct MP4 URL. GitHub Pages should work because `latest-reel.mp4` and the versioned Reel assets are direct static files.
 
 ### Dry-run local Instagram test
 
 ```bash
 DRY_RUN=true python scripts/post_instagram.py \
-  --image-url "https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg"
+  --media-type reel \
+  --video-url "https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest-reel.mp4"
 ```
 
-This validates that the image URL is reachable and prints the caption without posting.
+This validates that the Reel URL is reachable and prints the caption without posting. The GitHub Actions workflow publishes Reels by default; local CLI image posting is still available by using `--media-type image`.
 
 ### Local Instagram credential test
 
@@ -305,7 +343,8 @@ After you have credentials in `.env`:
 
 ```bash
 DRY_RUN=false python scripts/post_instagram.py \
-  --image-url "https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg"
+  --media-type reel \
+  --video-url "https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest-reel.mp4"
 ```
 
 ### Enable scheduled Instagram posting
@@ -321,7 +360,7 @@ The default cron is:
 cron: "27,57 12-14 * * *"
 ```
 
-GitHub Actions cron uses UTC. The workflow checks Marblehead local time and only posts at or after 8:27 AM, then writes a `.posted/instagram-YYYY-MM-DD.txt` marker to `gh-pages` after a successful scheduled post. The extra cron times are retries in case GitHub delays or drops one scheduled run; the marker prevents a later retry from intentionally posting twice on the same local date.
+GitHub Actions cron uses UTC. The workflow checks Marblehead local time and only posts at or after 8:27 AM, then writes a `.posted/instagram-YYYY-MM-DD.txt` marker to `gh-pages` after a successful scheduled Reel post. The extra UTC cron times cover daylight saving time and act as retries in case GitHub delays or drops one scheduled run; the marker prevents a later retry from intentionally posting twice on the same local date.
 
 ## Development ideas for Copilot
 

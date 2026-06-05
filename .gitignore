@@ -7,3 +7,15 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
+site/latest-reel.mp4
+site/latest-reel-audio.mp3
+site/latest-reel.jpg
+site/latest-reel.png
+site/reel-preview.html
+site/assets/tidegram-*.jpg
+site/assets/tidegram-*.png
+site/assets/tidegram-*.mp4
+site/assets/tidegram-*.mp3
+
+latest-reel.mp4
+ran_automation.jpg

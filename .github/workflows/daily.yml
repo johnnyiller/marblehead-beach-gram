@@ -9,7 +9,7 @@ on:
         type: boolean
         default: false
       post_to_instagram:
-        description: "Post the generated image to Instagram"
+        description: "Post the generated Reel to Instagram"
         required: false
         type: boolean
         default: false
@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   generate-deploy-post:
-    name: Generate, deploy, and optionally post
+    name: Generate, deploy, and optionally post Reel
     runs-on: ubuntu-latest
 
     steps:
@@ -96,7 +96,14 @@ jobs:
         if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' && steps.post_guard.outputs.skip == 'true' }}
         run: echo "${{ steps.post_guard.outputs.skip_reason }}"
 
-      - name: Generate Tidegram
+      - name: Install ffmpeg
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+
+      - name: Generate Tidegram images
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -107,6 +114,16 @@ jobs:
           DAYS_TO_FORECAST: ${{ vars.DAYS_TO_FORECAST }}
         run: python scripts/generate.py
 
+      - name: Generate narrated Reel
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_REEL_SCRIPT_MODEL: ${{ vars.OPENAI_REEL_SCRIPT_MODEL }}
+          OPENAI_TTS_MODEL: ${{ vars.OPENAI_TTS_MODEL }}
+          OPENAI_TTS_VOICE: ${{ vars.OPENAI_TTS_VOICE }}
+          OPENAI_TTS_INSTRUCTIONS: ${{ vars.OPENAI_TTS_INSTRUCTIONS }}
+        run: python scripts/generate_reel.py
+
       - name: Publish to gh-pages branch
         if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
         uses: peaceiris/actions-gh-pages@v4
@@ -116,8 +133,8 @@ jobs:
           publish_dir: ./site
           force_orphan: true
 
-      - name: Resolve public image URL
-        id: public_image
+      - name: Resolve public Reel URL
+        id: public_reel
         if: ${{ steps.post_guard.outputs.skip != 'true' && ((github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only)) }}
         env:
           REPO_NAME: ${{ github.event.repository.name }}
@@ -129,12 +146,12 @@ jobs:
           from pathlib import Path
 
           metadata = json.loads(Path("site/latest.json").read_text(encoding="utf-8"))
-          image_path = metadata.get("dated_jpg") or metadata.get("latest_jpg") or "latest.jpg"
-          local_path = Path("site") / image_path
+          video_path = metadata.get("dated_reel_mp4") or metadata.get("latest_reel_mp4") or "latest-reel.mp4"
+          local_path = Path("site") / video_path
           if not local_path.is_file():
-              raise SystemExit(f"Resolved Instagram image does not exist locally: {local_path}")
-          url = f"https://{os.environ['REPO_OWNER']}.github.io/{os.environ['REPO_NAME']}/{image_path}"
-          print(f"Resolved Instagram image URL: {url}", file=__import__("sys").stderr)
+              raise SystemExit(f"Resolved Instagram Reel does not exist locally: {local_path}")
+          url = f"https://{os.environ['REPO_OWNER']}.github.io/{os.environ['REPO_NAME']}/{video_path}"
+          print(f"Resolved Instagram Reel URL: {url}", file=__import__("sys").stderr)
           print(f"url={url}")
           PY
 
@@ -150,15 +167,16 @@ jobs:
       - name: Post to Instagram
         if: ${{ steps.post_guard.outputs.skip != 'true' && ((github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only)) }}
         env:
-          PUBLIC_IMAGE_URL: ${{ steps.public_image.outputs.url }}
+          PUBLIC_VIDEO_URL: ${{ steps.public_reel.outputs.url }}
+          IG_MEDIA_TYPE: reel
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_GRAPH_API_BASE_URL: ${{ vars.IG_GRAPH_API_BASE_URL || 'https://graph.instagram.com' }}
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
-          ALT_TEXT: ${{ vars.ALT_TEXT }}
+          IG_REEL_SHARE_TO_FEED: ${{ vars.IG_REEL_SHARE_TO_FEED || 'true' }}
           DRY_RUN: "false"
-          PUBLIC_IMAGE_WAIT_SECONDS: "900"
-        run: python scripts/post_instagram.py
+          PUBLIC_MEDIA_WAIT_SECONDS: "900"
+        run: python scripts/post_instagram.py --media-type reel
 
       - name: Mark today's Instagram post
         if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' && steps.post_guard.outputs.skip != 'true' }}
@@ -167,7 +185,8 @@ jobs:
           {
             echo "posted_at_utc=$(date -u --iso-8601=seconds)"
             echo "run_id=${GITHUB_RUN_ID}"
-            echo "image_url=${{ steps.public_image.outputs.url }}"
+            echo "media_type=reel"
+            echo "video_url=${{ steps.public_reel.outputs.url }}"
           } > "site/${{ steps.post_guard.outputs.marker_path }}"
 
       - name: Publish Instagram post marker

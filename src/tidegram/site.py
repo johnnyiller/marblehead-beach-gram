@@ -40,7 +40,23 @@ def write_index(
     cache_suffix = f"?v={html.escape(asset_version)}" if asset_version else ""
     latest_jpg = html.escape(str(metadata.get("latest_jpg", "latest.jpg")))
     latest_png = html.escape(str(metadata.get("latest_png", "latest.png")))
+    latest_reel_jpg = html.escape(str(metadata.get("latest_reel_jpg", "")))
+    latest_reel_png = html.escape(str(metadata.get("latest_reel_png", "")))
     latest_jpg_versioned = f"{latest_jpg}{cache_suffix}"
+    latest_reel_jpg_versioned = f"{latest_reel_jpg}{cache_suffix}" if latest_reel_jpg else ""
+    latest_reel_links = ""
+    if latest_reel_jpg:
+        reel_png_link = f" · <a href=\"{latest_reel_png}{cache_suffix}\">Reel PNG</a>" if latest_reel_png else ""
+        latest_reel_links = f" · <a href=\"{latest_reel_jpg_versioned}\">Reel JPG</a>{reel_png_link}"
+    reel_preview = ""
+    if latest_reel_jpg:
+        reel_preview = f"""
+    <section class=\"card\" style=\"margin-top: 28px;\">
+      <h2>Reel Still</h2>
+      <a href=\"{latest_reel_jpg_versioned}\"><img src=\"{latest_reel_jpg_versioned}\" alt=\"{html.escape(title)} Reel still\" style=\"width: min(100%, 360px);\" /></a>
+      <p>This 9:16 still is used as the source visual for optional Reel generation.</p>
+    </section>
+"""
 
     document = f"""<!doctype html>
 <html lang=\"en\">
@@ -86,10 +102,12 @@ def write_index(
       </table>
     </section>
 
+{reel_preview}
+
     <section class=\"card\" style=\"margin-top: 28px;\">
       <h2>Caption</h2>
       <pre>{caption}</pre>
-      <p><a href=\"latest.json\">latest.json</a> · <a href=\"{latest_png}{cache_suffix}\">PNG</a> · <a href=\"{latest_jpg_versioned}\">JPG</a></p>
+      <p><a href=\"latest.json\">latest.json</a> · <a href=\"{latest_png}{cache_suffix}\">PNG</a> · <a href=\"{latest_jpg_versioned}\">JPG</a>{latest_reel_links}</p>
     </section>
   </main>
 </body>

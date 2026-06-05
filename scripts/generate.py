@@ -18,8 +18,10 @@ from tidegram.data_sources import fetch_noaa_tides, fetch_nws_hourly_weather
 from tidegram.openai_background import (
     DAILY_ART_DIRECTIONS,
     build_full_post_prompt,
+    build_reel_image_prompt,
     daily_art_direction,
     generate_openai_full_post,
+    generate_openai_reel_image,
     numbered_art_direction,
 )
 from tidegram.recommender import build_caption, build_recommendations
@@ -57,6 +59,11 @@ def parse_args() -> argparse.Namespace:
         "--print-prompt",
         action="store_true",
         help="Print the OpenAI full-post prompt and exit without generating an image.",
+    )
+    parser.add_argument(
+        "--print-reel-prompt",
+        action="store_true",
+        help="Print the OpenAI Reel-image prompt and exit without generating an image.",
     )
     parser.add_argument("--output-dir", default=str(SITE_DIR), help="Static site output directory.")
     return parser.parse_args()
@@ -191,12 +198,21 @@ def main() -> None:
     jpg_path = output_dir / "latest.jpg"
     dated_png = output_dir / "assets" / f"tidegram-{versioned_slug}.png"
     dated_jpg = output_dir / "assets" / f"tidegram-{versioned_slug}.jpg"
+    reel_png_path = output_dir / "latest-reel.png"
+    reel_jpg_path = output_dir / "latest-reel.jpg"
+    dated_reel_png = output_dir / "assets" / f"tidegram-{versioned_slug}-reel.png"
+    dated_reel_jpg = output_dir / "assets" / f"tidegram-{versioned_slug}-reel.jpg"
 
     rendered_recommendations = recommendations[: int(settings.get("recommendations_to_render", 3))]
+    reel_recommendations = recommendations[: int(settings.get("reel_recommendations_to_render", settings.get("recommendations_to_render", 3)))]
     image_width = int(settings.get("default_image_width", settings.get("default_image_size", 1080)))
     image_height = int(settings.get("default_image_height", settings.get("default_image_size", 1080)))
+    reel_image_width = int(settings.get("reel_image_width", 1080))
+    reel_image_height = int(settings.get("reel_image_height", 1920))
     title = settings.get("site_title", "Marblehead Tide + Weather Outlook")
     subtitle = settings.get("subtitle", "Best beach windows from tides + hourly forecast")
+    reel_title = settings.get("reel_title", "Marblehead Beach Outlook")
+    reel_subtitle = settings.get("reel_subtitle", "Three-day beach windows")
     art_direction_selector = args.art_direction if args.art_direction is not None else settings.get("default_art_direction")
     art_direction = resolve_art_direction(art_direction_selector, visual_date)
 
@@ -206,6 +222,18 @@ def main() -> None:
                 recommendations=rendered_recommendations,
                 title=title,
                 subtitle=subtitle,
+                location_name=settings.get("location_name", "Marblehead, MA"),
+                art_direction=art_direction,
+            )
+        )
+        return
+
+    if args.print_reel_prompt:
+        print(
+            build_reel_image_prompt(
+                recommendations=reel_recommendations,
+                title=reel_title,
+                subtitle=reel_subtitle,
                 location_name=settings.get("location_name", "Marblehead, MA"),
                 art_direction=art_direction,
             )
@@ -275,6 +303,23 @@ def main() -> None:
     shutil.copy2(png_path, dated_png)
     shutil.copy2(jpg_path, dated_jpg)
 
+    print("Generating OpenAI Reel still...")
+    generate_openai_reel_image(
+        recommendations=reel_recommendations,
+        output_png=reel_png_path,
+        output_jpg=reel_jpg_path,
+        model=settings.get("openai_reel_image_model", settings.get("openai_full_post_model", "gpt-image-2")),
+        size=settings.get("openai_reel_image_size", "1088x1936"),
+        final_width=reel_image_width,
+        final_height=reel_image_height,
+        title=reel_title,
+        subtitle=reel_subtitle,
+        location_name=settings.get("location_name", "Marblehead, MA"),
+        art_direction=art_direction,
+    )
+    shutil.copy2(reel_png_path, dated_reel_png)
+    shutil.copy2(reel_jpg_path, dated_reel_jpg)
+
     caption = build_caption(recommendations, settings.get("location_name", "Marblehead, MA"))
     metadata = {
         "generated_at": generated_at,
@@ -291,11 +336,20 @@ def main() -> None:
         "latest_png": "latest.png",
         "dated_jpg": f"assets/{dated_jpg.name}",
         "dated_png": f"assets/{dated_png.name}",
+        "latest_reel_jpg": "latest-reel.jpg",
+        "latest_reel_png": "latest-reel.png",
+        "dated_reel_jpg": f"assets/{dated_reel_jpg.name}",
+        "dated_reel_png": f"assets/{dated_reel_png.name}",
         "recommendations": [r.to_json() for r in recommendations],
         "tide_events": [t.to_json() for t in tides],
         "weather_period_count": len(weather),
         "image_generation_mode": "openai_full_post",
         "image_model": settings.get("openai_full_post_model", "gpt-image-2"),
+        "image_size": settings.get("openai_full_post_size", "1088x1360"),
+        "reel_image_generation_mode": "openai_reel_image",
+        "reel_image_model": settings.get("openai_reel_image_model", settings.get("openai_full_post_model", "gpt-image-2")),
+        "reel_image_size": settings.get("openai_reel_image_size", "1088x1936"),
+        "reel_image_final_size": f"{reel_image_width}x{reel_image_height}",
         "art_direction": art_direction,
         "sources": {
             "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
@@ -314,6 +368,8 @@ def main() -> None:
 
     print(f"Generated {png_path}")
     print(f"Generated {jpg_path}")
+    print(f"Generated {reel_png_path}")
+    print(f"Generated {reel_jpg_path}")
     rendered_count = int(settings.get("recommendations_to_render", 3))
     print("Top recommendations:")
     for rec in recommendations[:rendered_count]:
