@@ -21,6 +21,14 @@ def truthy(value: str | None, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "y", "on"}
 
 
+def clean_env_value(name: str, default: str = "") -> str:
+    value = (os.getenv(name) or default).strip()
+    prefix = f"{name}="
+    if value.startswith(prefix):
+        value = value[len(prefix) :].strip()
+    return value.strip("'\"")
+
+
 def load_caption(default_caption: str, metadata_path: Path) -> str:
     if metadata_path.exists():
         payload = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -126,11 +134,23 @@ def publish_container(version: str, ig_user_id: str, access_token: str, containe
     )
 
 
+def validate_instagram_credentials(version: str, ig_user_id: str, access_token: str) -> None:
+    payload = graph_get(
+        version,
+        ig_user_id,
+        {"fields": "id,username", "access_token": access_token},
+    )
+    username = payload.get("username")
+    label = f"@{username}" if username else payload.get("id", ig_user_id)
+    print(f"Instagram credentials validated for {label}.")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Publish latest Tidegram image to Instagram.")
     parser.add_argument("--image-url", default=os.getenv("PUBLIC_IMAGE_URL"), help="Public direct image URL, usually GitHub Pages latest.jpg.")
     parser.add_argument("--metadata", default=str(ROOT / "site" / "latest.json"), help="Path to latest.json for caption.")
     parser.add_argument("--dry-run", action="store_true", help="Validate inputs and print intended post without publishing.")
+    parser.add_argument("--validate-credentials", action="store_true", help="Validate IG_USER_ID and IG_ACCESS_TOKEN without publishing.")
     parser.add_argument("--skip-url-wait", action="store_true", help="Do not wait for image URL to be reachable.")
     return parser.parse_args()
 
@@ -140,13 +160,13 @@ def main() -> None:
     args = parse_args()
 
     image_url = args.image_url
-    if not image_url:
+    if not image_url and not args.validate_credentials:
         raise RuntimeError("PUBLIC_IMAGE_URL or --image-url is required.")
 
-    version = os.getenv("GRAPH_API_VERSION", "v23.0")
-    ig_user_id = os.getenv("IG_USER_ID", "")
-    access_token = os.getenv("IG_ACCESS_TOKEN", "")
-    alt_text = os.getenv("ALT_TEXT")
+    version = clean_env_value("GRAPH_API_VERSION", "v23.0") or "v23.0"
+    ig_user_id = clean_env_value("IG_USER_ID")
+    access_token = clean_env_value("IG_ACCESS_TOKEN")
+    alt_text = clean_env_value("ALT_TEXT") or None
     dry_run = args.dry_run or truthy(os.getenv("DRY_RUN"), default=False)
 
     metadata_path = Path(args.metadata)
@@ -154,6 +174,12 @@ def main() -> None:
         "Marblehead tide + weather outlook 🌊☀️ #MarbleheadMA #NorthShoreMA",
         metadata_path,
     )
+
+    if args.validate_credentials:
+        if not ig_user_id or not access_token:
+            raise RuntimeError("IG_USER_ID and IG_ACCESS_TOKEN are required to validate Instagram credentials.")
+        validate_instagram_credentials(version, ig_user_id, access_token)
+        return
 
     if dry_run:
         print("DRY RUN: would publish to Instagram")

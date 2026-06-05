@@ -278,6 +278,16 @@ DRY_RUN=true python scripts/post_instagram.py \
 
 This validates that the image URL is reachable and prints the caption without posting.
 
+### Local Instagram credential test
+
+After you have `IG_USER_ID` and `IG_ACCESS_TOKEN` in `.env`, validate the account/token pair without creating a post:
+
+```bash
+python scripts/post_instagram.py --validate-credentials
+```
+
+If this fails with `OAuthException` code `190`, the access token is missing, malformed, expired, copied with extra text, or is not an Instagram Graph API token for the connected account.
+
 ### Real local Instagram test
 
 After you have credentials in `.env`:

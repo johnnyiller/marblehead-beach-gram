@@ -58,13 +58,21 @@ jobs:
           publish_dir: ./site
           force_orphan: true
 
+      - name: Validate Instagram credentials
+        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
+        env:
+          IG_USER_ID: ${{ vars.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
+        run: python scripts/post_instagram.py --validate-credentials
+
       - name: Post to Instagram
         if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
         env:
           PUBLIC_IMAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/latest.jpg
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-          GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION }}
+          GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
           ALT_TEXT: ${{ vars.ALT_TEXT }}
           DRY_RUN: "false"
         run: python scripts/post_instagram.py
