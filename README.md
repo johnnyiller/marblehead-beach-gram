@@ -318,10 +318,10 @@ Only after the manual workflow and local/one-off Instagram publishing work:
 The default cron is:
 
 ```yaml
-cron: "30 11 * * *"
+cron: "27,57 12-14 * * *"
 ```
 
-GitHub Actions cron uses UTC. This is about 7:30 AM Eastern during daylight saving time and 6:30 AM Eastern during standard time. Adjust it as desired.
+GitHub Actions cron uses UTC. The workflow checks Marblehead local time and only posts at or after 8:27 AM, then writes a `.posted/instagram-YYYY-MM-DD.txt` marker to `gh-pages` after a successful scheduled post. The extra cron times are retries in case GitHub delays or drops one scheduled run; the marker prevents a later retry from intentionally posting twice on the same local date.
 
 ## Development ideas for Copilot
 

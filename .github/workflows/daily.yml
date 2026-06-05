@@ -14,7 +14,7 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: "30 11 * * *"
+    - cron: "27,57 12-14 * * *"
 
 env:
   TZ: ${{ vars.TIMEZONE || 'America/New_York' }}
@@ -45,8 +45,59 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check scheduled Instagram post guard
+        id: post_guard
+        if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' }}
+        env:
+          POST_AFTER_LOCAL: "08:27"
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from __future__ import annotations
+
+          import os
+          import subprocess
+          import sys
+          from datetime import datetime, time
+          from zoneinfo import ZoneInfo
+
+          tz_name = os.environ.get("TIMEZONE") or "America/New_York"
+          post_after = os.environ.get("POST_AFTER_LOCAL", "08:27")
+          hour, minute = [int(part) for part in post_after.split(":", 1)]
+          now = datetime.now(ZoneInfo(tz_name))
+          marker_path = f".posted/instagram-{now.date().isoformat()}.txt"
+          before_window = now.time() < time(hour, minute)
+          already_posted = False
+
+          if not before_window:
+              subprocess.run(["git", "fetch", "origin", "gh-pages", "--depth=1"], check=False)
+              marker_check = subprocess.run(
+                  ["git", "cat-file", "-e", f"origin/gh-pages:{marker_path}"],
+                  stderr=subprocess.DEVNULL,
+              )
+              already_posted = marker_check.returncode == 0
+
+          skip_reason = ""
+          if before_window:
+              skip_reason = f"local time {now.strftime('%H:%M %Z')} is before {post_after}"
+          elif already_posted:
+              skip_reason = f"{marker_path} already exists on gh-pages"
+
+          print(f"marker_path={marker_path}")
+          print(f"local_time={now.isoformat()}")
+          print(f"before_window={str(before_window).lower()}")
+          print(f"already_posted={str(already_posted).lower()}")
+          print(f"skip={str(bool(skip_reason)).lower()}")
+          print(f"skip_reason={skip_reason}")
+          if skip_reason:
+              print(f"Skipping scheduled Instagram post: {skip_reason}", file=sys.stderr)
+          PY
+
+      - name: Report skipped scheduled post
+        if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' && steps.post_guard.outputs.skip == 'true' }}
+        run: echo "${{ steps.post_guard.outputs.skip_reason }}"
+
       - name: Generate Tidegram
-        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) }}
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NWS_USER_AGENT: ${{ vars.NWS_USER_AGENT }}
@@ -57,7 +108,7 @@ jobs:
         run: python scripts/generate.py
 
       - name: Publish to gh-pages branch
-        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) }}
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) && steps.post_guard.outputs.skip != 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,7 +118,7 @@ jobs:
 
       - name: Resolve public image URL
         id: public_image
-        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only) }}
+        if: ${{ steps.post_guard.outputs.skip != 'true' && ((github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only)) }}
         env:
           REPO_NAME: ${{ github.event.repository.name }}
           REPO_OWNER: ${{ github.repository_owner }}
@@ -88,7 +139,7 @@ jobs:
           PY
 
       - name: Validate Instagram credentials
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) || (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
+        if: ${{ steps.post_guard.outputs.skip != 'true' && ((github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) || (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram)) }}
         env:
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -97,7 +148,7 @@ jobs:
         run: python scripts/post_instagram.py --validate-credentials
 
       - name: Post to Instagram
-        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only) }}
+        if: ${{ steps.post_guard.outputs.skip != 'true' && ((github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only)) }}
         env:
           PUBLIC_IMAGE_URL: ${{ steps.public_image.outputs.url }}
           IG_USER_ID: ${{ vars.IG_USER_ID }}
@@ -108,3 +159,22 @@ jobs:
           DRY_RUN: "false"
           PUBLIC_IMAGE_WAIT_SECONDS: "900"
         run: python scripts/post_instagram.py
+
+      - name: Mark today's Instagram post
+        if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' && steps.post_guard.outputs.skip != 'true' }}
+        run: |
+          mkdir -p site/.posted
+          {
+            echo "posted_at_utc=$(date -u --iso-8601=seconds)"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "image_url=${{ steps.public_image.outputs.url }}"
+          } > "site/${{ steps.post_guard.outputs.marker_path }}"
+
+      - name: Publish Instagram post marker
+        if: ${{ github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true' && steps.post_guard.outputs.skip != 'true' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./site
+          force_orphan: true
