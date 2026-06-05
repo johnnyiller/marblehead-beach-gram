@@ -102,4 +102,5 @@ jobs:
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
           ALT_TEXT: ${{ vars.ALT_TEXT }}
           DRY_RUN: "false"
+          PUBLIC_IMAGE_WAIT_SECONDS: "900"
         run: python scripts/post_instagram.py

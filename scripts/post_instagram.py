@@ -64,6 +64,16 @@ def wait_for_public_image(image_url: str, timeout_seconds: int = 180, interval_s
     raise TimeoutError(f"Timed out waiting for public image URL {image_url}. Last error: {last_error}")
 
 
+def public_image_wait_seconds(default: int = 180) -> int:
+    value = clean_env_value("PUBLIC_IMAGE_WAIT_SECONDS")
+    if not value:
+        return default
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise RuntimeError("PUBLIC_IMAGE_WAIT_SECONDS must be an integer number of seconds.") from exc
+
+
 def graph_post(base_url: str, version: str, path: str, data: dict[str, Any], access_token: str) -> dict[str, Any]:
     url = graph_api_url(base_url, version, path)
     headers = {"Authorization": f"Bearer {access_token}"} if uses_bearer_auth(base_url) else None
@@ -205,7 +215,7 @@ def main() -> None:
         print("DRY RUN: would publish to Instagram")
         print(json.dumps({"image_url": image_url, "caption": caption, "base_url": base_url, "version": version}, indent=2))
         if not args.skip_url_wait:
-            wait_for_public_image(image_url, timeout_seconds=60, interval_seconds=5)
+            wait_for_public_image(image_url, timeout_seconds=min(public_image_wait_seconds(), 60), interval_seconds=5)
             print("Image URL is reachable.")
         return
 
@@ -213,7 +223,7 @@ def main() -> None:
         raise RuntimeError("IG_USER_ID and IG_ACCESS_TOKEN are required unless DRY_RUN=true.")
 
     if not args.skip_url_wait:
-        wait_for_public_image(image_url)
+        wait_for_public_image(image_url, timeout_seconds=public_image_wait_seconds())
 
     container_id = create_media_container(
         base_url=base_url,

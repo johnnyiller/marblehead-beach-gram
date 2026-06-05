@@ -258,6 +258,8 @@ https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg
 
 The generated site cache-busts `latest.jpg` in `index.html`, and Instagram posting uses the versioned asset path from `latest.json` (for example `assets/tidegram-YYYY-MM-DD-YYYYMMDDHHMMSS.jpg`) so Meta does not fetch a stale mutable image.
 
+When posting, the workflow waits for the versioned image URL to become public on GitHub Pages. Brand-new Pages assets can briefly return `404` right after the `gh-pages` branch updates.
+
 ## Instagram setup notes
 
 The script posts through the Instagram Graph API with:
