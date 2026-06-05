@@ -277,6 +277,21 @@ def _clip_to_preferred_visit_hours(
     return best_overlap
 
 
+def _friendly_window_within_bounds(
+    start: dt.datetime,
+    end: dt.datetime,
+    bound_start: dt.datetime,
+    bound_end: dt.datetime,
+) -> tuple[dt.datetime, dt.datetime]:
+    rounded_start = max(bound_start, round_to_half_hour(start, direction="ceil"))
+    rounded_end = min(bound_end, round_to_half_hour(end))
+
+    if rounded_end <= rounded_start:
+        return start, end
+
+    return rounded_start, rounded_end
+
+
 def _clip_recommended_window(
     rule_start: dt.datetime,
     rule_end: dt.datetime,
@@ -306,8 +321,7 @@ def _clip_recommended_window(
     end = min(rule_end, end)
 
     # Round to friendlier half-hour labels without expanding past the target duration.
-    rounded_start = round_to_half_hour(start)
-    rounded_end = round_to_half_hour(end, direction="ceil")
+    rounded_start, rounded_end = _friendly_window_within_bounds(start, end, rule_start, rule_end)
     desired_delta = dt.timedelta(minutes=desired_minutes)
     if rounded_end - rounded_start > desired_delta:
         rounded_end = rounded_start + desired_delta
@@ -470,6 +484,7 @@ def build_recommendations(
                 start, end = preferred_window
                 if _overlap_minutes(start, end, start, end) < max(30, recommended_window_min_minutes // 2):
                     continue
+                start, end = _friendly_window_within_bounds(start, end, start, end)
                 best_period, wx_score = _best_weather_period(
                     weather,
                     start,
