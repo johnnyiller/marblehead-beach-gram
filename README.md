@@ -288,6 +288,8 @@ python scripts/post_instagram.py --validate-credentials
 
 If this fails with `OAuthException` code `190`, the access token is missing, malformed, expired, copied with extra text, or is not an Instagram Graph API token for the connected account.
 
+If the token only exists in GitHub Actions secrets, run **Actions → Daily Marblehead Tidegram → Run workflow** and check `validate_instagram_only`. That validates `IG_USER_ID` and `IG_ACCESS_TOKEN` inside GitHub Actions without generating a new image or posting to Instagram.
+
 ### Real local Instagram test
 
 After you have credentials in `.env`:

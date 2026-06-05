@@ -3,6 +3,11 @@ name: Daily Marblehead Tidegram
 on:
   workflow_dispatch:
     inputs:
+      validate_instagram_only:
+        description: "Validate Instagram credentials without generating or posting"
+        required: false
+        type: boolean
+        default: false
       post_to_instagram:
         description: "Post the generated image to Instagram"
         required: false
@@ -41,6 +46,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Generate Tidegram
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NWS_USER_AGENT: ${{ vars.NWS_USER_AGENT }}
@@ -51,6 +57,7 @@ jobs:
         run: python scripts/generate.py
 
       - name: Publish to gh-pages branch
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +66,7 @@ jobs:
           force_orphan: true
 
       - name: Validate Instagram credentials
-        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
+        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) || (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
         env:
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
@@ -67,7 +74,7 @@ jobs:
         run: python scripts/post_instagram.py --validate-credentials
 
       - name: Post to Instagram
-        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
+        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only) }}
         env:
           PUBLIC_IMAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/latest.jpg
           IG_USER_ID: ${{ vars.IG_USER_ID }}
