@@ -79,7 +79,11 @@ jobs:
 
           metadata = json.loads(Path("site/latest.json").read_text(encoding="utf-8"))
           image_path = metadata.get("dated_jpg") or metadata.get("latest_jpg") or "latest.jpg"
+          local_path = Path("site") / image_path
+          if not local_path.is_file():
+              raise SystemExit(f"Resolved Instagram image does not exist locally: {local_path}")
           url = f"https://{os.environ['REPO_OWNER']}.github.io/{os.environ['REPO_NAME']}/{image_path}"
+          print(f"Resolved Instagram image URL: {url}", file=__import__("sys").stderr)
           print(f"url={url}")
           PY
 
