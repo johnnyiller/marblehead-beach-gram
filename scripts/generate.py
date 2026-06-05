@@ -185,11 +185,12 @@ def main() -> None:
     generated_at = generated_at_dt.isoformat()
     asset_version = generated_at_dt.strftime("%Y%m%d%H%M%S")
     date_slug = visual_date.strftime("%Y-%m-%d")
+    versioned_slug = f"{date_slug}-{asset_version}"
 
     png_path = output_dir / "latest.png"
     jpg_path = output_dir / "latest.jpg"
-    dated_png = output_dir / "assets" / f"tidegram-{date_slug}.png"
-    dated_jpg = output_dir / "assets" / f"tidegram-{date_slug}.jpg"
+    dated_png = output_dir / "assets" / f"tidegram-{versioned_slug}.png"
+    dated_jpg = output_dir / "assets" / f"tidegram-{versioned_slug}.jpg"
 
     rendered_recommendations = recommendations[: int(settings.get("recommendations_to_render", 3))]
     image_width = int(settings.get("default_image_width", settings.get("default_image_size", 1080)))

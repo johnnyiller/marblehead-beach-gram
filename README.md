@@ -256,7 +256,7 @@ Your direct image URL should look like:
 https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg
 ```
 
-The generated site cache-busts `latest.jpg` in `index.html`, and Instagram posting uses the dated asset path from `latest.json` (for example `assets/tidegram-YYYY-MM-DD.jpg`) so Meta does not fetch a stale mutable `latest.jpg`.
+The generated site cache-busts `latest.jpg` in `index.html`, and Instagram posting uses the versioned asset path from `latest.json` (for example `assets/tidegram-YYYY-MM-DD-YYYYMMDDHHMMSS.jpg`) so Meta does not fetch a stale mutable image.
 
 ## Instagram setup notes
 
