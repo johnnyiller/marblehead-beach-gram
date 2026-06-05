@@ -70,6 +70,7 @@ jobs:
         env:
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_GRAPH_API_BASE_URL: ${{ vars.IG_GRAPH_API_BASE_URL || 'https://graph.instagram.com' }}
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
         run: python scripts/post_instagram.py --validate-credentials
 
@@ -79,6 +80,7 @@ jobs:
           PUBLIC_IMAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/latest.jpg
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_GRAPH_API_BASE_URL: ${{ vars.IG_GRAPH_API_BASE_URL || 'https://graph.instagram.com' }}
           GRAPH_API_VERSION: ${{ vars.GRAPH_API_VERSION || 'v23.0' }}
           ALT_TEXT: ${{ vars.ALT_TEXT }}
           DRY_RUN: "false"

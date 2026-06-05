@@ -233,6 +233,7 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | `LOCATION_LAT` | `42.5051` | Marblehead latitude. |
 | `LOCATION_LON` | `-70.8578` | Marblehead longitude. |
 | `DAYS_TO_FORECAST` | `5` | Forecast horizon. |
+| `IG_GRAPH_API_BASE_URL` | `https://graph.instagram.com` | Instagram API endpoint for Instagram Login tokens. |
 | `GRAPH_API_VERSION` | `v23.0` | Meta Graph API version to call. |
 | `ALT_TEXT` | `Marblehead tide and weather outlook infographic` | Optional Instagram alt text. |
 
@@ -255,11 +256,13 @@ https://YOUR_GITHUB_USERNAME.github.io/marblehead-tidegram/latest.jpg
 
 ## Instagram setup notes
 
-The script posts through the Graph API with:
+The script posts through the Instagram Graph API with:
 
 1. `POST /{ig-user-id}/media` with `image_url` and `caption`.
 2. Wait/poll briefly.
 3. `POST /{ig-user-id}/media_publish` with the returned `creation_id`.
+
+By default, the script uses `https://graph.instagram.com` and sends the token as `Authorization: Bearer ...`, which matches Instagram Login tokens. If you switch to the older Facebook Login/Page-token flow, set `IG_GRAPH_API_BASE_URL=https://graph.facebook.com`.
 
 Before enabling automation, make sure you have:
 
