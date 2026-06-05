@@ -181,7 +181,9 @@ def main() -> None:
     if not recommendations:
         raise RuntimeError("No beach recommendations were produced. Check tide/weather data and beach rules.")
 
-    generated_at = dt.datetime.now(zone).isoformat()
+    generated_at_dt = dt.datetime.now(zone)
+    generated_at = generated_at_dt.isoformat()
+    asset_version = generated_at_dt.strftime("%Y%m%d%H%M%S")
     date_slug = visual_date.strftime("%Y-%m-%d")
 
     png_path = output_dir / "latest.png"
@@ -283,6 +285,11 @@ def main() -> None:
         "noaa_station_label": settings.get("noaa_station_label"),
         "days_to_forecast": days,
         "caption": caption,
+        "asset_version": asset_version,
+        "latest_jpg": "latest.jpg",
+        "latest_png": "latest.png",
+        "dated_jpg": f"assets/{dated_jpg.name}",
+        "dated_png": f"assets/{dated_png.name}",
         "recommendations": [r.to_json() for r in recommendations],
         "tide_events": [t.to_json() for t in tides],
         "weather_period_count": len(weather),

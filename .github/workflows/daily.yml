@@ -65,6 +65,24 @@ jobs:
           publish_dir: ./site
           force_orphan: true
 
+      - name: Resolve public image URL
+        id: public_image
+        if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only) }}
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import os
+          from pathlib import Path
+
+          metadata = json.loads(Path("site/latest.json").read_text(encoding="utf-8"))
+          image_path = metadata.get("dated_jpg") or metadata.get("latest_jpg") or "latest.jpg"
+          url = f"https://{os.environ['REPO_OWNER']}.github.io/{os.environ['REPO_NAME']}/{image_path}"
+          print(f"url={url}")
+          PY
+
       - name: Validate Instagram credentials
         if: ${{ (github.event_name == 'workflow_dispatch' && inputs.validate_instagram_only) || (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram) }}
         env:
@@ -77,7 +95,7 @@ jobs:
       - name: Post to Instagram
         if: ${{ (github.event_name == 'schedule' && vars.AUTO_POST_TO_INSTAGRAM == 'true') || (github.event_name == 'workflow_dispatch' && inputs.post_to_instagram && !inputs.validate_instagram_only) }}
         env:
-          PUBLIC_IMAGE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/latest.jpg
+          PUBLIC_IMAGE_URL: ${{ steps.public_image.outputs.url }}
           IG_USER_ID: ${{ vars.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_GRAPH_API_BASE_URL: ${{ vars.IG_GRAPH_API_BASE_URL || 'https://graph.instagram.com' }}

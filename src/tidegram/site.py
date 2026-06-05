@@ -36,6 +36,11 @@ def write_index(
     caption = html.escape(build_caption(recommendations, metadata.get("location_name", "Marblehead, MA")))
     generated = html.escape(metadata.get("generated_at", ""))
     station = html.escape(metadata.get("noaa_station_label", metadata.get("noaa_station_id", "")))
+    asset_version = str(metadata.get("asset_version", "")).strip()
+    cache_suffix = f"?v={html.escape(asset_version)}" if asset_version else ""
+    latest_jpg = html.escape(str(metadata.get("latest_jpg", "latest.jpg")))
+    latest_png = html.escape(str(metadata.get("latest_png", "latest.png")))
+    latest_jpg_versioned = f"{latest_jpg}{cache_suffix}"
 
     document = f"""<!doctype html>
 <html lang=\"en\">
@@ -44,7 +49,7 @@ def write_index(
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>{html.escape(title)}</title>
   <meta property=\"og:title\" content=\"{html.escape(title)}\" />
-  <meta property=\"og:image\" content=\"latest.jpg\" />
+  <meta property=\"og:image\" content=\"{latest_jpg_versioned}\" />
   <style>
     :root {{ color-scheme: light; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }}
     body {{ margin: 0; background: #f5efe3; color: #1f3750; }}
@@ -68,7 +73,7 @@ def write_index(
         <h1>{html.escape(title)}</h1>
         <p>Generated {generated}. Tide predictions use station {station}. The image below is the direct asset used for Instagram publishing.</p>
       </div>
-      <a href=\"latest.jpg\"><img src=\"latest.jpg\" alt=\"{html.escape(title)} infographic\" /></a>
+      <a href=\"{latest_jpg_versioned}\"><img src=\"{latest_jpg_versioned}\" alt=\"{html.escape(title)} infographic\" /></a>
     </section>
 
     <section class=\"card\" style=\"margin-top: 28px;\">
@@ -84,7 +89,7 @@ def write_index(
     <section class=\"card\" style=\"margin-top: 28px;\">
       <h2>Caption</h2>
       <pre>{caption}</pre>
-      <p><a href=\"latest.json\">latest.json</a> · <a href=\"latest.png\">PNG</a> · <a href=\"latest.jpg\">JPG</a></p>
+      <p><a href=\"latest.json\">latest.json</a> · <a href=\"{latest_png}{cache_suffix}\">PNG</a> · <a href=\"{latest_jpg_versioned}\">JPG</a></p>
     </section>
   </main>
 </body>
