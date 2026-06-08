@@ -196,12 +196,14 @@ def build_full_post_prompt(
         cards.append(
             f"""
 Card {idx}
+Left column:
 Day: {rec.day_label}
 Time window: {rec.window_label()}
 Beach options:
 {beach_options_text}
+Right rail:
 Recommended tide: {tide_height} at {_format_hour(rec.tide_time)}
-Tides: {daily_tides_text}
+High/low tide line: {daily_tides_text}
 Hourly weather:
 {hourly_text}
 """.strip()
@@ -215,8 +217,13 @@ Canvas and layout:
 - Portrait 4:5 composition for Instagram.
 - Clean mobile-first infographic layout with three stacked recommendation cards.
 - Use the same two-column card layout on every card: left content column for day/time/beaches, right info rail for tide plus hourly weather.
+- Render the "Left column" source content only in the left content column.
+- Render the "Right rail" source content only in the right info rail.
 - The right info rail must be consistent across all cards. Put the tide module at the top of the right info rail, then put the hourly weather rows directly below it.
 - Do not move the tide module to the left side, bottom, center, or into the beach text area on any card.
+- Do not render any tide text, tide times, high tide text, low tide text, tide height, or wave icon in the left content column.
+- Render the recommended tide line and high/low tide line exactly once per card, only in the right info rail.
+- Never duplicate the high/low tide line on both sides of a card.
 - Use a polished scenic header band across the top, about 22-26% of the canvas height, with the title over or above it.
 - The header should feel prettier and more designed than plain empty paper, but the recommendation cards remain the main subject.
 - Prioritize the content. Give the cards, text, icons, tide values, and weather rows enough room to breathe.
@@ -226,13 +233,14 @@ Canvas and layout:
 - Render exactly every hourly weather row listed for each card. If three rows are listed, show all three rows. Do not drop rows to make room for scenery.
 - Put the attribution line at the very bottom as a tiny, quiet footer in much smaller print than the card text.
 - Do not add any text beyond the exact text content listed below.
+- The labels Card, Left column, Right rail, Day, Time window, Beach options, Recommended tide, High/low tide line, Hourly weather, Title, Subtitle, and Footer attribution are source labels only. Do not render those labels.
 - Render all text crisply and exactly. Do not invent, omit, abbreviate, or alter the tide/weather numbers.
 - Preserve tide times exactly, including minutes. Do not round tide times to the nearest hour.
 - Tide module structure must be identical on every card:
-  1. Small teal wave icon on the left.
+  1. Small teal wave icon on the left within the right-rail tide module.
   2. Recommended tide value on the same line, using the exact height and time from "Recommended tide".
-  3. Compact high/low tide line below, using the exact text from "Tides".
-- Include both the high tide and low tide information from the Tides line on every card, but do not render the label "Tides" or "Daily tides".
+  3. Compact high/low tide line below, using the exact text from "High/low tide line".
+- Include both the high tide and low tide information from the high/low tide line on every card, but do not render the labels "High/low tide line", "Tides", or "Daily tides".
 - Keep the high/low tide line aligned the same way on every card. Do not vary its position, icon, color, size, or layout from card to card.
 - Render beach options as a compact beach-name list. Use full beach names only, for example "Gas House Beach". Do not add invitation phrasing, recommendation labels, or field labels before beach names.
 - If a card has more than one beach option, keep the options visually grouped and understated. Do not number the beach options.
@@ -278,11 +286,13 @@ def build_reel_image_prompt(
         cards.append(
             f"""
 Card {idx}
+Left column:
 Day: {_full_day_label(rec)}
 Time window: {rec.window_label()}
 Beach names:
 {beach_options_text}
 Activity: {rec.activity}
+Right rail:
 Recommended tide: {tide_height} at {_format_hour(rec.tide_time)}
 High/low tide line: {rec.daily_tides_label()}
 Hourly weather:
@@ -302,13 +312,18 @@ Canvas and layout:
 - Use a scenic papercraft header band across the top 20-24% of the canvas: layered sea-glass water, cream sky, warm sand, granite shoreline, tiny distant sailcloth shapes, and soft paper shadows.
 - The three day cards are the main subject. Do not shrink them just to show more scenery.
 - Each day card must use the same compact two-column layout: left side for day, time window, beach names, and activity; right side for tide and hourly weather.
+- Render the "Left column" source content only in the left side of the card.
+- Render the "Right rail" source content only in the right side of the card.
+- Do not render any tide text, tide times, high tide text, low tide text, tide height, or wave icon in the left side of the card.
+- Render the recommended tide line and high/low tide line exactly once per card, only in the right side of the card.
+- Never duplicate the high/low tide line on both sides of a card.
 - Make the day, beach names, and time window larger than the supporting tide/weather text, but keep all three cards balanced.
 - Give every card enough room to breathe while keeping spacing compact and efficient. Do not overlap rows or shrink the hourly weather rows.
 - Render exactly every hourly weather row listed below. If three rows are listed, show all three rows.
 - Put the attribution line at the very bottom as tiny quiet footer text.
 - Render all text crisply and exactly. Do not invent, omit, abbreviate, round, or alter any tide/weather numbers.
 - Preserve tide times exactly, including minutes.
-- The field names in "Exact text content to render" are source labels only. Do not render labels like Title, Subtitle, Date, Time window, Beach names, Activity, Recommended tide, High/low tide line, Hourly weather, or Footer attribution.
+- The field names in "Exact text content to render" are source labels only. Do not render labels like Title, Subtitle, Left column, Right rail, Date, Time window, Beach names, Activity, Recommended tide, High/low tide line, Hourly weather, or Footer attribution.
 - Do not add labels like Best, Recommendation, or Daily Tides.
 - Keep the high/low tide line exactly as written in the source value, including the words High and Low.
 - Beach names must be plain full beach names. Do not add "Go to" or map/location marker text.
