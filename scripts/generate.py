@@ -19,6 +19,7 @@ from tidegram.openai_background import (
     DAILY_ART_DIRECTIONS,
     build_full_post_prompt,
     build_reel_image_prompt,
+    compose_art_direction,
     daily_art_direction,
     generate_openai_full_post,
     generate_openai_reel_image,
@@ -79,17 +80,24 @@ def parse_visual_date(value: str | None, zone: ZoneInfo) -> dt.date:
 
 
 def print_art_directions() -> None:
+    print("auto. Date-rotated coastal theme with forecast-aware background cues")
     for idx, direction in enumerate(DAILY_ART_DIRECTIONS, start=1):
         print(f"{idx}. {direction}")
 
 
-def resolve_art_direction(value: str | int | None, visual_date: dt.date) -> str:
+def resolve_art_direction(
+    value: str | int | None,
+    visual_date: dt.date,
+    recommendations=None,
+    offset: int = 0,
+) -> str:
+    rotation_date = visual_date + dt.timedelta(days=offset)
     if value is None:
-        return daily_art_direction(visual_date)
+        return daily_art_direction(rotation_date, recommendations=recommendations)
 
     selector = str(value).strip()
-    if not selector:
-        return daily_art_direction(visual_date)
+    if not selector or selector.lower() in {"auto", "daily", "rotate", "rotation", "weather"}:
+        return daily_art_direction(rotation_date, recommendations=recommendations)
 
     try:
         direction_number = int(selector)
@@ -97,22 +105,28 @@ def resolve_art_direction(value: str | int | None, visual_date: dt.date) -> str:
         return selector
 
     try:
-        return numbered_art_direction(direction_number)
+        base_direction = numbered_art_direction(direction_number)
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
+    return compose_art_direction(
+        base_direction,
+        recommendations=recommendations,
+        day=visual_date,
+        offset=offset,
+    )
 
 
-def build_trial_art_directions(count: int, selector: str | None, visual_date: dt.date) -> list[str]:
+def build_trial_art_directions(count: int, selector: str | None, visual_date: dt.date, recommendations=None) -> list[str]:
     if count < 1:
         raise SystemExit("--background-variants must be 1 or greater.")
 
     if selector:
-        base = resolve_art_direction(selector, visual_date)
         if count == 1:
-            return [base]
+            return [resolve_art_direction(selector, visual_date, recommendations=recommendations)]
         return [
             (
-                f"{base}; trial {idx}: keep the same brand/style but change the background composition, "
+                f"{resolve_art_direction(selector, visual_date, recommendations=recommendations, offset=idx - 1)}; "
+                f"trial {idx}: keep the same brand/style but change the background composition, "
                 "paper layer geometry, horizon placement, accent placement, and negative-space balance."
             )
             for idx in range(1, count + 1)
@@ -120,7 +134,7 @@ def build_trial_art_directions(count: int, selector: str | None, visual_date: dt
 
     trials: list[str] = []
     for offset in range(count):
-        base = DAILY_ART_DIRECTIONS[offset % len(DAILY_ART_DIRECTIONS)]
+        base = resolve_art_direction("auto", visual_date, recommendations=recommendations, offset=offset)
         cycle = offset // len(DAILY_ART_DIRECTIONS)
         if cycle:
             base = (
@@ -214,7 +228,7 @@ def main() -> None:
     reel_title = settings.get("reel_title", "Marblehead Beach Outlook")
     reel_subtitle = settings.get("reel_subtitle", "Three-day beach windows")
     art_direction_selector = args.art_direction if args.art_direction is not None else settings.get("default_art_direction")
-    art_direction = resolve_art_direction(art_direction_selector, visual_date)
+    art_direction = resolve_art_direction(art_direction_selector, visual_date, recommendations=rendered_recommendations)
 
     if args.print_prompt:
         print(
@@ -241,7 +255,12 @@ def main() -> None:
         return
 
     if args.background_variants:
-        trial_art_directions = build_trial_art_directions(args.background_variants, args.art_direction, visual_date)
+        trial_art_directions = build_trial_art_directions(
+            args.background_variants,
+            args.art_direction,
+            visual_date,
+            recommendations=rendered_recommendations,
+        )
         variants = []
         print(f"Generating {len(trial_art_directions)} full OpenAI background trial(s)...")
         for idx, trial_art_direction in enumerate(trial_art_directions, start=1):

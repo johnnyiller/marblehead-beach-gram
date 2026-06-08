@@ -21,7 +21,7 @@
   "default_image_height": 1350,
   "reel_image_width": 1080,
   "reel_image_height": 1920,
-  "default_art_direction": 4,
+  "default_art_direction": "auto",
   "openai_full_post_model": "gpt-image-2",
   "openai_full_post_size": "1088x1360",
   "openai_reel_image_model": "gpt-image-2",

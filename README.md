@@ -206,7 +206,7 @@ Generate one image with a specific numbered direction:
 python scripts/generate.py --sample --art-direction 7
 ```
 
-The default art direction is configured in `config/settings.json` as `default_art_direction`. It is currently set to `4`.
+The default art direction is configured in `config/settings.json` as `default_art_direction`. It is currently set to `auto`, which means GitHub Actions uses the local date plus the forecast to rotate the coastal background theme. The rotation keeps the same minimal papercraft brand, but varies the weather mood and small New England motif, such as lighthouse, rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy.
 
 Generate a batch of full OpenAI post trials with different background directions:
 
@@ -275,6 +275,9 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | `IG_GRAPH_API_BASE_URL` | `https://graph.instagram.com` | Instagram API endpoint for Instagram Login tokens. |
 | `GRAPH_API_VERSION` | `v23.0` | Meta Graph API version to call. |
 | `IG_REEL_SHARE_TO_FEED` | `true` | Whether Instagram should also share the Reel to the feed. |
+| `REEL_VOICE_PROFILE` | `auto` | Narration personality/voice profile. Options: `auto`, `sunny_local`, `rainy_harbor`, `foggy_morning`, `cloudy_coast`, `breezy_skipper`, `calm_coast`, `postcard`. |
+| `OPENAI_TTS_VOICE` | Leave blank | Optional voice override. Leave blank to let `REEL_VOICE_PROFILE` pick the voice. |
+| `OPENAI_TTS_INSTRUCTIONS` | Leave blank | Optional delivery override. Leave blank to use the profile instructions. |
 
 Use `America/New_York`, not `EST`, so daylight saving time is handled correctly. GitHub Actions cron still uses UTC, but the generator converts dates and recommendations to Marblehead local time.
 

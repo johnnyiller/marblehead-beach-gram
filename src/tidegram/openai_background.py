@@ -4,6 +4,7 @@ import base64
 import datetime as dt
 import io
 import os
+import re
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -15,7 +16,7 @@ DAILY_ART_DIRECTIONS = [
     "stacked pale sky, sea-glass water, and warm sand paper layers with one tiny sail triangle near the horizon",
     "minimal dune-grass paper cutouts along the lower edge with soft golden paper sun and calm open sky",
     "simple horizontal harbor bands in dusty blue and ivory with two small sailcloth paper triangles",
-    "a polished top coastal papercraft band with granite-gray shoreline, muted teal water layers, cream sky, soft sun, and one tiny distant sail; no town, lighthouse, church, houses, or large sailboat",
+    "a polished top coastal papercraft band with granite-gray shoreline, muted teal water layers, cream sky, soft sun, and one tiny distant sail; no town, church, houses, or large focal sailboat",
     "soft foggy blue paper layers with a tiny buoy circle and restrained sand-colored lower edge",
     "warm ivory sky, faded terracotta sun disk, sea-glass wave band, and sparse paper dune grass",
     "weathered shingle-gray paper sky, thin harbor-blue water strip, and one restrained lobster-buoy color accent",
@@ -26,10 +27,104 @@ DAILY_ART_DIRECTIONS = [
     "low-tide sandbar paper shape with shallow teal pools, tiny shell-like cutouts, and restrained warm shadows",
 ]
 
+COASTAL_MOTIF_DIRECTIONS = [
+    "one tiny lighthouse cutout far on the horizon, reduced to a simple cream-and-red paper shape",
+    "flat granite rock shapes and a few quiet tide-pool paper ovals along the header shoreline",
+    "two small lobster traps and a muted buoy tucked near one header edge, not touching text",
+    "two distant sailboats with simple off-white triangular sails, kept tiny and far from the cards",
+    "a pair of paddleboards resting on warm sand as flat paper silhouettes in the header",
+    "beach-rose leaves and sparse dune grass as small lower-edge paper accents",
+    "a low island silhouette with a few harbor mooring dots in muted navy and teal",
+    "a weathered dinghy shape pulled high on the sand, simplified and quiet",
+]
 
-def daily_art_direction(day: dt.date | None = None) -> str:
+
+def _parse_wind_mph(wind_speed_text: str) -> float:
+    nums = [float(n) for n in re.findall(r"\d+(?:\.\d+)?", wind_speed_text or "")]
+    return max(nums) if nums else 0.0
+
+
+def _condition_for_values(forecasts: list[str], rain_chance: int, wind_mph: float) -> str:
+    text = " ".join(forecasts).lower()
+    if "thunder" in text or rain_chance >= 55:
+        return "stormy"
+    if rain_chance > 30 or "rain" in text or "showers" in text or "drizzle" in text:
+        return "rainy"
+    if wind_mph >= 18:
+        return "windy"
+    if "fog" in text or "mist" in text or "haze" in text:
+        return "foggy"
+    if "overcast" in text or "cloudy" in text:
+        return "cloudy"
+    if "sunny" in text or "clear" in text:
+        return "sunny"
+    return "calm"
+
+
+def _condition_for_recommendation(rec: BeachRecommendation) -> str:
+    forecasts = [rec.forecast, *[snapshot.forecast for snapshot in rec.hourly_snapshots]]
+    rain = max([rec.precip_probability, *[snapshot.precip_probability for snapshot in rec.hourly_snapshots]] or [0])
+    wind = max([_parse_wind_mph(rec.wind_speed_text), *[_parse_wind_mph(snapshot.wind_speed_text) for snapshot in rec.hourly_snapshots]] or [0.0])
+    return _condition_for_values(forecasts, rain, wind)
+
+
+def weather_background_direction(recommendations: list[BeachRecommendation] | None) -> str:
+    if not recommendations:
+        return "Weather cue: calm morning beach light with clean cream sky and soft sea-glass water."
+
+    primary = recommendations[0]
+    condition = _condition_for_recommendation(primary)
+    if condition == "stormy":
+        return "Weather cue: moody rain-ready coast with layered slate-gray clouds, darker teal water, and a few tiny paper raindrops; still calm, readable, and not dramatic."
+    if condition == "rainy":
+        return "Weather cue: soft rainy beach morning with pale gray-blue clouds, muted water, tiny paper raindrops, and gentle reflected light."
+    if condition == "windy":
+        return "Weather cue: breezy harbor day with subtle swept cloud strips, angled dune grass, and a little motion in the paper water bands."
+    if condition == "foggy":
+        return "Weather cue: quiet fog bank with translucent-looking blue-gray paper layers, softened horizon, and low-contrast coastal shapes."
+    if condition == "cloudy":
+        return "Weather cue: relaxed cloudy coast with layered off-white and blue-gray cloud cutouts, muted sun glow, and calm water."
+    if condition == "sunny":
+        return "Weather cue: warm sunny beach day with a soft golden paper sun disk, bright cream sky, and lightly sparkling sea-glass water."
+    return "Weather cue: calm coastal morning with balanced sky, water, sand, and soft paper shadows."
+
+
+def coastal_motif_direction(day: dt.date | None = None, offset: int = 0) -> str:
     day = day or dt.datetime.now().date()
-    return DAILY_ART_DIRECTIONS[day.toordinal() % len(DAILY_ART_DIRECTIONS)]
+    return COASTAL_MOTIF_DIRECTIONS[(day.toordinal() + offset) % len(COASTAL_MOTIF_DIRECTIONS)]
+
+
+def card_weather_cues(recommendations: list[BeachRecommendation] | None) -> str:
+    if not recommendations:
+        return "No card-specific weather accents needed."
+    cues = [
+        f"{_full_day_label(rec)}: {_condition_for_recommendation(rec)}"
+        for rec in recommendations[:3]
+    ]
+    return "Card weather cues: " + "; ".join(cues) + "."
+
+
+def compose_art_direction(
+    base_direction: str,
+    recommendations: list[BeachRecommendation] | None = None,
+    day: dt.date | None = None,
+    offset: int = 0,
+) -> str:
+    weather = weather_background_direction(recommendations)
+    motif = coastal_motif_direction(day, offset=offset)
+    cues = card_weather_cues(recommendations)
+    return (
+        f"{base_direction}; {weather} Rotating coastal motif: {motif}. "
+        f"{cues} Keep all weather and motif details minimal, papercraft, and behind or above the content"
+    )
+
+
+def daily_art_direction(day: dt.date | None = None, recommendations: list[BeachRecommendation] | None = None) -> str:
+    day = day or dt.datetime.now().date()
+    base_direction = DAILY_ART_DIRECTIONS[day.toordinal() % len(DAILY_ART_DIRECTIONS)]
+    if recommendations is None:
+        return base_direction
+    return compose_art_direction(base_direction, recommendations=recommendations, day=day)
 
 
 def numbered_art_direction(number: int) -> str:
@@ -145,8 +240,10 @@ Canvas and layout:
 Visual style:
 - Minimal papercraft look with layered cut-paper shapes, soft paper shadows, subtle fiber texture, and rounded handmade edges.
 - Coastal New England mood: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, soft golden paper.
-- Background should be simple and quiet behind the content, with the prettiest detail concentrated in the top header band: abstract sky, water bands, sand layers, tiny sailcloth shapes, granite shoreline, and a soft sun disk.
-- Do not create a village, townscape, church, lighthouse, row of houses, busy harbor illustration, or prominent sailboat. These distract from the card content.
+- Background should be simple and quiet behind the content, with the prettiest detail concentrated in the top header band.
+- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft paper clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm paper light.
+- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet papercraft accent in the header or background. It must never crowd, cover, or compete with the text.
+- Do not create a village, townscape, church, row of houses, busy harbor illustration, or large focal object. These distract from the card content.
 - Icons should be simple coastal papercraft icons: sun/cloud/rain for weather and one consistent simple wave for tide.
 - The tide icon must always be the same small teal three-crest wave icon. Use exactly one wave icon per card. Do not use a star, shell, anchor, water droplet, compass, badge, circle, spiral curl, or decorative surf illustration for tide.
 - Do not use bookmark tabs, ribbons, flags, corner tabs, checkmarks, ratings, or left-side decorative gutters. Use that space for content instead.
@@ -219,6 +316,9 @@ Canvas and layout:
 Visual style:
 - Minimal papercraft look with layered cut-paper shapes, soft paper shadows, subtle fiber texture, and rounded handmade edges.
 - Relaxed retro coastal palette: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, soft golden paper.
+- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft paper clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm paper light.
+- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet papercraft accent in the header or background. It must never crowd, cover, or compete with the text.
+- Do not create a village, townscape, church, row of houses, busy harbor illustration, or large focal object. These distract from the card content.
 - Icons should be simple coastal papercraft icons: sun/cloud/rain for weather and one consistent small teal three-crest wave for tide.
 - The tide icon must be exactly one small teal three-crest wave icon. Do not use stars, shells, anchors, pins, droplets, compasses, badges, circles, spirals, or decorative surf illustrations for tide.
 - Do not use bookmark tabs, ribbons, flags, corner tabs, checkmarks, ratings, or left-side decorative gutters. Use that space for content instead.

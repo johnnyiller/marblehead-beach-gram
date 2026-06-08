@@ -20,13 +20,57 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCRIPT_MODEL = "gpt-5.5"
 DEFAULT_TTS_MODEL = "gpt-audio-1.5"
-DEFAULT_TTS_VOICE = "marin"
 REEL_WIDTH = 1080
 REEL_HEIGHT = 1920
 DEFAULT_VOICE_LEAD_IN_SECONDS = 1.25
 DEFAULT_WAVE_AUDIO_PATH = ROOT / "assets" / "audio" / "waves-public-domain.mp3"
 DEFAULT_WAVE_AUDIO_SOURCE = "Wikimedia Commons File:Waves.ogg by Dsw4, public domain"
 DEFAULT_WAVE_AUDIO_URL = "https://commons.wikimedia.org/wiki/File:Waves.ogg"
+VOICE_PROFILES: dict[str, dict[str, str]] = {
+    "sunny_local": {
+        "voice": "marin",
+        "label": "Sunny local",
+        "script_personality": "a bright Marblehead neighbor who sounds genuinely pleased about a good beach day, but never salesy",
+        "tts_instructions": "Use a warm, bright, relaxed coastal delivery with natural pauses and a small smile in the voice.",
+    },
+    "rainy_harbor": {
+        "voice": "cedar",
+        "label": "Rainy harbor",
+        "script_personality": "a calm harbor guide who is a little wistful about the weather but still practical and kind",
+        "tts_instructions": "Use a grounded, soothing, slightly wistful delivery. Keep the pace unhurried and reassuring.",
+    },
+    "foggy_morning": {
+        "voice": "sage",
+        "label": "Foggy morning",
+        "script_personality": "a soft-spoken local giving a quiet foggy-morning note with gentle optimism",
+        "tts_instructions": "Use a gentle, reflective morning tone with soft dynamics and clean articulation.",
+    },
+    "cloudy_coast": {
+        "voice": "sage",
+        "label": "Cloudy coast",
+        "script_personality": "a relaxed local who makes a cloudy beach day feel calm, useful, and still worth considering",
+        "tts_instructions": "Use a smooth, mellow, lightly optimistic delivery with relaxed pacing and clear practical emphasis.",
+    },
+    "breezy_skipper": {
+        "voice": "verse",
+        "label": "Breezy skipper",
+        "script_personality": "a friendly old-salt beach regular who notices the breeze and keeps things lightly playful",
+        "tts_instructions": "Use an easygoing, breezy delivery with a touch of character, but keep it polished and calm.",
+    },
+    "calm_coast": {
+        "voice": "cedar",
+        "label": "Calm coast",
+        "script_personality": "a steady coastal narrator with a relaxed, reassuring morning rhythm",
+        "tts_instructions": "Use a calm, intimate, steady delivery with relaxed pacing and a peaceful coastal feel.",
+    },
+    "postcard": {
+        "voice": "coral",
+        "label": "Postcard",
+        "script_personality": "a warm postcard-style narrator who feels friendly, light, and a little nostalgic",
+        "tts_instructions": "Use a warm, lightly nostalgic delivery with gentle energy and conversational pacing.",
+    },
+}
+CALM_ROTATION_PROFILES = ("calm_coast", "postcard", "sunny_local")
 
 
 def clean_env_value(name: str, default: str = "") -> str:
@@ -55,14 +99,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--script-model", default=clean_env_value("OPENAI_REEL_SCRIPT_MODEL", DEFAULT_SCRIPT_MODEL), help="OpenAI text model used to polish the narration script.")
     parser.add_argument("--no-script-polish", action="store_true", help="Use the deterministic draft narration without the LLM polish step.")
     parser.add_argument("--tts-model", default=clean_env_value("OPENAI_TTS_MODEL", DEFAULT_TTS_MODEL), help="OpenAI TTS model.")
-    parser.add_argument("--voice", default=clean_env_value("OPENAI_TTS_VOICE", DEFAULT_TTS_VOICE), help="OpenAI TTS voice.")
+    parser.add_argument("--voice", default=clean_env_value("OPENAI_TTS_VOICE", ""), help="OpenAI TTS voice. Overrides the selected voice profile when set.")
+    parser.add_argument(
+        "--voice-profile",
+        default=clean_env_value("REEL_VOICE_PROFILE", "auto"),
+        help="Narration voice profile: auto, or one of " + ", ".join(VOICE_PROFILES),
+    )
     parser.add_argument(
         "--voice-instructions",
-        default=clean_env_value(
-            "OPENAI_TTS_INSTRUCTIONS",
-            "Read like a friendly Marblehead local giving a calm morning beach note. Use natural pacing, small pauses, and a little emotional color from the weather. Keep it relaxed, human, and coastal, not announcer-like.",
-        ),
-        help="Style instructions for the TTS voice.",
+        default=clean_env_value("OPENAI_TTS_INSTRUCTIONS", ""),
+        help="Style instructions for the TTS voice. Overrides the selected voice profile instructions when set.",
     )
     parser.add_argument("--wave-audio", default=clean_env_value("REEL_WAVE_AUDIO", str(DEFAULT_WAVE_AUDIO_PATH)), help="Path to looping wave ambience audio.")
     parser.add_argument("--no-background-bed", action="store_true", help="Do not mix in the quiet wave ambience bed.")
@@ -168,6 +214,31 @@ def weather_phrase(rec: dict[str, Any]) -> str:
     return ", ".join(pieces)
 
 
+def parse_wind_mph(wind_speed_text: str) -> float:
+    nums = [float(n) for n in re.findall(r"\d+(?:\.\d+)?", wind_speed_text or "")]
+    return max(nums) if nums else 0.0
+
+
+def max_recommendation_wind_mph(rec: dict[str, Any]) -> float:
+    values = [parse_wind_mph(str(rec.get("wind_speed_text") or ""))]
+    for snapshot in rec.get("hourly_snapshots") or []:
+        values.append(parse_wind_mph(str(snapshot.get("wind_speed_text") or "")))
+    return max(values) if values else 0.0
+
+
+def max_recommendation_rain(rec: dict[str, Any]) -> int:
+    values = [int(rec.get("precip_probability") or 0)]
+    for snapshot in rec.get("hourly_snapshots") or []:
+        values.append(int(snapshot.get("precip_probability") or 0))
+    return max(values) if values else 0
+
+
+def recommendation_forecast_text(rec: dict[str, Any]) -> str:
+    forecasts = [str(rec.get("forecast") or "")]
+    forecasts.extend(str(snapshot.get("forecast") or "") for snapshot in rec.get("hourly_snapshots") or [])
+    return " ".join(forecasts).lower()
+
+
 def ordinal_day(day: int) -> str:
     if 10 <= day % 100 <= 20:
         suffix = "th"
@@ -257,10 +328,10 @@ def mood_hint(rec: dict[str, Any] | None) -> str:
     if not rec:
         return "neutral and gentle"
 
-    forecast = str(rec.get("forecast") or "").lower()
-    rain = int(rec.get("precip_probability") or 0)
+    forecast = recommendation_forecast_text(rec)
+    rain = max_recommendation_rain(rec)
     score = float(rec.get("score") or 0)
-    wind = str(rec.get("wind_speed_text") or "").lower()
+    wind_mph = max_recommendation_wind_mph(rec)
 
     if rain > 50 or "thunder" in forecast:
         return "a little disappointed but still warm, practical, and helpful"
@@ -268,9 +339,78 @@ def mood_hint(rec: dict[str, Any] | None) -> str:
         return "softly cautious, a little wistful, but still useful"
     if score >= 130 and ("sunny" in forecast or "clear" in forecast):
         return "quietly upbeat, bright, and beach-day excited without sounding salesy"
-    if "mph" in wind and any(token in wind for token in ["18", "19", "20", "21", "22"]):
+    if wind_mph >= 18:
         return "pleasant but a touch cautious about the breeze"
     return "relaxed, friendly, and optimistic"
+
+
+def generated_date(metadata: dict[str, Any]) -> dt.date:
+    generated_at = str(metadata.get("generated_at") or "")
+    if len(generated_at) >= 10:
+        try:
+            return dt.date.fromisoformat(generated_at[:10])
+        except ValueError:
+            pass
+
+    rec = primary_recommendation(metadata)
+    if rec:
+        date_value = str(rec.get("date") or "")
+        try:
+            return dt.date.fromisoformat(date_value)
+        except ValueError:
+            pass
+
+    return local_now(metadata).date()
+
+
+def auto_voice_profile(metadata: dict[str, Any]) -> str:
+    rec = primary_recommendation(metadata)
+    if not rec:
+        return CALM_ROTATION_PROFILES[generated_date(metadata).toordinal() % len(CALM_ROTATION_PROFILES)]
+
+    forecast = recommendation_forecast_text(rec)
+    rain = max_recommendation_rain(rec)
+    wind_mph = max_recommendation_wind_mph(rec)
+    score = float(rec.get("score") or 0)
+
+    if rain > 50 or "thunder" in forecast:
+        return "rainy_harbor"
+    if rain > 30 or "rain" in forecast or "showers" in forecast or "drizzle" in forecast:
+        return "rainy_harbor"
+    if wind_mph >= 18:
+        return "breezy_skipper"
+    if "fog" in forecast or "mist" in forecast or "haze" in forecast:
+        return "foggy_morning"
+    if "cloudy" in forecast or "overcast" in forecast:
+        return "cloudy_coast"
+    if score >= 130 and ("sunny" in forecast or "clear" in forecast):
+        return "sunny_local"
+    return CALM_ROTATION_PROFILES[generated_date(metadata).toordinal() % len(CALM_ROTATION_PROFILES)]
+
+
+def resolve_voice_plan(
+    metadata: dict[str, Any],
+    requested_profile: str,
+    requested_voice: str,
+    requested_instructions: str,
+) -> dict[str, str]:
+    profile_name = (requested_profile or "auto").strip().lower()
+    if profile_name == "auto":
+        profile_name = auto_voice_profile(metadata)
+    if profile_name not in VOICE_PROFILES:
+        valid = ", ".join(["auto", *VOICE_PROFILES])
+        raise RuntimeError(f"Unknown voice profile {requested_profile!r}. Use one of: {valid}.")
+
+    profile = VOICE_PROFILES[profile_name]
+    voice = (requested_voice or "").strip() or profile["voice"]
+    instructions = (requested_instructions or "").strip() or profile["tts_instructions"]
+    return {
+        "profile": profile_name,
+        "label": profile["label"],
+        "voice": voice,
+        "script_personality": profile["script_personality"],
+        "instructions": instructions,
+    }
 
 
 def source_facts(metadata: dict[str, Any], max_days: int) -> dict[str, Any]:
@@ -298,7 +438,13 @@ def source_facts(metadata: dict[str, Any], max_days: int) -> dict[str, Any]:
     }
 
 
-def polish_narration_script(metadata: dict[str, Any], draft_script: str, model: str, max_days: int) -> str:
+def polish_narration_script(
+    metadata: dict[str, Any],
+    draft_script: str,
+    model: str,
+    max_days: int,
+    voice_plan: dict[str, str],
+) -> str:
     api_key = clean_env_value("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY is required to polish Reel narration.")
@@ -310,6 +456,7 @@ def polish_narration_script(metadata: dict[str, Any], draft_script: str, model: 
 
     facts = source_facts(metadata, max_days)
     mood = mood_hint(primary_recommendation(metadata))
+    personality = voice_plan.get("script_personality") or "a relaxed coastal narrator"
     client = OpenAI(api_key=api_key)
     response = client.chat.completions.create(
         model=model,
@@ -331,6 +478,7 @@ def polish_narration_script(metadata: dict[str, Any], draft_script: str, model: 
                 "content": (
                     "Rewrite this draft into a natural one-day voiceover script.\n"
                     "Length target: 20 to 35 seconds of speech.\n"
+                    f"Personality target: {personality}.\n"
                     f"Tone target: {mood}.\n"
                     "Use only these facts. Use each spoken_day exactly if you mention the date:\n"
                     f"{json.dumps(facts, indent=2)}\n\n"
@@ -608,8 +756,13 @@ def main() -> None:
     assets_dir = output_dir / "assets"
     metadata = load_metadata(metadata_path)
     image_path = resolve_image_path(metadata, output_dir, args.image)
+    voice_plan = resolve_voice_plan(metadata, args.voice_profile, args.voice, args.voice_instructions)
     draft_script = build_narration(metadata, max_days=args.max_days)
-    script = draft_script if args.no_script_polish else polish_narration_script(metadata, draft_script, args.script_model, args.max_days)
+    script = (
+        draft_script
+        if args.no_script_polish
+        else polish_narration_script(metadata, draft_script, args.script_model, args.max_days, voice_plan=voice_plan)
+    )
     wave_audio_path = None if args.no_background_bed else resolve_rooted_path(args.wave_audio)
     if wave_audio_path is not None and not wave_audio_path.is_file():
         print(f"WARNING: Wave audio not found at {wave_audio_path}; using synthetic ambience fallback.", file=sys.stderr)
@@ -641,7 +794,10 @@ def main() -> None:
                     "dated_reel": str(dated_reel),
                     "tts_model": args.tts_model,
                     "script_model": None if args.no_script_polish else args.script_model,
-                    "voice": args.voice,
+                    "voice_profile": voice_plan["profile"],
+                    "voice_profile_label": voice_plan["label"],
+                    "voice": voice_plan["voice"],
+                    "voice_instructions": voice_plan["instructions"],
                     "min_duration": args.min_duration,
                     "voice_lead_in": args.voice_lead_in,
                     "background_bed": not args.no_background_bed,
@@ -661,7 +817,13 @@ def main() -> None:
             raise RuntimeError(f"Narration audio does not exist: {audio_path}")
         shutil.copy2(audio_path, latest_audio)
     else:
-        generate_narration_audio(script, latest_audio, model=args.tts_model, voice=args.voice, instructions=args.voice_instructions)
+        generate_narration_audio(
+            script,
+            latest_audio,
+            model=args.tts_model,
+            voice=voice_plan["voice"],
+            instructions=voice_plan["instructions"],
+        )
 
     shutil.copy2(latest_audio, dated_audio)
     generate_video(
@@ -684,7 +846,10 @@ def main() -> None:
             "reel_voice_lead_in_seconds": args.voice_lead_in,
             "reel_script_model": None if args.no_script_polish else args.script_model,
             "reel_audio_model": args.tts_model,
-            "reel_voice": args.voice,
+            "reel_voice_profile": voice_plan["profile"],
+            "reel_voice_profile_label": voice_plan["label"],
+            "reel_voice": voice_plan["voice"],
+            "reel_voice_instructions": voice_plan["instructions"],
             "reel_background_bed": not args.no_background_bed,
             "reel_wave_audio": relative_to_root(wave_audio_path),
             "reel_wave_audio_source": DEFAULT_WAVE_AUDIO_SOURCE if is_default_wave_audio(wave_audio_path) else None,
