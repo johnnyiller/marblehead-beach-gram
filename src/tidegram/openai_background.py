@@ -13,27 +13,72 @@ from .recommender import BeachRecommendation
 
 
 DAILY_ART_DIRECTIONS = [
-    "stacked pale sky, sea-glass water, and warm sand paper layers with one tiny sail triangle near the horizon",
-    "minimal dune-grass paper cutouts along the lower edge with soft golden paper sun and calm open sky",
-    "simple horizontal harbor bands in dusty blue and ivory with two small sailcloth paper triangles",
-    "a polished top coastal papercraft band with granite-gray shoreline, muted teal water layers, cream sky, soft sun, and one tiny distant sail; no town, church, houses, or large focal sailboat",
-    "soft foggy blue paper layers with a tiny buoy circle and restrained sand-colored lower edge",
-    "warm ivory sky, faded terracotta sun disk, sea-glass wave band, and sparse paper dune grass",
-    "weathered shingle-gray paper sky, thin harbor-blue water strip, and one restrained lobster-buoy color accent",
-    "salt-marsh paper reeds along one corner with pale sand layers, muted teal water, and wide open ivory sky",
-    "simple rocky cove shapes in granite gray and sand paper with a tiny off-white sail far from the text area",
-    "soft beach-rose green paper leaves near the lower edge with faded coral accent and calm sea-glass bands",
-    "minimal lighthouse-red sliver on the horizon, foggy blue paper sky, and broad quiet cream negative space",
-    "low-tide sandbar paper shape with shallow teal pools, tiny shell-like cutouts, and restrained warm shadows",
+    "stacked pale sky, sea-glass water, and warm sand bands with one tiny sail triangle near the horizon",
+    "minimal dune grass along the lower edge with soft golden sun and calm open sky",
+    "simple horizontal harbor bands in dusty blue and ivory with two small sailcloth triangles",
+    "a polished top coastal band with granite-gray shoreline, muted teal water layers, cream sky, soft sun, and one tiny distant sail; no town, church, houses, or large focal sailboat",
+    "soft foggy blue layers with a tiny buoy circle and restrained sand-colored lower edge",
+    "warm ivory sky, faded terracotta sun disk, sea-glass wave band, and sparse dune grass",
+    "weathered shingle-gray sky, thin harbor-blue water strip, and one restrained lobster-buoy color accent",
+    "salt-marsh reeds along one corner with pale sand layers, muted teal water, and wide open ivory sky",
+    "simple rocky cove shapes in granite gray and sand with a tiny off-white sail far from the text area",
+    "soft beach-rose green leaves near the lower edge with faded coral accent and calm sea-glass bands",
+    "minimal lighthouse-red sliver on the horizon, foggy blue sky, and broad quiet cream negative space",
+    "low-tide sandbar shape with shallow teal pools, tiny shell-like marks, and restrained warm shadows",
+]
+
+VISUAL_STYLE_DIRECTIONS = [
+    {
+        "label": "papercraft",
+        "direction": (
+            "layered cut-paper shapes, soft paper shadows, subtle fiber texture, rounded handmade edges, "
+            "and simple coastal paper icons"
+        ),
+    },
+    {
+        "label": "watercolor field journal",
+        "direction": (
+            "soft watercolor washes, light ink contour lines, warm sketchbook paper grain, restrained hand-painted "
+            "weather icons, and airy negative space"
+        ),
+    },
+    {
+        "label": "vintage harbor postcard",
+        "direction": (
+            "slightly faded postcard color, gentle print texture, clean mid-century travel-poster geometry, "
+            "small flat weather icons, and tidy editorial spacing"
+        ),
+    },
+    {
+        "label": "risograph coast",
+        "direction": (
+            "muted two- or three-ink risograph texture, tiny registration offsets, simple blocky coastal shapes, "
+            "limited spot color, and crisp readable typography"
+        ),
+    },
+    {
+        "label": "nautical chart note",
+        "direction": (
+            "cream chart-paper texture, thin navy linework, subtle contour and current-line accents, small stamped "
+            "weather icons, and a tidy field-note feeling"
+        ),
+    },
+    {
+        "label": "soft linocut",
+        "direction": (
+            "gentle linocut-inspired coastal shapes, softened ink edges, sparse hatch texture, restrained color blocks, "
+            "and simple carved-looking icons"
+        ),
+    },
 ]
 
 COASTAL_MOTIF_DIRECTIONS = [
-    "one tiny lighthouse cutout far on the horizon, reduced to a simple cream-and-red paper shape",
-    "flat granite rock shapes and a few quiet tide-pool paper ovals along the header shoreline",
+    "one tiny lighthouse accent far on the horizon, reduced to a simple cream-and-red shape",
+    "flat granite rock shapes and a few quiet tide-pool ovals along the header shoreline",
     "two small lobster traps and a muted buoy tucked near one header edge, not touching text",
     "two distant sailboats with simple off-white triangular sails, kept tiny and far from the cards",
-    "a pair of paddleboards resting on warm sand as flat paper silhouettes in the header",
-    "beach-rose leaves and sparse dune grass as small lower-edge paper accents",
+    "a pair of paddleboards resting on warm sand as flat silhouettes in the header",
+    "beach-rose leaves and sparse dune grass as small lower-edge accents",
     "a low island silhouette with a few harbor mooring dots in muted navy and teal",
     "a weathered dinghy shape pulled high on the sand, simplified and quiet",
 ]
@@ -75,23 +120,29 @@ def weather_background_direction(recommendations: list[BeachRecommendation] | No
     primary = recommendations[0]
     condition = _condition_for_recommendation(primary)
     if condition == "stormy":
-        return "Weather cue: moody rain-ready coast with layered slate-gray clouds, darker teal water, and a few tiny paper raindrops; still calm, readable, and not dramatic."
+        return "Weather cue: moody rain-ready coast with layered slate-gray clouds, darker teal water, and a few tiny raindrop accents; still calm, readable, and not dramatic."
     if condition == "rainy":
-        return "Weather cue: soft rainy beach morning with pale gray-blue clouds, muted water, tiny paper raindrops, and gentle reflected light."
+        return "Weather cue: soft rainy beach morning with pale gray-blue clouds, muted water, tiny raindrop accents, and gentle reflected light."
     if condition == "windy":
-        return "Weather cue: breezy harbor day with subtle swept cloud strips, angled dune grass, and a little motion in the paper water bands."
+        return "Weather cue: breezy harbor day with subtle swept cloud strips, angled dune grass, and a little motion in the water bands."
     if condition == "foggy":
-        return "Weather cue: quiet fog bank with translucent-looking blue-gray paper layers, softened horizon, and low-contrast coastal shapes."
+        return "Weather cue: quiet fog bank with translucent-looking blue-gray layers, softened horizon, and low-contrast coastal shapes."
     if condition == "cloudy":
         return "Weather cue: relaxed cloudy coast with layered off-white and blue-gray cloud cutouts, muted sun glow, and calm water."
     if condition == "sunny":
-        return "Weather cue: warm sunny beach day with a soft golden paper sun disk, bright cream sky, and lightly sparkling sea-glass water."
-    return "Weather cue: calm coastal morning with balanced sky, water, sand, and soft paper shadows."
+        return "Weather cue: warm sunny beach day with a soft golden sun disk, bright cream sky, and lightly sparkling sea-glass water."
+    return "Weather cue: calm coastal morning with balanced sky, water, sand, and soft shadows."
 
 
 def coastal_motif_direction(day: dt.date | None = None, offset: int = 0) -> str:
     day = day or dt.datetime.now().date()
     return COASTAL_MOTIF_DIRECTIONS[(day.toordinal() + offset) % len(COASTAL_MOTIF_DIRECTIONS)]
+
+
+def visual_style_direction(day: dt.date | None = None, offset: int = 0) -> str:
+    day = day or dt.datetime.now().date()
+    style = VISUAL_STYLE_DIRECTIONS[(day.toordinal() + offset) % len(VISUAL_STYLE_DIRECTIONS)]
+    return f"{style['label']}: {style['direction']}"
 
 
 def card_weather_cues(recommendations: list[BeachRecommendation] | None) -> str:
@@ -111,11 +162,12 @@ def compose_art_direction(
     offset: int = 0,
 ) -> str:
     weather = weather_background_direction(recommendations)
+    style = visual_style_direction(day, offset=offset)
     motif = coastal_motif_direction(day, offset=offset)
     cues = card_weather_cues(recommendations)
     return (
-        f"{base_direction}; {weather} Rotating coastal motif: {motif}. "
-        f"{cues} Keep all weather and motif details minimal, papercraft, and behind or above the content"
+        f"{base_direction}; Visual style profile: {style}. {weather} Rotating coastal motif: {motif}. "
+        f"{cues} Keep all weather, texture, and motif details minimal, quiet, and behind or above the content"
     )
 
 
@@ -211,7 +263,7 @@ Hourly weather:
 
     return f"""
 Create a complete vertical 4:5 Instagram feed image for {location_name}.
-Final design should look like a minimal coastal New England papercraft weather-and-tide poster.
+Final design should look like a minimal coastal New England weather-and-tide poster in the visual style specified by the Daily art direction.
 
 Canvas and layout:
 - Portrait 4:5 composition for Instagram.
@@ -225,7 +277,7 @@ Canvas and layout:
 - Render the recommended tide line and high/low tide line exactly once per card, only in the right info rail.
 - Never duplicate the high/low tide line on both sides of a card.
 - Use a polished scenic header band across the top, about 22-26% of the canvas height, with the title over or above it.
-- The header should feel prettier and more designed than plain empty paper, but the recommendation cards remain the main subject.
+- The header should feel prettier and more designed than plain empty space, but the recommendation cards remain the main subject.
 - Prioritize the content. Give the cards, text, icons, tide values, and weather rows enough room to breathe.
 - Do not compress, shrink, overlap, or squash the card content vertically just to reveal more background.
 - It is okay for the cards to occupy most of the canvas if that improves readability.
@@ -246,13 +298,14 @@ Canvas and layout:
 - If a card has more than one beach option, keep the options visually grouped and understated. Do not number the beach options.
 
 Visual style:
-- Minimal papercraft look with layered cut-paper shapes, soft paper shadows, subtle fiber texture, and rounded handmade edges.
-- Coastal New England mood: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, soft golden paper.
+- Follow the Visual style profile inside the Daily art direction. Let that selected medium drive texture, edges, icon treatment, and background rendering.
+- Keep the style variation tasteful and restrained; the post should still feel like the same Marblehead beach outlook series.
+- Coastal New England mood: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, and soft golden accents.
 - Background should be simple and quiet behind the content, with the prettiest detail concentrated in the top header band.
-- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft paper clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm paper light.
-- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet papercraft accent in the header or background. It must never crowd, cover, or compete with the text.
+- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm light.
+- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet accent in the header or background. It must never crowd, cover, or compete with the text.
 - Do not create a village, townscape, church, row of houses, busy harbor illustration, or large focal object. These distract from the card content.
-- Icons should be simple coastal papercraft icons: sun/cloud/rain for weather and one consistent simple wave for tide.
+- Icons should be simple coastal icons matching the selected visual style: sun/cloud/rain for weather and one consistent simple wave for tide.
 - The tide icon must always be the same small teal three-crest wave icon. Use exactly one wave icon per card. Do not use a star, shell, anchor, water droplet, compass, badge, circle, spiral curl, or decorative surf illustration for tide.
 - Do not use bookmark tabs, ribbons, flags, corner tabs, checkmarks, ratings, or left-side decorative gutters. Use that space for content instead.
 - Do not use star icons anywhere. Do not place a star beside the recommended tide line.
@@ -302,14 +355,14 @@ Hourly weather:
 
     return f"""
 Create a complete vertical 9:16 Instagram Reel still image for {location_name}.
-Final design should look like a calm, minimal coastal New England papercraft three-day beach forecast poster.
+Final design should look like a calm, minimal coastal New England three-day beach forecast poster in the visual style specified by the Daily art direction.
 
 Canvas and layout:
 - True 9:16 Reel composition. Do not create a 4:5 feed post centered inside a taller canvas.
 - Use the whole vertical frame naturally, with no large blank padding above or below the design.
 - This image will be used as the visual track for a narrated Reel, so the content must be readable on a phone.
 - Show exactly three day cards, stacked vertically below the scenic header.
-- Use a scenic papercraft header band across the top 20-24% of the canvas: layered sea-glass water, cream sky, warm sand, granite shoreline, tiny distant sailcloth shapes, and soft paper shadows.
+- Use a scenic header band across the top 20-24% of the canvas: layered sea-glass water, cream sky, warm sand, granite shoreline, tiny distant sailcloth shapes, and soft shadows.
 - The three day cards are the main subject. Do not shrink them just to show more scenery.
 - Each day card must use the same compact two-column layout: left side for day, time window, beach names, and activity; right side for tide and hourly weather.
 - Render the "Left column" source content only in the left side of the card.
@@ -329,12 +382,13 @@ Canvas and layout:
 - Beach names must be plain full beach names. Do not add "Go to" or map/location marker text.
 
 Visual style:
-- Minimal papercraft look with layered cut-paper shapes, soft paper shadows, subtle fiber texture, and rounded handmade edges.
-- Relaxed retro coastal palette: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, soft golden paper.
-- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft paper clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm paper light.
-- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet papercraft accent in the header or background. It must never crowd, cover, or compete with the text.
+- Follow the Visual style profile inside the Daily art direction. Let that selected medium drive texture, edges, icon treatment, and background rendering.
+- Keep the style variation tasteful and restrained; the Reel still should still feel like the same Marblehead beach outlook series.
+- Relaxed retro coastal palette: warm ivory, faded sand, sea-glass green, dusty sky blue, weathered navy, muted terracotta, and soft golden accents.
+- Let the background weather match the forecast cues in the daily art direction: rainy days can use soft clouds and tiny raindrops, windy days can use swept cloud strips and angled dune grass, cloudy/foggy days can use muted layered skies, and sunny days can use warm light.
+- The daily art direction may specify one coastal New England motif such as a lighthouse, granite rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy. Include that motif only as a small quiet accent in the header or background. It must never crowd, cover, or compete with the text.
 - Do not create a village, townscape, church, row of houses, busy harbor illustration, or large focal object. These distract from the card content.
-- Icons should be simple coastal papercraft icons: sun/cloud/rain for weather and one consistent small teal three-crest wave for tide.
+- Icons should be simple coastal icons matching the selected visual style: sun/cloud/rain for weather and one consistent small teal three-crest wave for tide.
 - The tide icon must be exactly one small teal three-crest wave icon. Do not use stars, shells, anchors, pins, droplets, compasses, badges, circles, spirals, or decorative surf illustrations for tide.
 - Do not use bookmark tabs, ribbons, flags, corner tabs, checkmarks, ratings, or left-side decorative gutters. Use that space for content instead.
 - For hourly weather rows, show the weather condition as an icon only. Do not write forecast words like Sunny, Mostly Sunny, Partly Sunny, Cloudy, or Showers.

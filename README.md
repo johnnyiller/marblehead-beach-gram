@@ -33,14 +33,17 @@ The starter rules are in `config/beaches.json` and reflect the planning thread:
 
 - **Gas House Beach**
   - High tide: paddle boarding / harbor float.
-  - Low tide: walk to Brown's Island.
+  - Low tide: walk to Brown's Island, but it is usually secondary to Preston for a pure low-tide walk.
 - **Preston Beach**
   - Avoid high tide.
-  - Best when the tide is already out and still going out, or only about an hour after low tide.
+  - Best low-tide walk when the tide is already out and still going out, or only about an hour after low tide.
 - **Devereux Beach**
-  - Good at most tide stages.
+  - Good at most tide stages as a general beach visit.
+  - Low tide adds a short walk, but it is not a long-walk or paddleboarding pick.
   - Bathrooms and showers.
   - Parking may cost money in season.
+
+The scorer uses the whole recommended visit window, not just the single nicest hour. If a high-tide window is rainy or too windy, a cleaner low-tide window can outrank it, and vice versa.
 
 To add more beaches, add another beach object with one or more rules. Each rule is anchored to a tide event:
 
@@ -50,7 +53,7 @@ To add more beaches, add another beach object with one or more rules. Each rule 
   "activity": "Low-tide walk / tide pools",
   "start_minutes": -180,
   "end_minutes": 60,
-  "base_score": 82,
+  "base_score": 92,
   "wind_profile": "walk",
   "sun_required": true,
   "note": "Best when the tide is already out and continuing out."
@@ -184,9 +187,9 @@ python scripts/generate_reel.py --dry-run
 python scripts/generate_reel.py --print-script
 ```
 
-`python scripts/generate.py` creates both the normal 4:5 feed image and a separate 9:16 Reel still. The Reel command uses the 9:16 still, generates a calm OpenAI TTS voiceover from the same `latest.json` data, and mixes in a quiet public-domain wave recording. The generated Reel caption includes an AI voiceover disclosure.
+`python scripts/generate.py` creates both the normal 4:5 feed image and a separate 9:16 Reel still. The Reel command uses the 9:16 still, generates a weather-aware OpenAI TTS voiceover from the same `latest.json` data, then plays a public-domain wave recording after the voice until the clip ends. Auto voice selection rotates among compatible narrator profiles so sunny, cloudy, rainy, breezy, and calm days do not all sound the same. The generated Reel caption includes an AI voiceover disclosure.
 
-The default wave bed is `assets/audio/waves-public-domain.mp3`, sourced from Wikimedia Commons `File:Waves.ogg` by Dsw4, public domain. Override it with:
+The default wave tail is `assets/audio/waves-public-domain.mp3`, sourced from Wikimedia Commons `File:Waves.ogg` by Dsw4, public domain. Override it with:
 
 ```bash
 python scripts/generate_reel.py --wave-audio path/to/waves.mp3
@@ -206,7 +209,7 @@ Generate one image with a specific numbered direction:
 python scripts/generate.py --sample --art-direction 7
 ```
 
-The default art direction is configured in `config/settings.json` as `default_art_direction`. It is currently set to `auto`, which means GitHub Actions uses the local date plus the forecast to rotate the coastal background theme. The rotation keeps the same minimal papercraft brand, but varies the weather mood and small New England motif, such as lighthouse, rocks, lobster traps, sailboats, paddleboards, beach roses, buoys, or a dinghy.
+The default art direction is configured in `config/settings.json` as `default_art_direction`. It is currently set to `auto`, which means GitHub Actions uses the local date plus the forecast to rotate the coastal background theme, visual style, weather mood, and small New England motif. The visual style rotation stays restrained but can move between papercraft, watercolor field journal, vintage harbor postcard, risograph coast, nautical chart note, and soft linocut.
 
 Generate a batch of full OpenAI post trials with different background directions:
 

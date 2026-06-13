@@ -17,6 +17,7 @@ from tidegram.config import SITE_DIR, ensure_output_dirs, load_beach_rules, load
 from tidegram.data_sources import fetch_noaa_tides, fetch_nws_hourly_weather
 from tidegram.openai_background import (
     DAILY_ART_DIRECTIONS,
+    VISUAL_STYLE_DIRECTIONS,
     build_full_post_prompt,
     build_reel_image_prompt,
     compose_art_direction,
@@ -80,7 +81,11 @@ def parse_visual_date(value: str | None, zone: ZoneInfo) -> dt.date:
 
 
 def print_art_directions() -> None:
-    print("auto. Date-rotated coastal theme with forecast-aware background cues")
+    print("auto. Date-rotated coastal theme + visual style with forecast-aware background cues")
+    print("Visual style rotation:")
+    for idx, style in enumerate(VISUAL_STYLE_DIRECTIONS, start=1):
+        print(f"- {idx}. {style['label']}: {style['direction']}")
+    print("Background composition rotation:")
     for idx, direction in enumerate(DAILY_ART_DIRECTIONS, start=1):
         print(f"{idx}. {direction}")
 

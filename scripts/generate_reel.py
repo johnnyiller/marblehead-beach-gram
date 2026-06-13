@@ -16,13 +16,14 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCRIPT_MODEL = "gpt-5.5"
 DEFAULT_TTS_MODEL = "gpt-audio-1.5"
 REEL_WIDTH = 1080
 REEL_HEIGHT = 1920
-DEFAULT_VOICE_LEAD_IN_SECONDS = 1.25
+DEFAULT_VOICE_LEAD_IN_SECONDS = 0.25
 DEFAULT_WAVE_AUDIO_PATH = ROOT / "assets" / "audio" / "waves-public-domain.mp3"
 DEFAULT_WAVE_AUDIO_SOURCE = "Wikimedia Commons File:Waves.ogg by Dsw4, public domain"
 DEFAULT_WAVE_AUDIO_URL = "https://commons.wikimedia.org/wiki/File:Waves.ogg"
@@ -33,17 +34,41 @@ VOICE_PROFILES: dict[str, dict[str, str]] = {
         "script_personality": "a bright Marblehead neighbor who sounds genuinely pleased about a good beach day, but never salesy",
         "tts_instructions": "Use a warm, bright, relaxed coastal delivery with natural pauses and a small smile in the voice.",
     },
+    "dockside_note": {
+        "voice": "marin",
+        "label": "Dockside note",
+        "script_personality": "a relaxed dockside regular giving a crisp useful beach note with light good humor",
+        "tts_instructions": "Use an easy conversational delivery, lightly upbeat, with a practical local rhythm and natural pauses.",
+    },
+    "morning_radio": {
+        "voice": "verse",
+        "label": "Morning radio",
+        "script_personality": "a calm local morning-radio host: polished, friendly, concise, and useful without hype",
+        "tts_instructions": "Use a clear polished morning-show delivery with gentle energy, clean articulation, and no announcer exaggeration.",
+    },
     "rainy_harbor": {
         "voice": "cedar",
         "label": "Rainy harbor",
         "script_personality": "a calm harbor guide who is a little wistful about the weather but still practical and kind",
         "tts_instructions": "Use a grounded, soothing, slightly wistful delivery. Keep the pace unhurried and reassuring.",
     },
+    "rain_check": {
+        "voice": "sage",
+        "label": "Rain check",
+        "script_personality": "a pragmatic local friend who is honest about damp weather and still points out the usable window",
+        "tts_instructions": "Use a clear, grounded, gently cautious delivery with practical emphasis and a warm finish.",
+    },
     "foggy_morning": {
         "voice": "sage",
         "label": "Foggy morning",
         "script_personality": "a soft-spoken local giving a quiet foggy-morning note with gentle optimism",
         "tts_instructions": "Use a gentle, reflective morning tone with soft dynamics and clean articulation.",
+    },
+    "quiet_observer": {
+        "voice": "cedar",
+        "label": "Quiet observer",
+        "script_personality": "a thoughtful beach walker noticing the day plainly, with calm detail and no fuss",
+        "tts_instructions": "Use a quiet observational delivery, intimate but not sleepy, with measured pacing and clear diction.",
     },
     "cloudy_coast": {
         "voice": "sage",
@@ -69,8 +94,19 @@ VOICE_PROFILES: dict[str, dict[str, str]] = {
         "script_personality": "a warm postcard-style narrator who feels friendly, light, and a little nostalgic",
         "tts_instructions": "Use a warm, lightly nostalgic delivery with gentle energy and conversational pacing.",
     },
+    "field_note": {
+        "voice": "coral",
+        "label": "Field note",
+        "script_personality": "a concise field-note narrator with a warm observational style and a little coastal texture",
+        "tts_instructions": "Use a warm, precise, lightly textured delivery with short natural pauses and understated energy.",
+    },
 }
-CALM_ROTATION_PROFILES = ("calm_coast", "postcard", "sunny_local")
+SUNNY_ROTATION_PROFILES = ("sunny_local", "dockside_note", "morning_radio", "postcard")
+RAIN_ROTATION_PROFILES = ("rainy_harbor", "rain_check")
+FOG_ROTATION_PROFILES = ("foggy_morning", "quiet_observer")
+CLOUD_ROTATION_PROFILES = ("cloudy_coast", "quiet_observer", "field_note")
+BREEZY_ROTATION_PROFILES = ("breezy_skipper", "dockside_note")
+CALM_ROTATION_PROFILES = ("calm_coast", "postcard", "field_note", "quiet_observer")
 
 
 def clean_env_value(name: str, default: str = "") -> str:
@@ -95,7 +131,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--audio", default=None, help="Use an existing narration MP3 instead of generating speech.")
     parser.add_argument("--max-days", type=int, default=1, help="Number of recommendation days to include in the narration.")
     parser.add_argument("--min-duration", type=float, default=60.0, help="Minimum Reel duration in seconds.")
-    parser.add_argument("--voice-lead-in", type=float, default=DEFAULT_VOICE_LEAD_IN_SECONDS, help="Seconds of wave ambience before narration starts.")
+    parser.add_argument("--voice-lead-in", type=float, default=DEFAULT_VOICE_LEAD_IN_SECONDS, help="Seconds of silence before narration starts.")
     parser.add_argument("--script-model", default=clean_env_value("OPENAI_REEL_SCRIPT_MODEL", DEFAULT_SCRIPT_MODEL), help="OpenAI text model used to polish the narration script.")
     parser.add_argument("--no-script-polish", action="store_true", help="Use the deterministic draft narration without the LLM polish step.")
     parser.add_argument("--tts-model", default=clean_env_value("OPENAI_TTS_MODEL", DEFAULT_TTS_MODEL), help="OpenAI TTS model.")
@@ -110,8 +146,8 @@ def parse_args() -> argparse.Namespace:
         default=clean_env_value("OPENAI_TTS_INSTRUCTIONS", ""),
         help="Style instructions for the TTS voice. Overrides the selected voice profile instructions when set.",
     )
-    parser.add_argument("--wave-audio", default=clean_env_value("REEL_WAVE_AUDIO", str(DEFAULT_WAVE_AUDIO_PATH)), help="Path to looping wave ambience audio.")
-    parser.add_argument("--no-background-bed", action="store_true", help="Do not mix in the quiet wave ambience bed.")
+    parser.add_argument("--wave-audio", default=clean_env_value("REEL_WAVE_AUDIO", str(DEFAULT_WAVE_AUDIO_PATH)), help="Path to wave audio that plays after the narration.")
+    parser.add_argument("--no-background-bed", action="store_true", help="Do not append wave audio after the narration.")
     parser.add_argument("--print-script", action="store_true", help="Print the narration script and exit.")
     parser.add_argument("--dry-run", action="store_true", help="Print planned files and narration without creating audio/video.")
     return parser.parse_args()
@@ -128,8 +164,23 @@ def resolve_image_path(metadata: dict[str, Any], output_dir: Path, override: str
         image_path = Path(override)
         return image_path if image_path.is_absolute() else ROOT / image_path
 
-    image_ref = metadata.get("dated_reel_jpg") or metadata.get("latest_reel_jpg") or metadata.get("dated_jpg") or metadata.get("latest_jpg") or "latest.jpg"
+    image_ref = metadata.get("dated_reel_jpg") or metadata.get("latest_reel_jpg")
+    if not image_ref:
+        raise RuntimeError(
+            "No Reel-native image found in metadata. Run scripts/generate.py first so latest-reel.jpg is created, "
+            "or pass --image explicitly for a manual test."
+        )
     return output_dir / image_ref
+
+
+def require_reel_image_dimensions(image_path: Path) -> None:
+    with Image.open(image_path) as img:
+        width, height = img.size
+    if width * REEL_HEIGHT != height * REEL_WIDTH:
+        raise RuntimeError(
+            f"Reel source image must be 9:16, but {image_path} is {width}x{height}. "
+            "Run scripts/generate.py to create latest-reel.jpg, or pass a 9:16 image."
+        )
 
 
 def resolve_rooted_path(value: str | None) -> Path | None:
@@ -363,10 +414,14 @@ def generated_date(metadata: dict[str, Any]) -> dt.date:
     return local_now(metadata).date()
 
 
+def rotating_profile(metadata: dict[str, Any], profiles: tuple[str, ...], salt: int = 0) -> str:
+    return profiles[(generated_date(metadata).toordinal() + salt) % len(profiles)]
+
+
 def auto_voice_profile(metadata: dict[str, Any]) -> str:
     rec = primary_recommendation(metadata)
     if not rec:
-        return CALM_ROTATION_PROFILES[generated_date(metadata).toordinal() % len(CALM_ROTATION_PROFILES)]
+        return rotating_profile(metadata, CALM_ROTATION_PROFILES)
 
     forecast = recommendation_forecast_text(rec)
     rain = max_recommendation_rain(rec)
@@ -374,18 +429,18 @@ def auto_voice_profile(metadata: dict[str, Any]) -> str:
     score = float(rec.get("score") or 0)
 
     if rain > 50 or "thunder" in forecast:
-        return "rainy_harbor"
+        return rotating_profile(metadata, RAIN_ROTATION_PROFILES)
     if rain > 30 or "rain" in forecast or "showers" in forecast or "drizzle" in forecast:
-        return "rainy_harbor"
+        return rotating_profile(metadata, RAIN_ROTATION_PROFILES, salt=1)
     if wind_mph >= 18:
-        return "breezy_skipper"
+        return rotating_profile(metadata, BREEZY_ROTATION_PROFILES)
     if "fog" in forecast or "mist" in forecast or "haze" in forecast:
-        return "foggy_morning"
+        return rotating_profile(metadata, FOG_ROTATION_PROFILES)
     if "cloudy" in forecast or "overcast" in forecast:
-        return "cloudy_coast"
+        return rotating_profile(metadata, CLOUD_ROTATION_PROFILES)
     if score >= 130 and ("sunny" in forecast or "clear" in forecast):
-        return "sunny_local"
-    return CALM_ROTATION_PROFILES[generated_date(metadata).toordinal() % len(CALM_ROTATION_PROFILES)]
+        return rotating_profile(metadata, SUNNY_ROTATION_PROFILES)
+    return rotating_profile(metadata, CALM_ROTATION_PROFILES)
 
 
 def resolve_voice_plan(
@@ -466,6 +521,7 @@ def polish_narration_script(
                 "content": (
                     "You write short spoken local forecast scripts for a coastal New England Instagram Reel. "
                     "Sound like a real person: warm, observant, lightly conversational, and calm. "
+                    "Vary the sentence shape and opening from day to day while staying natural. "
                     "Adapt the emotional tone to the conditions. Keep every factual number exact. "
                     "Do not invent beaches, dates, times, temperatures, wind speeds, rain chances, or tide times. "
                     "Dates must use full spoken wording, like Friday June 5th. Never use abbreviations like Fri, Jun, Mon, Tue, Wed, Thu, Sat, or Sun. "
@@ -480,6 +536,7 @@ def polish_narration_script(
                     "Length target: 20 to 35 seconds of speech.\n"
                     f"Personality target: {personality}.\n"
                     f"Tone target: {mood}.\n"
+                    "Avoid formulaic phrasing; do not always start with Good morning if another natural opening fits.\n"
                     "Use only these facts. Use each spoken_day exactly if you mention the date:\n"
                     f"{json.dumps(facts, indent=2)}\n\n"
                     f"Draft:\n{draft_script}"
@@ -604,33 +661,41 @@ def build_ffmpeg_command(
     audio_duration = media_duration_seconds(audio_path)
     voice_delay_ms = max(0, round(voice_lead_in_seconds * 1000))
     target_duration = max(audio_duration + voice_lead_in_seconds, min_duration_seconds)
-    fade_out_start = max(0.0, target_duration - 2.0)
+    wave_start_seconds = audio_duration + voice_lead_in_seconds
+    wave_start_ms = max(0, round(wave_start_seconds * 1000))
+    wave_tail_duration = max(0.0, target_duration - wave_start_seconds)
+    wave_fade_out_start = max(0.0, wave_tail_duration - 2.0)
     video_filter = (
         f"scale={REEL_WIDTH}:{REEL_HEIGHT}:force_original_aspect_ratio=decrease,"
         f"pad={REEL_WIDTH}:{REEL_HEIGHT}:(ow-iw)/2:(oh-ih)/2:color=0xF5EFE3,"
         "setsar=1"
     )
 
-    if include_background_bed and wave_audio_path is not None:
+    if include_background_bed and wave_tail_duration > 0 and wave_audio_path is not None:
         audio_filter = (
-            f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0,asplit=2[voice][voice_sc];"
-            f"[2:a]atrim=0:{target_duration:.3f},asetpts=PTS-STARTPTS,"
+            f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0[voice];"
+            f"[2:a]atrim=0:{wave_tail_duration:.3f},asetpts=PTS-STARTPTS,"
             "highpass=f=45,lowpass=f=6000,"
-            f"afade=t=in:st=0:d=0.9,afade=t=out:st={fade_out_start:.3f}:d=2.0,volume=0.36[waves_raw];"
-            "[waves_raw][voice_sc]sidechaincompress=threshold=0.025:ratio=7:attack=80:release=1400[bed];"
-            f"[voice][bed]amix=inputs=2:duration=longest:dropout_transition=3,atrim=0:{target_duration:.3f}[a]"
+            f"afade=t=in:st=0:d=0.6,afade=t=out:st={wave_fade_out_start:.3f}:d=2.0,"
+            f"volume=0.72,adelay={wave_start_ms}:all=1[waves];"
+            f"[voice][waves]amix=inputs=2:duration=longest:dropout_transition=0,atrim=0:{target_duration:.3f}[mixed];"
+            "[mixed]loudnorm=I=-16:TP=-1.5:LRA=11[a]"
         )
-    elif include_background_bed:
+    elif include_background_bed and wave_tail_duration > 0:
         audio_filter = (
-            f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0,asplit=2[voice][voice_sc];"
-            f"anoisesrc=color=brown:amplitude=0.09:d={target_duration:.3f}[noise];"
+            f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0[voice];"
+            f"anoisesrc=color=brown:amplitude=0.09:d={wave_tail_duration:.3f}[noise];"
             f"[noise]highpass=f=70,lowpass=f=1150,tremolo=f=0.16:d=0.70,"
-            f"afade=t=in:st=0:d=0.9,afade=t=out:st={fade_out_start:.3f}:d=2.0,volume=0.18[waves];"
-            "[waves][voice_sc]sidechaincompress=threshold=0.025:ratio=7:attack=80:release=1400[bed];"
-            f"[voice][bed]amix=inputs=2:duration=longest:dropout_transition=3,atrim=0:{target_duration:.3f}[a]"
+            f"afade=t=in:st=0:d=0.6,afade=t=out:st={wave_fade_out_start:.3f}:d=2.0,"
+            f"volume=0.34,adelay={wave_start_ms}:all=1[waves];"
+            f"[voice][waves]amix=inputs=2:duration=longest:dropout_transition=0,atrim=0:{target_duration:.3f}[mixed];"
+            "[mixed]loudnorm=I=-16:TP=-1.5:LRA=11[a]"
         )
     else:
-        audio_filter = f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0,apad,atrim=0:{target_duration:.3f}[a]"
+        audio_filter = (
+            f"[1:a]adelay={voice_delay_ms}:all=1,volume=1.0,apad,atrim=0:{target_duration:.3f}[mixed];"
+            "[mixed]loudnorm=I=-16:TP=-1.5:LRA=11[a]"
+        )
 
     command = [
         "ffmpeg",
@@ -669,6 +734,10 @@ def build_ffmpeg_command(
             "aac",
             "-b:a",
             "160k",
+            "-ar",
+            "44100",
+            "-ac",
+            "2",
             "-t",
             f"{target_duration:.3f}",
             "-movflags",
@@ -770,6 +839,7 @@ def main() -> None:
 
     if not image_path.is_file():
         raise RuntimeError(f"Reel source image does not exist: {image_path}")
+    require_reel_image_dimensions(image_path)
 
     if args.print_script:
         print(script)
@@ -801,6 +871,7 @@ def main() -> None:
                     "min_duration": args.min_duration,
                     "voice_lead_in": args.voice_lead_in,
                     "background_bed": not args.no_background_bed,
+                    "wave_audio_placement": "after_voice" if not args.no_background_bed else None,
                     "wave_audio": relative_to_root(wave_audio_path),
                     "wave_audio_source": DEFAULT_WAVE_AUDIO_SOURCE if is_default_wave_audio(wave_audio_path) else None,
                     "draft_narration": draft_script,
@@ -815,7 +886,8 @@ def main() -> None:
         audio_path = Path(args.audio)
         if not audio_path.is_file():
             raise RuntimeError(f"Narration audio does not exist: {audio_path}")
-        shutil.copy2(audio_path, latest_audio)
+        if audio_path.resolve() != latest_audio.resolve():
+            shutil.copy2(audio_path, latest_audio)
     else:
         generate_narration_audio(
             script,
@@ -851,6 +923,7 @@ def main() -> None:
             "reel_voice": voice_plan["voice"],
             "reel_voice_instructions": voice_plan["instructions"],
             "reel_background_bed": not args.no_background_bed,
+            "reel_wave_audio_placement": "after_voice" if not args.no_background_bed else None,
             "reel_wave_audio": relative_to_root(wave_audio_path),
             "reel_wave_audio_source": DEFAULT_WAVE_AUDIO_SOURCE if is_default_wave_audio(wave_audio_path) else None,
             "reel_wave_audio_url": DEFAULT_WAVE_AUDIO_URL if is_default_wave_audio(wave_audio_path) else None,

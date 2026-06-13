@@ -233,12 +233,49 @@ def _best_weather_period(
     wind_profile: str,
     sun_required: bool,
 ) -> tuple[WeatherPeriod | None, float]:
-    candidates = [p for p in periods if _overlaps(p, start, end)]
-    if not candidates:
+    overlaps = [
+        (p, _overlap_minutes(p.start, p.end, start, end))
+        for p in periods
+        if _overlaps(p, start, end)
+    ]
+    if not overlaps:
         return None, -999.0
+
+    candidates = [p for p, _ in overlaps]
     scored = [(weather_score(p, wind_profile, sun_required), p) for p in candidates]
     scored.sort(key=lambda x: x[0], reverse=True)
-    return scored[0][1], scored[0][0]
+    best_period = scored[0][1]
+
+    total_minutes = sum(minutes for _, minutes in overlaps)
+    if total_minutes <= 0:
+        return best_period, scored[0][0]
+
+    weighted_score = sum(
+        weather_score(period, wind_profile, sun_required) * minutes
+        for period, minutes in overlaps
+    ) / total_minutes
+    max_precip = max(period.precip_probability for period in candidates)
+    avg_precip = sum(period.precip_probability * minutes for period, minutes in overlaps) / total_minutes
+    max_wind = max(parse_wind_mph(period.wind_speed_text) for period in candidates)
+
+    # A beach window should not win because one hour is nice while the rest is wet or windy.
+    if max_precip >= 70:
+        weighted_score -= 26
+    elif max_precip >= 50:
+        weighted_score -= 16
+    elif max_precip >= 35:
+        weighted_score -= 8
+    if avg_precip >= 45:
+        weighted_score -= 14
+    elif avg_precip >= 30:
+        weighted_score -= 7
+
+    if wind_profile == "paddle" and max_wind > 14:
+        weighted_score -= 18
+    elif max_wind > 22:
+        weighted_score -= 8
+
+    return best_period, weighted_score
 
 
 def _time_of_day_window(
