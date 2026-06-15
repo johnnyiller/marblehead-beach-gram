@@ -173,6 +173,12 @@ def _temperature_score(temp_f: int | None) -> float:
 
 def _wind_score(wind_speed_text: str, profile: str) -> float:
     mph = parse_wind_mph(wind_speed_text)
+    if profile == "shelter":
+        if mph <= 16:
+            return 4
+        if mph <= 24:
+            return -2
+        return -10
     if profile == "paddle":
         if mph <= 8:
             return 20
@@ -195,13 +201,41 @@ def weather_score(period: WeatherPeriod, wind_profile: str, sun_required: bool) 
     score = 0.0
     if not period.is_daytime:
         score -= 100
-    score += _forecast_sun_score(period.short_forecast)
+    if wind_profile == "shelter":
+        score += _shelter_weather_score(period)
+    else:
+        score += _forecast_sun_score(period.short_forecast)
     score += _temperature_score(period.temperature_f)
     score += _wind_score(period.wind_speed_text, wind_profile)
-    score -= period.precip_probability * 0.55
+    if wind_profile == "shelter":
+        score += min(24.0, period.precip_probability * 0.35)
+    else:
+        score -= period.precip_probability * 0.55
     if sun_required and not _is_sunny_enough(period.short_forecast):
         score -= 18
     return score
+
+
+def _is_rain_threat(short_forecast: str, precip_probability: int) -> bool:
+    text = short_forecast.lower()
+    return (
+        precip_probability >= 30
+        or "rain" in text
+        or "showers" in text
+        or "thunder" in text
+        or "drizzle" in text
+    )
+
+
+def _shelter_weather_score(period: WeatherPeriod) -> float:
+    if _is_rain_threat(period.short_forecast, period.precip_probability):
+        score = 32.0
+        if "thunder" in period.short_forecast.lower():
+            score -= 12
+        return score
+    if "cloud" in period.short_forecast.lower() or "fog" in period.short_forecast.lower():
+        return 4.0
+    return -18.0
 
 
 def _is_sunny_enough(short_forecast: str) -> bool:
@@ -271,11 +305,62 @@ def _best_weather_period(
         weighted_score -= 7
 
     if wind_profile == "paddle" and max_wind > 14:
-        weighted_score -= 18
+        weighted_score -= 90
+    elif wind_profile == "paddle" and max_wind > 12:
+        weighted_score -= 45
     elif max_wind > 22:
         weighted_score -= 8
 
     return best_period, weighted_score
+
+
+def _window_weather_flags(
+    periods: list[WeatherPeriod],
+    start: dt.datetime,
+    end: dt.datetime,
+) -> tuple[bool, float]:
+    overlaps = [
+        (p, _overlap_minutes(p.start, p.end, start, end))
+        for p in periods
+        if _overlaps(p, start, end)
+    ]
+    if not overlaps:
+        return False, 0.0
+
+    total_minutes = sum(minutes for _, minutes in overlaps)
+    max_wind = max(parse_wind_mph(period.wind_speed_text) for period, _ in overlaps)
+    if total_minutes <= 0:
+        rain_threat = any(_is_rain_threat(period.short_forecast, period.precip_probability) for period, _ in overlaps)
+        return rain_threat, max_wind
+
+    threatened_minutes = sum(
+        minutes
+        for period, minutes in overlaps
+        if _is_rain_threat(period.short_forecast, period.precip_probability)
+    )
+    max_precip = max(period.precip_probability for period, _ in overlaps)
+    rain_threat = threatened_minutes / total_minutes >= 0.25 or max_precip >= 40
+    return rain_threat, max_wind
+
+
+def _workweek_timing_score(start: dt.datetime, end: dt.datetime) -> float:
+    if start.weekday() >= 5:
+        return 4.0
+
+    work_start = start.replace(hour=9, minute=0, second=0, microsecond=0)
+    work_end = start.replace(hour=17, minute=0, second=0, microsecond=0)
+    overlap = _overlap_minutes(start, end, work_start, work_end)
+    total_minutes = max(1.0, (end - start).total_seconds() / 60)
+    overlap_ratio = overlap / total_minutes
+
+    score = -46.0 * overlap_ratio
+    if end <= work_start:
+        score += 18.0
+    elif start >= work_end:
+        score += 22.0
+    elif start.hour == 12 or (start.hour <= 12 and end.hour >= 13):
+        score += 8.0
+    return score
 
 
 def _time_of_day_window(
@@ -492,7 +577,7 @@ def build_recommendations(
     alternate_min_overlap_minutes: int = 60,
     recommended_window_min_minutes: int = 120,
     recommended_window_max_minutes: int = 240,
-    preferred_start_hour: int = 9,
+    preferred_start_hour: int = 6,
     preferred_end_hour: int = 21,
 ) -> list[BeachRecommendation]:
     zone = ZoneInfo(tz_name)
@@ -547,7 +632,21 @@ def build_recommendations(
                 minutes_from_tide = abs((midpoint - tide.time).total_seconds()) / 60
                 closeness_bonus = max(0.0, 16 - minutes_from_tide / 10)
 
+                wind_profile = rule.get("wind_profile", "walk")
+                rain_threat, max_wind = _window_weather_flags(weather, rec_start, rec_end)
                 score = tide_score + wx_score + closeness_bonus
+                score += _workweek_timing_score(rec_start, rec_end)
+                if rain_threat:
+                    if wind_profile == "shelter":
+                        score += 95
+                    else:
+                        score -= 150
+                elif wind_profile == "shelter":
+                    score -= 80
+
+                if wind_profile == "paddle" and max_wind > 12:
+                    score -= 140
+
                 candidates.append(
                     BeachRecommendation(
                         date=tide.time.date().isoformat(),
@@ -595,18 +694,170 @@ def build_recommendations(
     return sorted(candidates, key=lambda r: r.score, reverse=True)
 
 
-def build_caption(recommendations: list[BeachRecommendation], location_name: str) -> str:
+def _caption_recommendation_for_date(
+    recommendations: list[BeachRecommendation],
+    target_date: dt.date | None,
+) -> BeachRecommendation | None:
     if not recommendations:
-        return f"{location_name} tide + weather outlook 🌊"
-    best = max(recommendations, key=lambda r: r.score)
-    lines = [
-        f"{location_name} tide + weather outlook 🌊☀️",
-        f"Best window: {best.day_label}, {best.window_label()} at {best.beach_short_name}.",
-        f"{best.activity}. {best.tide_label_full()}.",
-        "",
-        "Built from NOAA tides + NWS hourly weather.",
-        "#MarbleheadMA #NorthShoreMA #LowTide #BeachWalk",
+        return None
+    if target_date is None:
+        return recommendations[0]
+
+    target_iso = target_date.isoformat()
+    same_day = [rec for rec in recommendations if rec.date == target_iso]
+    if same_day:
+        return max(same_day, key=lambda r: r.score)
+    return None
+
+
+def _periods_for_date(weather: list[WeatherPeriod], target_date: dt.date | None) -> list[WeatherPeriod]:
+    if target_date is None:
+        return []
+    return [period for period in weather if period.start.date() == target_date]
+
+
+def _most_common_forecasts(periods: list[WeatherPeriod], limit: int = 3) -> str:
+    counts: dict[str, int] = {}
+    for period in periods:
+        forecast = period.short_forecast.strip()
+        if forecast:
+            counts[forecast] = counts.get(forecast, 0) + 1
+    if not counts:
+        return "forecast details unavailable"
+    ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0].lower()))
+    return ", ".join(label for label, _ in ranked[:limit])
+
+
+def _temperature_range(periods: list[WeatherPeriod]) -> str:
+    temps = [period.temperature_f for period in periods if period.temperature_f is not None]
+    if not temps:
+        return "temps unavailable"
+    low = min(temps)
+    high = max(temps)
+    if low == high:
+        return f"around {high}°F"
+    return f"{low}°F to {high}°F"
+
+
+def _wind_summary(periods: list[WeatherPeriod]) -> tuple[str, float]:
+    if not periods:
+        return "wind unavailable", 0.0
+    max_period = max(periods, key=lambda period: parse_wind_mph(period.wind_speed_text))
+    max_wind = parse_wind_mph(max_period.wind_speed_text)
+    return max_period.wind_speed_text or "wind unavailable", max_wind
+
+
+def _rain_summary(periods: list[WeatherPeriod]) -> tuple[str, int, bool]:
+    if not periods:
+        return "rain chance unavailable", 0, False
+    max_precip = max(period.precip_probability for period in periods)
+    has_rain_text = any(_is_rain_threat(period.short_forecast, period.precip_probability) for period in periods)
+    if max_precip <= 0 and not has_rain_text:
+        return "little to no rain showing", max_precip, False
+    return f"rain chance peaks near {max_precip}%", max_precip, has_rain_text
+
+
+def _caption_advisories(periods: list[WeatherPeriod]) -> list[str]:
+    if not periods:
+        return []
+
+    advisories: list[str] = []
+    wind_text, max_wind = _wind_summary(periods)
+    _, max_precip, has_rain_threat = _rain_summary(periods)
+    forecast_text = " ".join(period.short_forecast.lower() for period in periods)
+
+    if has_rain_threat or max_precip >= 30:
+        advisories.append("Rain/threatening weather: Picnic Shelter is the sensible fallback.")
+    if "thunder" in forecast_text:
+        advisories.append("Thunder risk: skip exposed beach time if storms are nearby.")
+    if max_wind > 12:
+        advisories.append(f"Paddleboard caution: wind may reach {wind_text}.")
+    if "fog" in forecast_text:
+        advisories.append("Fog may reduce visibility near the water.")
+    return advisories
+
+
+def _daily_weather_caption(periods: list[WeatherPeriod]) -> str:
+    if not periods:
+        return "Weather: hourly details unavailable."
+
+    forecasts = _most_common_forecasts(periods)
+    temps = _temperature_range(periods)
+    wind_text, _ = _wind_summary(periods)
+    rain_text, _, _ = _rain_summary(periods)
+    return f"Weather: {forecasts}; temps {temps}; wind {wind_text}; {rain_text}."
+
+
+def _daily_tides_caption(rec: BeachRecommendation | None, tides: list[TideEvent], target_date: dt.date | None) -> str:
+    if rec and rec.daily_tides:
+        return f"Tides: {rec.daily_tides_label()}."
+    if target_date is None:
+        return "Tides: unavailable."
+    daily_tides = [
+        TideSummary(tide.label, tide.time, tide.height_ft)
+        for tide in tides
+        if tide.time.date() == target_date
     ]
+    if not daily_tides:
+        return "Tides: unavailable."
+
+    grouped = {"High": [], "Low": []}
+    for tide in sorted(daily_tides, key=lambda item: item.time):
+        grouped.setdefault(tide.label, []).append(tide)
+
+    parts = []
+    for label in ["High", "Low"]:
+        values = grouped.get(label, [])
+        if values:
+            parts.append(f"{label}: {', '.join(t.display_label(include_height=False).replace(label + ' ', '') for t in values)}")
+    return f"Tides: {'; '.join(parts)}."
+
+
+def build_caption(
+    recommendations: list[BeachRecommendation],
+    location_name: str,
+    target_date: dt.date | None = None,
+    weather: list[WeatherPeriod] | None = None,
+    tides: list[TideEvent] | None = None,
+) -> str:
+    rec = _caption_recommendation_for_date(recommendations, target_date)
+    if not rec and not recommendations:
+        return f"{location_name} tide + weather outlook 🌊"
+
+    periods = _periods_for_date(weather or [], target_date)
+    target_label = format_day_label(dt.datetime.combine(target_date, dt.time())) if target_date else (rec.day_label if rec else "Today")
+    lines = [
+        f"{location_name} beach outlook for {target_label} 🌊☀️",
+    ]
+
+    if rec:
+        lines.extend(
+            [
+                f"Best window: {rec.window_label()} at {rec.beach_short_name}.",
+                f"{rec.activity}. Recommended tide: {rec.tide_label_full()}.",
+            ]
+        )
+    else:
+        lines.append("No standout beach window for today from the current tide/weather mix.")
+
+    lines.extend(
+        [
+            _daily_weather_caption(periods),
+            _daily_tides_caption(rec, tides or [], target_date),
+        ]
+    )
+
+    advisories = _caption_advisories(periods)
+    if advisories:
+        lines.append("Heads up: " + " ".join(advisories))
+
+    lines.extend(
+        [
+            "",
+            "Built from NOAA tides + NWS hourly weather.",
+            "#MarbleheadMA #NorthShoreMA #BeachWeather #TideWatch",
+        ]
+    )
     return "\n".join(lines)
 
 

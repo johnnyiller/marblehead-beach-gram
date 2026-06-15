@@ -32,18 +32,23 @@ marblehead-tidegram/
 The starter rules are in `config/beaches.json` and reflect the planning thread:
 
 - **Gas House Beach**
-  - High tide: paddle boarding / harbor float.
+  - High tide: paddle boarding / harbor float, especially if Riverhead's ideal high-tide window is a little too early or late.
   - Low tide: walk to Brown's Island, but it is usually secondary to Preston for a pure low-tide walk.
 - **Preston Beach**
   - Avoid high tide.
-  - Best low-tide walk when the tide is already out and still going out, or only about an hour after low tide.
+  - Strongly preferred low-tide walk when the tide is already out and still going out, or only recently coming back in.
+- **Riverhead Beach**
+  - High tide: preferred paddleboarding spot across from Devereux.
+  - Low tide: not recommended for paddleboarding because the carry gets too long.
 - **Devereux Beach**
   - Good at most tide stages as a general beach visit.
   - Low tide adds a short walk, but it is not a long-walk or paddleboarding pick.
   - Bathrooms and showers.
   - Parking may cost money in season.
+- **Devereux Picnic Shelter**
+  - Rainy or threatening weather: the covered fallback recommendation.
 
-The scorer uses the whole recommended visit window, not just the single nicest hour. If a high-tide window is rainy or too windy, a cleaner low-tide window can outrank it, and vice versa.
+The scorer uses the whole recommended visit window, not just the single nicest hour. Rainy or threatening weather pushes the ranking toward the Picnic Shelter. Windy windows suppress paddleboarding. Weekday recommendations prefer windows with less typical workday overlap when the tide and weather allow it.
 
 To add more beaches, add another beach object with one or more rules. Each rule is anchored to a tide event:
 
@@ -66,7 +71,7 @@ The generator can show more than one beach on a day card when another beach is g
 
 - `recommended_window_min_minutes`: minimum recommendation window to try to show.
 - `recommended_window_max_minutes`: maximum recommendation window to try to show, currently four hours.
-- `preferred_window_start_hour`: earliest local hour to recommend, currently `9`.
+- `preferred_window_start_hour`: earliest local hour to recommend, currently `6`.
 - `preferred_window_end_hour`: latest local hour to recommend, currently `21`.
 - `max_beach_options_per_day`: total beach options to show on a card, including the primary pick.
 - `alternate_beach_min_score`: minimum score for an alternate.
@@ -189,6 +194,54 @@ python scripts/generate_reel.py --print-script
 
 `python scripts/generate.py` creates both the normal 4:5 feed image and a separate 9:16 Reel still. The Reel command uses the 9:16 still, generates a weather-aware OpenAI TTS voiceover from the same `latest.json` data, then plays a public-domain wave recording after the voice until the clip ends. Auto voice selection rotates among compatible narrator profiles so sunny, cloudy, rainy, breezy, and calm days do not all sound the same. The generated Reel caption includes an AI voiceover disclosure.
 
+### Content pipeline
+
+The production path turns live tide/weather data into a finished Instagram Reel in two phases:
+
+1. `scripts/generate.py` builds the daily recommendation, image prompt, feed image, Reel still, static preview site, and `site/latest.json`.
+2. `scripts/generate_reel.py` turns that metadata and Reel still into the final narrated MP4.
+
+The Reel narration, burned-in captions, and Instagram caption all come from the same polished LLM script so the post feels consistent whether someone listens, reads the on-video captions, or reads the Instagram text. The caption timing is word-aligned by transcribing the generated MP3 with OpenAI `whisper-1` word timestamps; if transcription fails, the generator falls back to estimated timing and records that in `site/latest.json`.
+
+```mermaid
+flowchart TD
+    A[GitHub Actions schedule or local command] --> B[Fetch NOAA tide predictions]
+    A --> C[Fetch NWS hourly forecast]
+    B --> D[Rank beach activity windows]
+    C --> D
+    D --> E[Build daily caption context and image prompt]
+    E --> F[OpenAI image generation]
+    F --> G[Write 4:5 feed image]
+    F --> H[Write 9:16 Reel still]
+    E --> I[Write site/latest.json]
+    G --> J[Publish static site assets]
+    H --> K[scripts/generate_reel.py]
+    I --> K
+    K --> L[LLM-polish natural voiceover script]
+    L --> M[OpenAI TTS MP3]
+    M --> N[OpenAI whisper-1 word timestamps]
+    L --> O[Instagram Reel caption text]
+    N --> P[Burn readable closed captions into ASS overlay]
+    H --> Q[ffmpeg render]
+    M --> Q
+    P --> Q
+    R[Wave audio file] --> Q
+    Q --> S[60s MP4: voice first, waves after voice]
+    S --> T[Publish versioned MP4 to GitHub Pages]
+    O --> U[Instagram Graph API Reel post]
+    T --> U
+```
+
+Key outputs:
+
+- `site/latest.json`: source-of-truth metadata, recommendation details, narration, Reel caption, and caption timing status.
+- `site/latest.jpg` / `site/latest.png`: feed image.
+- `site/latest-reel.jpg` / `site/latest-reel.png`: 9:16 Reel still.
+- `site/latest-reel-audio.mp3`: generated voiceover.
+- `site/latest-reel.captions.ass`: burned-caption timing file.
+- `site/latest-reel.mp4`: final Instagram Reel candidate with AAC audio.
+- `site/reel-preview.html`: quick browser preview.
+
 The default wave tail is `assets/audio/waves-public-domain.mp3`, sourced from Wikimedia Commons `File:Waves.ogg` by Dsw4, public domain. Override it with:
 
 ```bash
@@ -281,6 +334,7 @@ Go to **Settings → Secrets and variables → Actions → Variables** and add:
 | `REEL_VOICE_PROFILE` | `auto` | Narration personality/voice profile. Options: `auto`, `sunny_local`, `rainy_harbor`, `foggy_morning`, `cloudy_coast`, `breezy_skipper`, `calm_coast`, `postcard`. |
 | `OPENAI_TTS_VOICE` | Leave blank | Optional voice override. Leave blank to let `REEL_VOICE_PROFILE` pick the voice. |
 | `OPENAI_TTS_INSTRUCTIONS` | Leave blank | Optional delivery override. Leave blank to use the profile instructions. |
+| `OPENAI_TRANSCRIPTION_MODEL` | `whisper-1` | Optional transcription model override for word-timed Reel captions. |
 
 Use `America/New_York`, not `EST`, so daylight saving time is handled correctly. GitHub Actions cron still uses UTC, but the generator converts dates and recommendations to Marblehead local time.
 
@@ -363,19 +417,19 @@ Only after the manual workflow and local/one-off Instagram publishing work:
 The default cron is:
 
 ```yaml
-cron: "27,57 10-14 * * *"
+cron: "27,57 7-11 * * *"
 ```
 
-GitHub Actions cron uses UTC. The workflow checks Marblehead local time and only posts at or after 6:27 AM, then writes a `.posted/instagram-YYYY-MM-DD.txt` marker to `gh-pages` after a successful scheduled Reel post. The extra UTC cron times cover daylight saving time and act as retries in case GitHub delays or drops one scheduled run; the marker prevents a later retry from intentionally posting twice on the same local date.
+GitHub Actions cron uses UTC. The workflow checks Marblehead local time and only posts at or after 3:27 AM, then writes a `.posted/instagram-YYYY-MM-DD.txt` marker to `gh-pages` after a successful scheduled Reel post. The extra UTC cron times cover daylight saving time and act as retries in case GitHub delays or drops one scheduled run; the marker prevents a later retry from intentionally posting twice on the same local date.
 
 ## Development ideas for Copilot
 
 Good next improvements:
 
-- Add Fort Beach, Grace Oliver Beach, Riverhead, and Crocker Park rules.
+- Add Fort Beach, Grace Oliver Beach, and Crocker Park rules.
 - Use a true tide-height curve instead of high/low events only.
 - Add sunrise/sunset calculations.
-- Add a safety warning when wind exceeds a paddleboarding threshold.
+- Add a visible safety warning when wind exceeds a paddleboarding threshold.
 - Add an approval gate that generates the image daily but posts only when a GitHub issue comment says `approve`.
 - Store a history archive page of all generated tidegrams.
 - Add tests for `build_recommendations()` with known tide/weather fixtures.

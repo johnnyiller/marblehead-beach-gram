@@ -21,6 +21,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCRIPT_MODEL = "gpt-5.5"
 DEFAULT_TTS_MODEL = "gpt-audio-1.5"
+DEFAULT_TRANSCRIPTION_MODEL = "whisper-1"
 REEL_WIDTH = 1080
 REEL_HEIGHT = 1920
 DEFAULT_VOICE_LEAD_IN_SECONDS = 0.25
@@ -148,6 +149,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--wave-audio", default=clean_env_value("REEL_WAVE_AUDIO", str(DEFAULT_WAVE_AUDIO_PATH)), help="Path to wave audio that plays after the narration.")
     parser.add_argument("--no-background-bed", action="store_true", help="Do not append wave audio after the narration.")
+    parser.add_argument("--no-burned-captions", action="store_true", help="Do not overlay narration captions on the Reel video.")
+    parser.add_argument("--transcription-model", default=clean_env_value("OPENAI_TRANSCRIPTION_MODEL", DEFAULT_TRANSCRIPTION_MODEL), help="OpenAI transcription model for word-timed captions.")
+    parser.add_argument("--no-word-timestamps", action="store_true", help="Use estimated caption timing instead of transcribing narration word timestamps.")
     parser.add_argument("--print-script", action="store_true", help="Print the narration script and exit.")
     parser.add_argument("--dry-run", action="store_true", help="Print planned files and narration without creating audio/video.")
     return parser.parse_args()
@@ -353,6 +357,7 @@ def primary_recommendation(metadata: dict[str, Any]) -> dict[str, Any] | None:
 def build_narration(metadata: dict[str, Any], max_days: int = 1) -> str:
     location = str(metadata.get("location_name") or "Marblehead")
     recommendations = list(metadata.get("recommendations") or [])[:max_days]
+    caption_context = str(metadata.get("caption") or "").strip()
     lines = [f"Good morning {location}. Here is today's beach outlook."]
 
     for rec in recommendations:
@@ -370,6 +375,14 @@ def build_narration(metadata: dict[str, Any], max_days: int = 1) -> str:
         if tides:
             sentence += f". Tide notes: {tides}"
         lines.append(sentence + ".")
+
+    caption_context_lines = [
+        line.strip()
+        for line in caption_context.splitlines()
+        if line.strip().startswith(("Weather:", "Heads up:"))
+    ]
+    if caption_context_lines:
+        lines.append(" ".join(caption_context_lines))
 
     lines.append("Built from NOAA tides and National Weather Service hourly forecast data.")
     return " ".join(lines)
@@ -473,6 +486,8 @@ def source_facts(metadata: dict[str, Any], max_days: int) -> dict[str, Any]:
     return {
         "location": metadata.get("location_name") or "Marblehead",
         "generated_at": metadata.get("generated_at"),
+        "caption_target_date": metadata.get("caption_target_date"),
+        "instagram_caption_context": metadata.get("caption"),
         "recommendations": [
             {
                 "day": spoken_date_label(rec),
@@ -537,6 +552,8 @@ def polish_narration_script(
                     f"Personality target: {personality}.\n"
                     f"Tone target: {mood}.\n"
                     "Avoid formulaic phrasing; do not always start with Good morning if another natural opening fits.\n"
+                    "Use the instagram_caption_context as factual context for the day's fuller weather, tides, and advisories, "
+                    "but do not quote it mechanically or include hashtags/disclosures/source labels.\n"
                     "Use only these facts. Use each spoken_day exactly if you mention the date:\n"
                     f"{json.dumps(facts, indent=2)}\n\n"
                     f"Draft:\n{draft_script}"
@@ -549,8 +566,8 @@ def polish_narration_script(
     return normalize_spoken_dates(polished, metadata, max_days)
 
 
-def build_reel_caption(metadata: dict[str, Any]) -> str:
-    caption = str(metadata.get("caption") or "Marblehead tide and weather outlook.")
+def build_reel_caption(metadata: dict[str, Any], narration_script: str | None = None) -> str:
+    caption = str(narration_script or metadata.get("reel_narration") or metadata.get("caption") or "Marblehead tide and weather outlook.")
     disclosure = "Voiceover is AI-generated."
     if disclosure.lower() in caption.lower():
         return caption
@@ -629,6 +646,101 @@ def generate_narration_audio(script: str, output_mp3: Path, model: str, voice: s
     return generate_speech(script, output_mp3, model=model, voice=voice, instructions=instructions)
 
 
+def response_to_plain_data(value: Any) -> Any:
+    if hasattr(value, "model_dump"):
+        return value.model_dump()
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, list):
+        return [response_to_plain_data(item) for item in value]
+    return value
+
+
+def transcribe_word_timestamps(audio_path: Path, model: str, prompt: str | None = None) -> list[dict[str, Any]]:
+    api_key = clean_env_value("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY is required to generate word-timed captions.")
+
+    try:
+        from openai import OpenAI
+    except ImportError as exc:
+        raise RuntimeError("The openai package is required for word-timed captions. Run: pip install -r requirements.txt") from exc
+
+    client = OpenAI(api_key=api_key)
+    with audio_path.open("rb") as audio_file:
+        request: dict[str, Any] = {
+            "model": model,
+            "file": audio_file,
+            "response_format": "verbose_json",
+            "timestamp_granularities": ["word"],
+        }
+        if prompt:
+            request["prompt"] = prompt
+        response = client.audio.transcriptions.create(**request)
+
+    data = response_to_plain_data(response)
+    words = data.get("words") if isinstance(data, dict) else getattr(response, "words", None)
+    if not words:
+        raise RuntimeError(f"{model} did not return word timestamps.")
+
+    normalized: list[dict[str, Any]] = []
+    for item in words:
+        word = item.get("word") if isinstance(item, dict) else getattr(item, "word", "")
+        start = item.get("start") if isinstance(item, dict) else getattr(item, "start", None)
+        end = item.get("end") if isinstance(item, dict) else getattr(item, "end", None)
+        if word and start is not None and end is not None:
+            normalized.append({"word": str(word), "start": float(start), "end": float(end)})
+
+    if not normalized:
+        raise RuntimeError(f"{model} returned word timestamp data, but no usable words.")
+    return normalized
+
+
+def normalize_caption_token(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", value.lower())
+
+
+def script_display_tokens(script: str) -> list[str]:
+    return re.findall(r"\S+", script)
+
+
+def apply_script_text_to_word_timestamps(script: str, words: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    display_tokens = script_display_tokens(script)
+    if not display_tokens:
+        return words
+
+    timed_tokens: list[dict[str, Any]] = []
+    word_index = 0
+    for token in display_tokens:
+        normalized_token = normalize_caption_token(token)
+        if not normalized_token:
+            continue
+
+        if word_index >= len(words):
+            break
+
+        start = float(words[word_index]["start"])
+        end = float(words[word_index]["end"])
+        combined = ""
+        consumed = 0
+        while word_index + consumed < len(words) and len(combined) < len(normalized_token):
+            current_word = str(words[word_index + consumed].get("word") or "")
+            combined += normalize_caption_token(current_word)
+            end = float(words[word_index + consumed]["end"])
+            consumed += 1
+            if combined == normalized_token:
+                break
+
+        if combined != normalized_token:
+            consumed = 1
+            end = float(words[word_index]["end"])
+
+        timed_tokens.append({"word": token, "start": start, "end": end})
+        word_index += consumed
+
+    return timed_tokens or words
+
+
 def media_duration_seconds(path: Path) -> float:
     require_executable("ffprobe")
     result = subprocess.run(
@@ -649,6 +761,220 @@ def media_duration_seconds(path: Path) -> float:
     return float(result.stdout.strip())
 
 
+def clean_caption_text(script: str) -> str:
+    text = re.sub(r"\s+", " ", script).strip()
+    text = re.sub(r"\bNOAA\b", "NOAA", text)
+    return text
+
+
+def caption_chunks(script: str, max_words: int = 6) -> list[str]:
+    text = clean_caption_text(script)
+    if not text:
+        return []
+
+    chunks: list[str] = []
+    for sentence in re.split(r"(?<=[.!?])\s+", text):
+        words = sentence.split()
+        current: list[str] = []
+        for word in words:
+            current.append(word)
+            if len(current) >= max_words:
+                chunks.append(" ".join(current))
+                current = []
+        if current:
+            chunks.append(" ".join(current))
+    return chunks
+
+
+def ass_timestamp(seconds: float) -> str:
+    seconds = max(0.0, seconds)
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    secs = int(seconds % 60)
+    centis = int(round((seconds - int(seconds)) * 100))
+    if centis >= 100:
+        secs += 1
+        centis = 0
+    return f"{hours}:{minutes:02d}:{secs:02d}.{centis:02d}"
+
+
+def escape_ass_text(text: str) -> str:
+    escaped = text.replace("\\", "\\\\").replace("{", "\\{").replace("}", "\\}")
+    return escaped.replace("\n", "\\N")
+
+
+def wrap_caption_lines(text: str, max_line_chars: int = 30) -> str:
+    words = text.split()
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        proposed = word if not current else f"{current} {word}"
+        if len(proposed) > max_line_chars and current:
+            lines.append(current)
+            current = word
+        else:
+            current = proposed
+    if current:
+        lines.append(current)
+    return "\\N".join(lines)
+
+
+def write_burned_caption_file(
+    script: str,
+    output_path: Path,
+    audio_duration: float,
+    voice_lead_in_seconds: float,
+) -> Path | None:
+    chunks = caption_chunks(script)
+    if not chunks:
+        return None
+
+    def chunk_timing_weight(chunk: str) -> float:
+        weight = max(1.0, float(len(chunk.split())))
+        if re.search(r"[.!?]$", chunk):
+            weight += 1.15
+        elif re.search(r"[,;:]$", chunk):
+            weight += 0.45
+        return weight
+
+    weights = [chunk_timing_weight(chunk) for chunk in chunks]
+    total_weight = sum(weights)
+    voice_start = max(0.0, voice_lead_in_seconds)
+    cursor = voice_start
+    voice_end = voice_start + audio_duration
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "[Script Info]",
+        "ScriptType: v4.00+",
+        "PlayResX: 1080",
+        "PlayResY: 1920",
+        "ScaledBorderAndShadow: yes",
+        "",
+        "[V4+ Styles]",
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
+        "Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1",
+        "",
+        "[Events]",
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
+    ]
+    for idx, chunk in enumerate(chunks):
+        if idx == len(chunks) - 1:
+            end = voice_end
+        else:
+            duration = audio_duration * (weights[idx] / total_weight)
+            end = min(voice_end, cursor + duration)
+        if end <= cursor:
+            break
+        text = "\\N".join(
+            escape_ass_text(line)
+            for line in wrap_caption_lines(chunk).split("\\N")
+        )
+        lines.append(f"Dialogue: 0,{ass_timestamp(cursor)},{ass_timestamp(end)},Default,,0,0,0,,{text}")
+        cursor = end
+
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return output_path
+
+
+def ass_header_lines() -> list[str]:
+    return [
+        "[Script Info]",
+        "ScriptType: v4.00+",
+        "PlayResX: 1080",
+        "PlayResY: 1920",
+        "ScaledBorderAndShadow: yes",
+        "",
+        "[V4+ Styles]",
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
+        "Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1",
+        "",
+        "[Events]",
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
+    ]
+
+
+def word_timestamp_caption_groups(
+    words: list[dict[str, Any]],
+    max_words: int = 6,
+    max_chars: int = 42,
+    max_gap_seconds: float = 0.65,
+) -> list[dict[str, Any]]:
+    groups: list[dict[str, Any]] = []
+    current: list[dict[str, Any]] = []
+
+    def flush() -> None:
+        nonlocal current
+        if not current:
+            return
+        groups.append(
+            {
+                "start": float(current[0]["start"]),
+                "end": float(current[-1]["end"]),
+                "text": " ".join(str(item["word"]).strip() for item in current).strip(),
+            }
+        )
+        current = []
+
+    for item in words:
+        word = str(item.get("word") or "").strip()
+        if not word:
+            continue
+
+        if current:
+            gap = float(item["start"]) - float(current[-1]["end"])
+            proposed_text = " ".join([*(str(existing["word"]).strip() for existing in current), word])
+            should_flush = (
+                len(current) >= max_words
+                or len(proposed_text) > max_chars
+                or gap > max_gap_seconds
+            )
+            if should_flush:
+                flush()
+
+        current.append(item)
+        if re.search(r"[.!?]$", word):
+            flush()
+
+    flush()
+    return groups
+
+
+def write_word_timed_caption_file(
+    words: list[dict[str, Any]],
+    output_path: Path,
+    voice_lead_in_seconds: float,
+) -> Path | None:
+    groups = word_timestamp_caption_groups(words)
+    if not groups:
+        return None
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    lines = ass_header_lines()
+    lead_in = max(0.0, voice_lead_in_seconds)
+    for idx, group in enumerate(groups):
+        start = lead_in + float(group["start"])
+        end = lead_in + float(group["end"])
+        if idx + 1 < len(groups):
+            next_start = lead_in + float(groups[idx + 1]["start"])
+            end = min(next_start, max(end + 0.08, start + 0.7))
+        else:
+            end = max(end + 0.15, start + 0.7)
+        text = "\\N".join(
+            escape_ass_text(line)
+            for line in wrap_caption_lines(str(group["text"])).split("\\N")
+        )
+        lines.append(f"Dialogue: 0,{ass_timestamp(start)},{ass_timestamp(end)},Default,,0,0,0,,{text}")
+
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return output_path
+
+
+def escape_filter_path(path: Path) -> str:
+    value = str(path)
+    return value.replace("\\", "\\\\").replace(":", "\\:").replace("'", "\\'")
+
+
 def build_ffmpeg_command(
     image_path: Path,
     audio_path: Path,
@@ -657,6 +983,7 @@ def build_ffmpeg_command(
     min_duration_seconds: float,
     voice_lead_in_seconds: float,
     wave_audio_path: Path | None,
+    caption_path: Path | None = None,
 ) -> list[str]:
     audio_duration = media_duration_seconds(audio_path)
     voice_delay_ms = max(0, round(voice_lead_in_seconds * 1000))
@@ -670,6 +997,8 @@ def build_ffmpeg_command(
         f"pad={REEL_WIDTH}:{REEL_HEIGHT}:(ow-iw)/2:(oh-ih)/2:color=0xF5EFE3,"
         "setsar=1"
     )
+    if caption_path is not None:
+        video_filter = f"{video_filter},subtitles='{escape_filter_path(caption_path)}'"
 
     if include_background_bed and wave_tail_duration > 0 and wave_audio_path is not None:
         audio_filter = (
@@ -756,9 +1085,27 @@ def generate_video(
     min_duration_seconds: float,
     voice_lead_in_seconds: float,
     wave_audio_path: Path | None,
+    narration_script: str,
+    include_burned_captions: bool,
+    caption_words: list[dict[str, Any]] | None = None,
 ) -> Path:
     require_executable("ffmpeg")
     output_mp4.parent.mkdir(parents=True, exist_ok=True)
+    caption_path = None
+    if include_burned_captions:
+        if caption_words:
+            caption_path = write_word_timed_caption_file(
+                caption_words,
+                output_mp4.with_suffix(".captions.ass"),
+                voice_lead_in_seconds=voice_lead_in_seconds,
+            )
+        if caption_path is None:
+            caption_path = write_burned_caption_file(
+                narration_script,
+                output_mp4.with_suffix(".captions.ass"),
+                audio_duration=media_duration_seconds(audio_path),
+                voice_lead_in_seconds=voice_lead_in_seconds,
+            )
     command = build_ffmpeg_command(
         image_path,
         audio_path,
@@ -767,6 +1114,7 @@ def generate_video(
         min_duration_seconds,
         voice_lead_in_seconds,
         wave_audio_path,
+        caption_path=caption_path,
     )
     subprocess.run(command, check=True)
     return output_mp4
@@ -874,6 +1222,9 @@ def main() -> None:
                     "wave_audio_placement": "after_voice" if not args.no_background_bed else None,
                     "wave_audio": relative_to_root(wave_audio_path),
                     "wave_audio_source": DEFAULT_WAVE_AUDIO_SOURCE if is_default_wave_audio(wave_audio_path) else None,
+                    "burned_captions": not args.no_burned_captions,
+                    "caption_timing": "estimated" if args.no_word_timestamps else "word",
+                    "transcription_model": None if args.no_word_timestamps else args.transcription_model,
                     "draft_narration": draft_script,
                     "narration": script,
                 },
@@ -898,6 +1249,26 @@ def main() -> None:
         )
 
     shutil.copy2(latest_audio, dated_audio)
+    caption_words: list[dict[str, Any]] | None = None
+    caption_timing_source = None
+    caption_timing_error = None
+    if not args.no_burned_captions:
+        if args.no_word_timestamps:
+            caption_timing_source = "estimated"
+        else:
+            try:
+                caption_words = transcribe_word_timestamps(
+                    latest_audio,
+                    model=args.transcription_model,
+                    prompt=script,
+                )
+                caption_words = apply_script_text_to_word_timestamps(script, caption_words)
+                caption_timing_source = f"{args.transcription_model}:word"
+            except Exception as exc:
+                caption_timing_error = str(exc)
+                caption_timing_source = "estimated"
+                print(f"WARNING: Word timestamp transcription failed; using estimated captions. {exc}", file=sys.stderr)
+
     generate_video(
         image_path,
         latest_audio,
@@ -906,6 +1277,9 @@ def main() -> None:
         min_duration_seconds=args.min_duration,
         voice_lead_in_seconds=args.voice_lead_in,
         wave_audio_path=wave_audio_path,
+        narration_script=script,
+        include_burned_captions=not args.no_burned_captions,
+        caption_words=caption_words,
     )
     shutil.copy2(latest_reel, dated_reel)
 
@@ -927,9 +1301,16 @@ def main() -> None:
             "reel_wave_audio": relative_to_root(wave_audio_path),
             "reel_wave_audio_source": DEFAULT_WAVE_AUDIO_SOURCE if is_default_wave_audio(wave_audio_path) else None,
             "reel_wave_audio_url": DEFAULT_WAVE_AUDIO_URL if is_default_wave_audio(wave_audio_path) else None,
+            "reel_burned_captions": not args.no_burned_captions,
+            "reel_caption_overlay": f"{latest_reel.with_suffix('.captions.ass').name}" if not args.no_burned_captions else None,
+            "reel_caption_overlay_source": "reel_narration",
+            "reel_caption_timing_source": caption_timing_source,
+            "reel_transcription_model": args.transcription_model if caption_words else None,
+            "reel_transcription_word_count": len(caption_words or []),
+            "reel_caption_timing_error": caption_timing_error,
             "reel_draft_narration": draft_script,
             "reel_narration": script,
-            "reel_caption": build_reel_caption(metadata),
+            "reel_caption": build_reel_caption(metadata, narration_script=script),
             "latest_reel_mp4": "latest-reel.mp4",
             "latest_reel_audio_mp3": "latest-reel-audio.mp3",
             "dated_reel_mp4": f"assets/{dated_reel.name}",

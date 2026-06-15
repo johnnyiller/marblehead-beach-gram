@@ -201,7 +201,7 @@ def main() -> None:
         alternate_min_overlap_minutes=int(settings.get("alternate_beach_min_overlap_minutes", 60)),
         recommended_window_min_minutes=int(settings.get("recommended_window_min_minutes", 120)),
         recommended_window_max_minutes=int(settings.get("recommended_window_max_minutes", 240)),
-        preferred_start_hour=int(settings.get("preferred_window_start_hour", 9)),
+        preferred_start_hour=int(settings.get("preferred_window_start_hour", 6)),
         preferred_end_hour=int(settings.get("preferred_window_end_hour", 21)),
     )
     if not recommendations:
@@ -344,7 +344,13 @@ def main() -> None:
     shutil.copy2(reel_png_path, dated_reel_png)
     shutil.copy2(reel_jpg_path, dated_reel_jpg)
 
-    caption = build_caption(recommendations, settings.get("location_name", "Marblehead, MA"))
+    caption = build_caption(
+        recommendations,
+        settings.get("location_name", "Marblehead, MA"),
+        target_date=generated_at_dt.date(),
+        weather=weather,
+        tides=tides,
+    )
     metadata = {
         "generated_at": generated_at,
         "location_name": settings.get("location_name", "Marblehead, MA"),
@@ -354,6 +360,7 @@ def main() -> None:
         "noaa_station_id": settings.get("noaa_station_id"),
         "noaa_station_label": settings.get("noaa_station_label"),
         "days_to_forecast": days,
+        "caption_target_date": generated_at_dt.date().isoformat(),
         "caption": caption,
         "asset_version": asset_version,
         "latest_jpg": "latest.jpg",

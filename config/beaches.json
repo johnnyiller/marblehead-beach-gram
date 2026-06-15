@@ -5,24 +5,24 @@
     {
       "name": "Gas House Beach",
       "short_name": "Gas House",
-      "display_note": "High tide: paddle boarding. Low tide: Brown's Island walk, though Preston is usually the better low-tide walk.",
+      "display_note": "High tide: paddle boarding, especially if the tide window is a little early or late for Riverhead. Low tide: Brown's Island walk, though Preston is usually the better low-tide walk.",
       "rules": [
         {
           "event_type": "H",
           "activity": "Paddle board / harbor float",
-          "start_minutes": -120,
-          "end_minutes": 120,
-          "base_score": 84,
+          "start_minutes": -150,
+          "end_minutes": 150,
+          "base_score": 86,
           "wind_profile": "paddle",
           "sun_required": true,
-          "note": "Best near high tide for paddle boarding in the harbor. Avoid if winds are too strong."
+          "note": "Good high-tide paddle option, especially if Riverhead's ideal high-tide window is a little too early or late. Avoid if winds are up."
         },
         {
           "event_type": "L",
           "activity": "Walk to Brown's Island",
           "start_minutes": -180,
           "end_minutes": 60,
-          "base_score": 72,
+          "base_score": 66,
           "wind_profile": "walk",
           "sun_required": true,
           "note": "Fun around low tide when the route is exposed, but usually second choice behind Preston for a pure low-tide walk. Leave margin for the tide turning."
@@ -38,11 +38,28 @@
           "event_type": "L",
           "activity": "Low-tide walk / tide pools",
           "start_minutes": -180,
-          "end_minutes": 60,
-          "base_score": 92,
+          "end_minutes": 90,
+          "base_score": 112,
           "wind_profile": "walk",
           "sun_required": true,
-          "note": "Best when the tide is already out and continuing out, or has only been coming in for an hour or so."
+          "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent."
+        }
+      ]
+    },
+    {
+      "name": "Riverhead Beach",
+      "short_name": "Riverhead",
+      "display_note": "Across from Devereux. Excellent paddleboarding near high tide; not great at low tide because the carry gets long.",
+      "rules": [
+        {
+          "event_type": "H",
+          "activity": "High-tide paddle board",
+          "start_minutes": -90,
+          "end_minutes": 90,
+          "base_score": 102,
+          "wind_profile": "paddle",
+          "sun_required": true,
+          "note": "Great high-tide paddleboarding spot across from Devereux. Skip it when the tide is low or the wind is up."
         }
       ]
     },
@@ -70,6 +87,33 @@
           "wind_profile": "walk",
           "sun_required": false,
           "note": "Good general beach option when the weather is better than the more tide-specific windows."
+        }
+      ]
+    },
+    {
+      "name": "Devereux Picnic Shelter",
+      "short_name": "Picnic Shelter",
+      "display_note": "Covered fallback for rainy or threatening beach weather.",
+      "rules": [
+        {
+          "event_type": "H",
+          "activity": "Sit under the Picnic Shelter",
+          "start_minutes": -240,
+          "end_minutes": 240,
+          "base_score": 58,
+          "wind_profile": "shelter",
+          "sun_required": false,
+          "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter."
+        },
+        {
+          "event_type": "L",
+          "activity": "Sit under the Picnic Shelter",
+          "start_minutes": -240,
+          "end_minutes": 240,
+          "base_score": 58,
+          "wind_profile": "shelter",
+          "sun_required": false,
+          "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter."
         }
       ]
     }
