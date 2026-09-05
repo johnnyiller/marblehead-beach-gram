@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:01.07,Default,,0,0,0,,Marblehead,
+Dialogue: 0,0:00:01.69,0:00:04.43,Default,,0,0,0,,it’s a soft, not-quite-settled\Nbeach day
+Dialogue: 0,0:00:04.43,0:00:06.99,Default,,0,0,0,,for Saturday September 5th.
+Dialogue: 0,0:00:06.99,0:00:08.77,Default,,0,0,0,,If you’re going, aim for 12:00
+Dialogue: 0,0:00:08.77,0:00:11.31,Default,,0,0,0,,PM to 4:00 PM at Devereux
+Dialogue: 0,0:00:11.31,0:00:13.49,Default,,0,0,0,,Picnic Shelter or Preston\NBeach.
+Dialogue: 0,0:00:14.25,0:00:17.71,Default,,0,0,0,,Low tide is 12:07 PM, with
+Dialogue: 0,0:00:17.71,0:00:20.45,Default,,0,0,0,,highs at 6:09 AM and 6:31
+Dialogue: 0,0:00:20.45,0:00:21.39,Default,,0,0,0,,PM.
+Dialogue: 0,0:00:21.95,0:00:24.93,Default,,0,0,0,,Expect around 66 degrees, a\Nslight
+Dialogue: 0,0:00:24.93,0:00:27.39,Default,,0,0,0,,chance of rain showers, and\Nwind
+Dialogue: 0,0:00:27.39,0:00:28.83,Default,,0,0,0,,at 10 mph,
+Dialogue: 0,0:00:29.49,0:00:31.93,Default,,0,0,0,,though it may reach 13 mph,
+Dialogue: 0,0:00:32.23,0:00:34.66,Default,,0,0,0,,so be careful on a\Npaddleboard.

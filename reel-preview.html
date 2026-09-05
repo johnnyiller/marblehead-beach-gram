@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tidegram Reel Preview</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    body { margin: 0; background: #f5efe3; color: #1f3750; }
+    main { max-width: 900px; margin: 0 auto; padding: 28px 20px 56px; }
+    video, img { width: min(100%, 420px); border-radius: 12px; box-shadow: 0 16px 42px rgba(31,55,80,.16); background: #efe6d6; }
+    .media { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+    pre { white-space: pre-wrap; line-height: 1.5; background: white; border-radius: 8px; padding: 16px; }
+    a { color: #236f7a; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Tidegram Reel Preview</h1>
+    <div class="media">
+      <div>
+        <h2>Reel</h2>
+        <video src="latest-reel.mp4" controls playsinline preload="metadata"></video>
+        <p><a href="latest-reel.mp4">MP4</a></p>
+      </div>
+      <div>
+        <h2>Image</h2>
+        <img src="latest-reel.jpg" alt="Tidegram image" />
+        <p><a href="latest-reel.jpg">JPG</a></p>
+      </div>
+    </div>
+    <h2>Narration</h2>
+    <pre>Marblehead, it’s a soft, not-quite-settled beach day for Saturday September 5th. If you’re going, aim for 12:00 PM to 4:00 PM at Devereux Picnic Shelter or Preston Beach. Low tide is 12:07 PM, with highs at 6:09 AM and 6:31 PM. Expect around 66 degrees, a slight chance of rain showers, and wind at 10 mph, though it may reach 13 mph, so be careful on a paddleboard.</pre>
+  </main>
+</body>
+</html>
