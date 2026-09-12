@@ -1,0 +1,25 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:02.95,Default,,0,0,0,,Marblehead has that bright,\Nend-of-summer
+Dialogue: 0,0:00:02.95,0:00:05.69,Default,,0,0,0,,postcard feel today, Saturday\NSeptember
+Dialogue: 0,0:00:05.69,0:00:06.39,Default,,0,0,0,,12th.
+Dialogue: 0,0:00:06.69,0:00:08.75,Default,,0,0,0,,If you’re aiming for Riverhead\NBeach,
+Dialogue: 0,0:00:08.91,0:00:11.15,Default,,0,0,0,,the sweet spot is 11:30 AM
+Dialogue: 0,0:00:11.15,0:00:13.27,Default,,0,0,0,,to 2:00 PM sunny, around 67
+Dialogue: 0,0:00:13.27,0:00:16.37,Default,,0,0,0,,degrees, with a 7 mph breeze,
+Dialogue: 0,0:00:16.37,0:00:19.05,Default,,0,0,0,,just right for a high-tide\Npaddle
+Dialogue: 0,0:00:19.05,0:00:19.17,Default,,0,0,0,,board.
+Dialogue: 0,0:00:19.17,0:00:22.07,Default,,0,0,0,,High tides are 12:24 AM and
+Dialogue: 0,0:00:22.07,0:00:25.41,Default,,0,0,0,,12:47 PM; lows are 6:31 AM
+Dialogue: 0,0:00:26.19,0:00:27.33,Default,,0,0,0,,and 6:53 PM.
+Dialogue: 0,0:00:27.33,0:00:30.82,Default,,0,0,0,,A pretty one to remember.
