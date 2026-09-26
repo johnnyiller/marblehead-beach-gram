@@ -1,0 +1,632 @@
+{
+  "generated_at": "2026-09-26T08:19:55.589649-04:00",
+  "location_name": "Marblehead, MA",
+  "timezone": "America/New_York",
+  "latitude": 42.5051,
+  "longitude": -70.8578,
+  "noaa_station_id": "8442645",
+  "noaa_station_label": "Salem, Salem Harbor, MA",
+  "days_to_forecast": 5,
+  "caption_target_date": "2026-09-26",
+  "caption": "Marblehead, MA beach outlook for Sat Sep 26 🌊☀️\nBest window: 6:00 AM–9:00 AM at Picnic Shelter.\nSit under the Picnic Shelter. Recommended tide: Low 5:22 AM · 0.4 ft.\nWeather: Patchy Fog, Rain Showers; temps 57°F to 59°F; wind 26 mph; rain chance peaks near 100%.\nTides: High: 11:34 AM, 11:54 PM; Low: 5:22 AM, 5:41 PM.\nHeads up: Rain/threatening weather: Picnic Shelter is the sensible fallback. Paddleboard caution: wind may reach 26 mph. Fog may reduce visibility near the water.\n\nBuilt from NOAA tides + NWS hourly weather.\n#MarbleheadMA #NorthShoreMA #BeachWeather #TideWatch",
+  "asset_version": "20260926081955",
+  "latest_jpg": "latest.jpg",
+  "latest_png": "latest.png",
+  "dated_jpg": "assets/tidegram-2026-09-26-20260926081955.jpg",
+  "dated_png": "assets/tidegram-2026-09-26-20260926081955.png",
+  "latest_reel_jpg": "latest-reel.jpg",
+  "latest_reel_png": "latest-reel.png",
+  "dated_reel_jpg": "assets/tidegram-2026-09-26-20260926081955-reel.jpg",
+  "dated_reel_png": "assets/tidegram-2026-09-26-20260926081955-reel.png",
+  "recommendations": [
+    {
+      "date": "2026-09-26",
+      "day_label": "Sat Sep 26",
+      "start": "2026-09-26T06:00:00-04:00",
+      "end": "2026-09-26T09:00:00-04:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-09-26T05:22:00-04:00",
+      "tide_height_ft": 0.397,
+      "forecast": "Rain Showers",
+      "temperature_f": 58,
+      "wind_speed_text": "23 mph",
+      "precip_probability": 100,
+      "score": 175.1,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-09-26T08:00:00-04:00",
+          "temperature_f": 58,
+          "forecast": "Rain Showers",
+          "precip_probability": 100,
+          "wind_speed_text": "23 mph"
+        },
+        {
+          "time": "2026-09-26T09:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Rain Showers",
+          "precip_probability": 100,
+          "wind_speed_text": "24 mph"
+        },
+        {
+          "time": "2026-09-26T10:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Rain Showers",
+          "precip_probability": 100,
+          "wind_speed_text": "25 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-09-26T05:22:00-04:00",
+          "height_ft": 0.397,
+          "display_label": "Low 5:22 AM 0.4 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-26T11:34:00-04:00",
+          "height_ft": 9.242,
+          "display_label": "High 11:34 AM 9.2 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-26T17:41:00-04:00",
+          "height_ft": 0.159,
+          "display_label": "Low 5:41 PM 0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-26T23:54:00-04:00",
+          "height_ft": 9.377,
+          "display_label": "High 11:54 PM 9.4 ft"
+        }
+      ],
+      "window_label": "6:00 AM–9:00 AM",
+      "tide_label_full": "Low 5:22 AM · 0.4 ft",
+      "daily_tides_label": "High: 11:34 AM, 11:54 PM; Low: 5:22 AM, 5:41 PM",
+      "weather": "58°F · Rain Showers · 23 mph · 100% rain"
+    },
+    {
+      "date": "2026-09-27",
+      "day_label": "Sun Sep 27",
+      "start": "2026-09-27T09:30:00-04:00",
+      "end": "2026-09-27T13:30:00-04:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "High",
+      "tide_time": "2026-09-27T12:10:00-04:00",
+      "tide_height_ft": 9.718,
+      "forecast": "Patchy Fog",
+      "temperature_f": 60,
+      "wind_speed_text": "23 mph",
+      "precip_probability": 100,
+      "score": 183.4,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-09-27T09:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Patchy Fog",
+          "precip_probability": 100,
+          "wind_speed_text": "25 mph"
+        },
+        {
+          "time": "2026-09-27T11:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Patchy Fog",
+          "precip_probability": 100,
+          "wind_speed_text": "23 mph"
+        },
+        {
+          "time": "2026-09-27T13:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Patchy Fog",
+          "precip_probability": 100,
+          "wind_speed_text": "23 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-09-27T05:59:00-04:00",
+          "height_ft": 0.211,
+          "display_label": "Low 5:59 AM 0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-27T12:10:00-04:00",
+          "height_ft": 9.718,
+          "display_label": "High 12:10 PM 9.7 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-27T18:23:00-04:00",
+          "height_ft": -0.281,
+          "display_label": "Low 6:23 PM -0.3 ft"
+        }
+      ],
+      "window_label": "9:30 AM–1:30 PM",
+      "tide_label_full": "High 12:10 PM · 9.7 ft",
+      "daily_tides_label": "High: 12:10 PM; Low: 5:59 AM, 6:23 PM",
+      "weather": "60°F · Patchy Fog · 23 mph · 100% rain"
+    },
+    {
+      "date": "2026-09-28",
+      "day_label": "Mon Sep 28",
+      "start": "2026-09-28T06:30:00-04:00",
+      "end": "2026-09-28T10:30:00-04:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-09-28T06:38:00-04:00",
+      "tide_height_ft": 0.098,
+      "forecast": "Patchy Fog",
+      "temperature_f": 60,
+      "wind_speed_text": "20 mph",
+      "precip_probability": 85,
+      "score": 163.9,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-09-28T06:00:00-04:00",
+          "temperature_f": 58,
+          "forecast": "Patchy Fog",
+          "precip_probability": 100,
+          "wind_speed_text": "20 mph"
+        },
+        {
+          "time": "2026-09-28T08:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Patchy Fog",
+          "precip_probability": 100,
+          "wind_speed_text": "18 mph"
+        },
+        {
+          "time": "2026-09-28T10:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Patchy Fog",
+          "precip_probability": 85,
+          "wind_speed_text": "20 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-09-28T00:34:00-04:00",
+          "height_ft": 9.473,
+          "display_label": "High 12:34 AM 9.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-28T06:38:00-04:00",
+          "height_ft": 0.098,
+          "display_label": "Low 6:38 AM 0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-28T12:49:00-04:00",
+          "height_ft": 10.123,
+          "display_label": "High 12:49 PM 10.1 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-28T19:06:00-04:00",
+          "height_ft": -0.61,
+          "display_label": "Low 7:06 PM -0.6 ft"
+        }
+      ],
+      "window_label": "6:30 AM–10:30 AM",
+      "tide_label_full": "Low 6:38 AM · 0.1 ft",
+      "daily_tides_label": "High: 12:34 AM, 12:49 PM; Low: 6:38 AM, 7:06 PM",
+      "weather": "60°F · Patchy Fog · 20 mph · 85% rain"
+    },
+    {
+      "date": "2026-09-29",
+      "day_label": "Tue Sep 29",
+      "start": "2026-09-29T06:00:00-04:00",
+      "end": "2026-09-29T10:00:00-04:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-09-29T07:19:00-04:00",
+      "tide_height_ft": 0.081,
+      "forecast": "Chance Rain Showers",
+      "temperature_f": 57,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 32,
+      "score": 199.9,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-09-29T06:00:00-04:00",
+          "temperature_f": 57,
+          "forecast": "Chance Rain Showers",
+          "precip_probability": 32,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-09-29T08:00:00-04:00",
+          "temperature_f": 57,
+          "forecast": "Slight Chance Rain Showers",
+          "precip_probability": 18,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-09-29T10:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Mostly Cloudy",
+          "precip_probability": 12,
+          "wind_speed_text": "8 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-09-29T01:17:00-04:00",
+          "height_ft": 9.466,
+          "display_label": "High 1:17 AM 9.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-29T07:19:00-04:00",
+          "height_ft": 0.081,
+          "display_label": "Low 7:19 AM 0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-29T13:30:00-04:00",
+          "height_ft": 10.398,
+          "display_label": "High 1:30 PM 10.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-29T19:52:00-04:00",
+          "height_ft": -0.778,
+          "display_label": "Low 7:52 PM -0.8 ft"
+        }
+      ],
+      "window_label": "6:00 AM–10:00 AM",
+      "tide_label_full": "Low 7:19 AM · 0.1 ft",
+      "daily_tides_label": "High: 1:17 AM, 1:30 PM; Low: 7:19 AM, 7:52 PM",
+      "weather": "57°F · Chance Rain Showers · 8 mph · 32% rain"
+    },
+    {
+      "date": "2026-09-30",
+      "day_label": "Wed Sep 30",
+      "start": "2026-09-30T06:00:00-04:00",
+      "end": "2026-09-30T09:30:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-09-30T08:04:00-04:00",
+      "tide_height_ft": 0.174,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 60,
+      "wind_speed_text": "3 mph",
+      "precip_probability": 0,
+      "score": 166.2,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-09-30T06:00:00-04:00",
+          "temperature_f": 57,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "3 mph"
+        },
+        {
+          "time": "2026-09-30T08:00:00-04:00",
+          "temperature_f": 58,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "3 mph"
+        },
+        {
+          "time": "2026-09-30T09:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "3 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-09-30T02:03:00-04:00",
+          "height_ft": 9.337,
+          "display_label": "High 2:03 AM 9.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-30T08:04:00-04:00",
+          "height_ft": 0.174,
+          "display_label": "Low 8:04 AM 0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-09-30T14:17:00-04:00",
+          "height_ft": 10.502,
+          "display_label": "High 2:17 PM 10.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-09-30T20:42:00-04:00",
+          "height_ft": -0.765,
+          "display_label": "Low 8:42 PM -0.8 ft"
+        }
+      ],
+      "window_label": "6:00 AM–9:30 AM",
+      "tide_label_full": "Low 8:04 AM · 0.2 ft",
+      "daily_tides_label": "High: 2:03 AM, 2:17 PM; Low: 8:04 AM, 8:42 PM",
+      "weather": "60°F · Mostly Sunny · 3 mph"
+    },
+    {
+      "date": "2026-10-01",
+      "day_label": "Thu Oct 1",
+      "start": "2026-10-01T06:00:00-04:00",
+      "end": "2026-10-01T10:00:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-10-01T08:54:00-04:00",
+      "tide_height_ft": 0.366,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 61,
+      "wind_speed_text": "6 mph",
+      "precip_probability": 2,
+      "score": 157.9,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-01T06:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Partly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "5 mph"
+        },
+        {
+          "time": "2026-10-01T08:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-10-01T10:00:00-04:00",
+          "temperature_f": 63,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "7 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-10-01T02:54:00-04:00",
+          "height_ft": 9.096,
+          "display_label": "High 2:54 AM 9.1 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-01T08:54:00-04:00",
+          "height_ft": 0.366,
+          "display_label": "Low 8:54 AM 0.4 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-01T15:08:00-04:00",
+          "height_ft": 10.428,
+          "display_label": "High 3:08 PM 10.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-01T21:37:00-04:00",
+          "height_ft": -0.596,
+          "display_label": "Low 9:37 PM -0.6 ft"
+        }
+      ],
+      "window_label": "6:00 AM–10:00 AM",
+      "tide_label_full": "Low 8:54 AM · 0.4 ft",
+      "daily_tides_label": "High: 2:54 AM, 3:08 PM; Low: 8:54 AM, 9:37 PM",
+      "weather": "61°F · Mostly Sunny · 6 mph · 2% rain"
+    }
+  ],
+  "tide_events": [
+    {
+      "time": "2026-09-26T05:22:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.397,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-26T11:34:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.242,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-26T17:41:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.159,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-26T23:54:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.377,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-27T05:59:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.211,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-27T12:10:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.718,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-27T18:23:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.281,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-28T00:34:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.473,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-28T06:38:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.098,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-28T12:49:00-04:00",
+      "event_type": "H",
+      "height_ft": 10.123,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-28T19:06:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.61,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-29T01:17:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.466,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-29T07:19:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.081,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-29T13:30:00-04:00",
+      "event_type": "H",
+      "height_ft": 10.398,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-29T19:52:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.778,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-30T02:03:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.337,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-30T08:04:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.174,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-30T14:17:00-04:00",
+      "event_type": "H",
+      "height_ft": 10.502,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-09-30T20:42:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.765,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-01T02:54:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.096,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-01T08:54:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.366,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-01T15:08:00-04:00",
+      "event_type": "H",
+      "height_ft": 10.428,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-01T21:37:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.596,
+      "station_id": "8442645"
+    }
+  ],
+  "weather_period_count": 145,
+  "image_generation_mode": "openai_full_post",
+  "image_model": "gpt-image-2",
+  "image_size": "1088x1360",
+  "reel_image_generation_mode": "openai_reel_image",
+  "reel_image_model": "gpt-image-2",
+  "reel_image_size": "1088x1936",
+  "reel_image_final_size": "1080x1920",
+  "art_direction": "minimal dune grass along the lower edge with soft golden sun and calm open sky; Visual style profile: watercolor field journal: soft watercolor washes, light ink contour lines, warm sketchbook paper grain, restrained hand-painted weather icons, and airy negative space. Weather cue: moody rain-ready coast with layered slate-gray clouds, darker teal water, and a few tiny raindrop accents; still calm, readable, and not dramatic. Rotating coastal motif: beach-rose leaves and sparse dune grass as small lower-edge accents. Card weather cues: Saturday September 26th: stormy; Sunday September 27th: stormy; Monday September 28th: stormy. Keep all weather, texture, and motif details minimal, quiet, and behind or above the content",
+  "sources": {
+    "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
+    "weather": "National Weather Service hourly forecast API",
+    "beach_rules": "User-provided Marblehead beach preferences in config/beaches.json"
+  },
+  "reel_generated_at": "2026-09-26T08:22:10.345177-04:00",
+  "reel_video_size": "1080x1920",
+  "reel_min_duration_seconds": 60.0,
+  "reel_voice_lead_in_seconds": 0.25,
+  "reel_script_model": "gpt-5.5",
+  "reel_audio_model": "gpt-audio-1.5",
+  "reel_voice_profile": "rain_check",
+  "reel_voice_profile_label": "Rain check",
+  "reel_voice": "sage",
+  "reel_voice_instructions": "Use a clear, grounded, gently cautious delivery with practical emphasis and a warm finish.",
+  "reel_background_bed": true,
+  "reel_wave_audio_placement": "after_voice",
+  "reel_wave_audio": "assets/audio/waves-public-domain.mp3",
+  "reel_wave_audio_source": "Wikimedia Commons File:Waves.ogg by Dsw4, public domain",
+  "reel_wave_audio_url": "https://commons.wikimedia.org/wiki/File:Waves.ogg",
+  "reel_burned_captions": true,
+  "reel_caption_overlay": "latest-reel.captions.ass",
+  "reel_caption_overlay_source": "reel_narration",
+  "reel_caption_timing_source": "whisper-1:word",
+  "reel_transcription_model": "whisper-1",
+  "reel_transcription_word_count": 83,
+  "reel_caption_timing_error": null,
+  "reel_draft_narration": "Good morning Marblehead, MA. Here is today's beach outlook. Saturday September 26th: Devereux Picnic Shelter, with the best window from 6:00 AM–9:00 AM. Expect around 58 degrees, rain showers, wind 23 mph, 100 percent rain chance. Tide notes: high tide 11:34 AM, 11:54 PM, low tide 5:22 AM, 5:41 PM. Weather: Patchy Fog, Rain Showers; temps 57°F to 59°F; wind 26 mph; rain chance peaks near 100%. Heads up: Rain/threatening weather: Picnic Shelter is the sensible fallback. Paddleboard caution: wind may reach 26 mph. Fog may reduce visibility near the water. Built from NOAA tides and National Weather Service hourly forecast data.",
+  "reel_narration": "Marblehead, this is a soggy one for Saturday September 26th. If you’re trying to get near the water, the usable window is 6:00 AM–9:00 AM at the Devereux Picnic Shelter. Plan to sit under cover: around 58 degrees, rain showers, wind 23 mph, and a 100 percent chance of rain. Wind may reach 26 mph, so I’d be cautious with paddleboards, and patchy fog could cut visibility. Low tide is 5:22 AM and 5:41 PM; high tide is 11:34 AM and 11:54 PM.",
+  "reel_caption": "Marblehead, this is a soggy one for Saturday September 26th. If you’re trying to get near the water, the usable window is 6:00 AM–9:00 AM at the Devereux Picnic Shelter. Plan to sit under cover: around 58 degrees, rain showers, wind 23 mph, and a 100 percent chance of rain. Wind may reach 26 mph, so I’d be cautious with paddleboards, and patchy fog could cut visibility. Low tide is 5:22 AM and 5:41 PM; high tide is 11:34 AM and 11:54 PM.\n\nVoiceover is AI-generated.",
+  "latest_reel_mp4": "latest-reel.mp4",
+  "latest_reel_audio_mp3": "latest-reel-audio.mp3",
+  "dated_reel_mp4": "assets/tidegram-2026-09-26-20260926081955-reel.mp4",
+  "dated_reel_audio_mp3": "assets/tidegram-2026-09-26-20260926081955-reel-audio.mp3"
+}
