@@ -1,0 +1,632 @@
+{
+  "generated_at": "2026-10-03T08:40:37.627904-04:00",
+  "location_name": "Marblehead, MA",
+  "timezone": "America/New_York",
+  "latitude": 42.5051,
+  "longitude": -70.8578,
+  "noaa_station_id": "8442645",
+  "noaa_station_label": "Salem, Salem Harbor, MA",
+  "days_to_forecast": 5,
+  "caption_target_date": "2026-10-03",
+  "caption": "Marblehead, MA beach outlook for Sat Oct 3 🌊☀️\nBest window: 8:00 AM–12:00 PM at Preston.\nLow-tide walk / tide pools. Recommended tide: Low 10:49 AM · 0.9 ft.\nWeather: Sunny, Clear; temps 55°F to 63°F; wind 9 mph; little to no rain showing.\nTides: High: 4:51 AM, 5:10 PM; Low: 10:49 AM, 11:40 PM.\n\nBuilt from NOAA tides + NWS hourly weather.\n#MarbleheadMA #NorthShoreMA #BeachWeather #TideWatch",
+  "asset_version": "20261003084037",
+  "latest_jpg": "latest.jpg",
+  "latest_png": "latest.png",
+  "dated_jpg": "assets/tidegram-2026-10-03-20261003084037.jpg",
+  "dated_png": "assets/tidegram-2026-10-03-20261003084037.png",
+  "latest_reel_jpg": "latest-reel.jpg",
+  "latest_reel_png": "latest-reel.png",
+  "dated_reel_jpg": "assets/tidegram-2026-10-03-20261003084037-reel.jpg",
+  "dated_reel_png": "assets/tidegram-2026-10-03-20261003084037-reel.png",
+  "recommendations": [
+    {
+      "date": "2026-10-03",
+      "day_label": "Sat Oct 3",
+      "start": "2026-10-03T08:00:00-04:00",
+      "end": "2026-10-03T12:00:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-10-03T10:49:00-04:00",
+      "tide_height_ft": 0.864,
+      "forecast": "Sunny",
+      "temperature_f": 63,
+      "wind_speed_text": "8 mph",
+      "precip_probability": 0,
+      "score": 175.8,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-03T08:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-10-03T10:00:00-04:00",
+          "temperature_f": 62,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-10-03T12:00:00-04:00",
+          "temperature_f": 62,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-10-03T04:51:00-04:00",
+          "height_ft": 8.508,
+          "display_label": "High 4:51 AM 8.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-03T10:49:00-04:00",
+          "height_ft": 0.864,
+          "display_label": "Low 10:49 AM 0.9 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-03T17:10:00-04:00",
+          "height_ft": 9.96,
+          "display_label": "High 5:10 PM 10.0 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-03T23:40:00-04:00",
+          "height_ft": -0.094,
+          "display_label": "Low 11:40 PM -0.1 ft"
+        }
+      ],
+      "window_label": "8:00 AM–12:00 PM",
+      "tide_label_full": "Low 10:49 AM · 0.9 ft",
+      "daily_tides_label": "High: 4:51 AM, 5:10 PM; Low: 10:49 AM, 11:40 PM",
+      "weather": "63°F · Sunny · 8 mph"
+    },
+    {
+      "date": "2026-10-04",
+      "day_label": "Sun Oct 4",
+      "start": "2026-10-04T09:00:00-04:00",
+      "end": "2026-10-04T13:00:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-10-04T11:56:00-04:00",
+      "tide_height_ft": 1.006,
+      "forecast": "Sunny",
+      "temperature_f": 60,
+      "wind_speed_text": "10 mph",
+      "precip_probability": 0,
+      "score": 173.8,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-04T09:00:00-04:00",
+          "temperature_f": 56,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-10-04T11:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "10 mph"
+        },
+        {
+          "time": "2026-10-04T13:00:00-04:00",
+          "temperature_f": 60,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-10-04T05:59:00-04:00",
+          "height_ft": 8.367,
+          "display_label": "High 5:59 AM 8.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-04T11:56:00-04:00",
+          "height_ft": 1.006,
+          "display_label": "Low 11:56 AM 1.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-04T18:20:00-04:00",
+          "height_ft": 9.768,
+          "display_label": "High 6:20 PM 9.8 ft"
+        }
+      ],
+      "window_label": "9:00 AM–1:00 PM",
+      "tide_label_full": "Low 11:56 AM · 1.0 ft",
+      "daily_tides_label": "High: 5:59 AM, 6:20 PM; Low: 11:56 AM",
+      "weather": "60°F · Sunny · 10 mph"
+    },
+    {
+      "date": "2026-10-05",
+      "day_label": "Mon Oct 5",
+      "start": "2026-10-05T06:00:00-04:00",
+      "end": "2026-10-05T10:00:00-04:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "High",
+      "tide_time": "2026-10-05T07:10:00-04:00",
+      "tide_height_ft": 8.467,
+      "forecast": "Slight Chance Rain Showers",
+      "temperature_f": 54,
+      "wind_speed_text": "3 mph",
+      "precip_probability": 23,
+      "score": 179.0,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-05T06:00:00-04:00",
+          "temperature_f": 54,
+          "forecast": "Slight Chance Rain Showers",
+          "precip_probability": 23,
+          "wind_speed_text": "3 mph"
+        },
+        {
+          "time": "2026-10-05T08:00:00-04:00",
+          "temperature_f": 55,
+          "forecast": "Mostly Cloudy",
+          "precip_probability": 7,
+          "wind_speed_text": "5 mph"
+        },
+        {
+          "time": "2026-10-05T10:00:00-04:00",
+          "temperature_f": 59,
+          "forecast": "Partly Sunny",
+          "precip_probability": 4,
+          "wind_speed_text": "7 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-10-05T00:48:00-04:00",
+          "height_ft": 0.034,
+          "display_label": "Low 12:48 AM 0.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-05T07:10:00-04:00",
+          "height_ft": 8.467,
+          "display_label": "High 7:10 AM 8.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-05T13:06:00-04:00",
+          "height_ft": 0.953,
+          "display_label": "Low 1:06 PM 1.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-05T19:31:00-04:00",
+          "height_ft": 9.721,
+          "display_label": "High 7:31 PM 9.7 ft"
+        }
+      ],
+      "window_label": "6:00 AM–10:00 AM",
+      "tide_label_full": "High 7:10 AM · 8.5 ft",
+      "daily_tides_label": "High: 7:10 AM, 7:31 PM; Low: 12:48 AM, 1:06 PM",
+      "weather": "54°F · Slight Chance Rain Showers · 3 mph · 23% rain"
+    },
+    {
+      "date": "2026-10-06",
+      "day_label": "Tue Oct 6",
+      "start": "2026-10-06T11:30:00-04:00",
+      "end": "2026-10-06T15:30:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-10-06T14:15:00-04:00",
+      "tide_height_ft": 0.696,
+      "forecast": "Sunny",
+      "temperature_f": 58,
+      "wind_speed_text": "13 mph",
+      "precip_probability": 0,
+      "score": 124.0,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-06T11:00:00-04:00",
+          "temperature_f": 53,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "14 mph"
+        },
+        {
+          "time": "2026-10-06T13:00:00-04:00",
+          "temperature_f": 56,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "14 mph"
+        },
+        {
+          "time": "2026-10-06T15:00:00-04:00",
+          "temperature_f": 58,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "13 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-10-06T01:54:00-04:00",
+          "height_ft": 0.011,
+          "display_label": "Low 1:54 AM 0.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-06T08:16:00-04:00",
+          "height_ft": 8.791,
+          "display_label": "High 8:16 AM 8.8 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-06T14:15:00-04:00",
+          "height_ft": 0.696,
+          "display_label": "Low 2:15 PM 0.7 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-06T20:37:00-04:00",
+          "height_ft": 9.779,
+          "display_label": "High 8:37 PM 9.8 ft"
+        }
+      ],
+      "window_label": "11:30 AM–3:30 PM",
+      "tide_label_full": "Low 2:15 PM · 0.7 ft",
+      "daily_tides_label": "High: 8:16 AM, 8:37 PM; Low: 1:54 AM, 2:15 PM",
+      "weather": "58°F · Sunny · 13 mph"
+    },
+    {
+      "date": "2026-10-07",
+      "day_label": "Wed Oct 7",
+      "start": "2026-10-07T08:00:00-04:00",
+      "end": "2026-10-07T10:30:00-04:00",
+      "beach_name": "Riverhead Beach",
+      "beach_short_name": "Riverhead",
+      "activity": "High-tide paddle board",
+      "tide_label": "High",
+      "tide_time": "2026-10-07T09:16:00-04:00",
+      "tide_height_ft": 9.215,
+      "forecast": "Sunny",
+      "temperature_f": 52,
+      "wind_speed_text": "5 mph",
+      "precip_probability": 0,
+      "score": 139.0,
+      "note": "Great high-tide paddleboarding spot across from Devereux. Skip it when the tide is low or the wind is up.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-07T08:00:00-04:00",
+          "temperature_f": 46,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-10-07T09:00:00-04:00",
+          "temperature_f": 49,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-10-07T10:00:00-04:00",
+          "temperature_f": 52,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "5 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-10-07T02:56:00-04:00",
+          "height_ft": -0.089,
+          "display_label": "Low 2:56 AM -0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-07T09:16:00-04:00",
+          "height_ft": 9.215,
+          "display_label": "High 9:16 AM 9.2 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-07T15:18:00-04:00",
+          "height_ft": 0.335,
+          "display_label": "Low 3:18 PM 0.3 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-07T21:38:00-04:00",
+          "height_ft": 9.838,
+          "display_label": "High 9:38 PM 9.8 ft"
+        }
+      ],
+      "window_label": "8:00 AM–10:30 AM",
+      "tide_label_full": "High 9:16 AM · 9.2 ft",
+      "daily_tides_label": "High: 9:16 AM, 9:38 PM; Low: 2:56 AM, 3:18 PM",
+      "weather": "52°F · Sunny · 5 mph"
+    },
+    {
+      "date": "2026-10-08",
+      "day_label": "Thu Oct 8",
+      "start": "2026-10-08T13:30:00-04:00",
+      "end": "2026-10-08T17:30:00-04:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-10-08T16:15:00-04:00",
+      "tide_height_ft": -0.013,
+      "forecast": "Sunny",
+      "temperature_f": 65,
+      "wind_speed_text": "9 mph",
+      "precip_probability": 1,
+      "score": 134.0,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-10-08T13:00:00-04:00",
+          "temperature_f": 63,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-10-08T15:00:00-04:00",
+          "temperature_f": 65,
+          "forecast": "Sunny",
+          "precip_probability": 1,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-10-08T17:00:00-04:00",
+          "temperature_f": 65,
+          "forecast": "Sunny",
+          "precip_probability": 1,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-10-08T03:51:00-04:00",
+          "height_ft": -0.165,
+          "display_label": "Low 3:51 AM -0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-08T10:09:00-04:00",
+          "height_ft": 9.613,
+          "display_label": "High 10:09 AM 9.6 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-10-08T16:15:00-04:00",
+          "height_ft": -0.013,
+          "display_label": "Low 4:15 PM -0.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-10-08T22:32:00-04:00",
+          "height_ft": 9.823,
+          "display_label": "High 10:32 PM 9.8 ft"
+        }
+      ],
+      "window_label": "1:30 PM–5:30 PM",
+      "tide_label_full": "Low 4:15 PM · -0.0 ft",
+      "daily_tides_label": "High: 10:09 AM, 10:32 PM; Low: 3:51 AM, 4:15 PM",
+      "weather": "65°F · Sunny · 9 mph · 1% rain"
+    }
+  ],
+  "tide_events": [
+    {
+      "time": "2026-10-03T04:51:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.508,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-03T10:49:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.864,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-03T17:10:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.96,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-03T23:40:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.094,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-04T05:59:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.367,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-04T11:56:00-04:00",
+      "event_type": "L",
+      "height_ft": 1.006,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-04T18:20:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.768,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-05T00:48:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.034,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-05T07:10:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.467,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-05T13:06:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.953,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-05T19:31:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.721,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-06T01:54:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.011,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-06T08:16:00-04:00",
+      "event_type": "H",
+      "height_ft": 8.791,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-06T14:15:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.696,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-06T20:37:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.779,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-07T02:56:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.089,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-07T09:16:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.215,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-07T15:18:00-04:00",
+      "event_type": "L",
+      "height_ft": 0.335,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-07T21:38:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.838,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-08T03:51:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.165,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-08T10:09:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.613,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-08T16:15:00-04:00",
+      "event_type": "L",
+      "height_ft": -0.013,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-10-08T22:32:00-04:00",
+      "event_type": "H",
+      "height_ft": 9.823,
+      "station_id": "8442645"
+    }
+  ],
+  "weather_period_count": 145,
+  "image_generation_mode": "openai_full_post",
+  "image_model": "gpt-image-2",
+  "image_size": "1088x1360",
+  "reel_image_generation_mode": "openai_reel_image",
+  "reel_image_model": "gpt-image-2",
+  "reel_image_size": "1088x1936",
+  "reel_image_final_size": "1080x1920",
+  "art_direction": "simple rocky cove shapes in granite gray and sand with a tiny off-white sail far from the text area; Visual style profile: vintage harbor postcard: slightly faded postcard color, gentle print texture, clean mid-century travel-poster geometry, small flat weather icons, and tidy editorial spacing. Weather cue: warm sunny beach day with a soft golden sun disk, bright cream sky, and lightly sparkling sea-glass water. Rotating coastal motif: a pair of paddleboards resting on warm sand as flat silhouettes in the header. Card weather cues: Saturday October 3rd: sunny; Sunday October 4th: sunny; Monday October 5th: rainy. Keep all weather, texture, and motif details minimal, quiet, and behind or above the content",
+  "sources": {
+    "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
+    "weather": "National Weather Service hourly forecast API",
+    "beach_rules": "User-provided Marblehead beach preferences in config/beaches.json"
+  },
+  "reel_generated_at": "2026-10-03T08:42:49.899300-04:00",
+  "reel_video_size": "1080x1920",
+  "reel_min_duration_seconds": 60.0,
+  "reel_voice_lead_in_seconds": 0.25,
+  "reel_script_model": "gpt-5.5",
+  "reel_audio_model": "gpt-audio-1.5",
+  "reel_voice_profile": "sunny_local",
+  "reel_voice_profile_label": "Sunny local",
+  "reel_voice": "marin",
+  "reel_voice_instructions": "Use a warm, bright, relaxed coastal delivery with natural pauses and a small smile in the voice.",
+  "reel_background_bed": true,
+  "reel_wave_audio_placement": "after_voice",
+  "reel_wave_audio": "assets/audio/waves-public-domain.mp3",
+  "reel_wave_audio_source": "Wikimedia Commons File:Waves.ogg by Dsw4, public domain",
+  "reel_wave_audio_url": "https://commons.wikimedia.org/wiki/File:Waves.ogg",
+  "reel_burned_captions": true,
+  "reel_caption_overlay": "latest-reel.captions.ass",
+  "reel_caption_overlay_source": "reel_narration",
+  "reel_caption_timing_source": "whisper-1:word",
+  "reel_transcription_model": "whisper-1",
+  "reel_transcription_word_count": 74,
+  "reel_caption_timing_error": null,
+  "reel_draft_narration": "Good morning Marblehead, MA. Here is today's beach outlook. Saturday October 3rd: Preston Beach, with the best window from 8:00 AM–12:00 PM. Expect around 63 degrees, sunny, wind 8 mph. Tide notes: high tide 4:51 AM, 5:10 PM, low tide 10:49 AM, 11:40 PM. Weather: Sunny, Clear; temps 55°F to 63°F; wind 9 mph; little to no rain showing. Built from NOAA tides and National Weather Service hourly forecast data.",
+  "reel_narration": "Marblehead, this is one of those beach mornings worth making a little room for. For Saturday October 3rd, Preston Beach looks especially nice from 8:00 AM to 12:00 PM. It’s sunny, around 63 degrees, with wind at 8 mph. Low tide is 10:49 AM, so it’s a good window for a low-tide walk and a little tide pool wandering. High tides are 4:51 AM and 5:10 PM, with the late low at 11:40 PM.",
+  "reel_caption": "Marblehead, this is one of those beach mornings worth making a little room for. For Saturday October 3rd, Preston Beach looks especially nice from 8:00 AM to 12:00 PM. It’s sunny, around 63 degrees, with wind at 8 mph. Low tide is 10:49 AM, so it’s a good window for a low-tide walk and a little tide pool wandering. High tides are 4:51 AM and 5:10 PM, with the late low at 11:40 PM.\n\nVoiceover is AI-generated.",
+  "latest_reel_mp4": "latest-reel.mp4",
+  "latest_reel_audio_mp3": "latest-reel-audio.mp3",
+  "dated_reel_mp4": "assets/tidegram-2026-10-03-20261003084037-reel.mp4",
+  "dated_reel_audio_mp3": "assets/tidegram-2026-10-03-20261003084037-reel-audio.mp3"
+}

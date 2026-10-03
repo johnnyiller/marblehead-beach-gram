@@ -1,0 +1,27 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:02.21,Default,,0,0,0,,Marblehead, this is one of\Nthose
+Dialogue: 0,0:00:02.21,0:00:03.93,Default,,0,0,0,,beach mornings worth making a\Nlittle
+Dialogue: 0,0:00:03.93,0:00:04.73,Default,,0,0,0,,room for.
+Dialogue: 0,0:00:05.31,0:00:07.59,Default,,0,0,0,,For Saturday October 3rd,\NPreston Beach
+Dialogue: 0,0:00:07.59,0:00:09.61,Default,,0,0,0,,looks especially nice from\N8:00 AM
+Dialogue: 0,0:00:09.61,0:00:10.51,Default,,0,0,0,,to 12:00 PM.
+Dialogue: 0,0:00:11.11,0:00:13.69,Default,,0,0,0,,It’s sunny, around 63 degrees,\Nwith
+Dialogue: 0,0:00:13.69,0:00:14.95,Default,,0,0,0,,wind at 8 mph.
+Dialogue: 0,0:00:15.67,0:00:18.19,Default,,0,0,0,,Low tide is 10:49 AM, so
+Dialogue: 0,0:00:18.19,0:00:19.45,Default,,0,0,0,,it’s a good window for a
+Dialogue: 0,0:00:19.45,0:00:21.17,Default,,0,0,0,,low-tide walk and a little\Ntide
+Dialogue: 0,0:00:21.17,0:00:21.99,Default,,0,0,0,,pool wandering.
+Dialogue: 0,0:00:22.59,0:00:24.91,Default,,0,0,0,,High tides are 4:51 AM and
+Dialogue: 0,0:00:24.91,0:00:27.43,Default,,0,0,0,,5:10 PM, with the late low
+Dialogue: 0,0:00:27.43,0:00:28.78,Default,,0,0,0,,at 11:40 PM.
