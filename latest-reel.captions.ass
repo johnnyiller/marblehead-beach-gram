@@ -1,0 +1,27 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:02.41,Default,,0,0,0,,Marblehead has one of those\Ncrisp,
+Dialogue: 0,0:00:03.07,0:00:04.97,Default,,0,0,0,,bright October beach mornings\Ntoday.
+Dialogue: 0,0:00:05.65,0:00:08.61,Default,,0,0,0,,For Saturday October 10th,\NRiverhead Beach
+Dialogue: 0,0:00:08.61,0:00:11.57,Default,,0,0,0,,looks especially lovely from\N10:30 AM
+Dialogue: 0,0:00:11.57,0:00:12.87,Default,,0,0,0,,to 1:00 PM,
+Dialogue: 0,0:00:13.47,0:00:16.35,Default,,0,0,0,,with sunny skies, around 56\Ndegrees,
+Dialogue: 0,0:00:16.45,0:00:18.49,Default,,0,0,0,,and wind at 9 mph.
+Dialogue: 0,0:00:19.33,0:00:21.71,Default,,0,0,0,,It’s a nice high-tide paddle\Nboard
+Dialogue: 0,0:00:21.71,0:00:24.47,Default,,0,0,0,,window, with high tide at\N11:41
+Dialogue: 0,0:00:24.47,0:00:25.17,Default,,0,0,0,,AM.
+Dialogue: 0,0:00:25.75,0:00:28.41,Default,,0,0,0,,Low tides are 5:24 AM and
+Dialogue: 0,0:00:28.41,0:00:29.77,Default,,0,0,0,,5:52 PM.
+Dialogue: 0,0:00:30.47,0:00:32.73,Default,,0,0,0,,A light layer, a board, and
+Dialogue: 0,0:00:32.73,0:00:34.55,Default,,0,0,0,,a little salt air that’s the
+Dialogue: 0,0:00:34.55,0:00:35.25,Default,,0,0,0,,day.
