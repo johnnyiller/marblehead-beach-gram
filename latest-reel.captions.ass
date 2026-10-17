@@ -1,0 +1,27 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:02.41,Default,,0,0,0,,Marblehead, keep a hand on\Nyour
+Dialogue: 0,0:00:02.41,0:00:03.17,Default,,0,0,0,,hat today.
+Dialogue: 0,0:00:04.11,0:00:06.65,Default,,0,0,0,,Saturday October 17th looks\Nlike a
+Dialogue: 0,0:00:06.65,0:00:08.97,Default,,0,0,0,,nice Preston Beach morning,\Nespecially
+Dialogue: 0,0:00:08.97,0:00:11.69,Default,,0,0,0,,from 7:30 AM to 11:30 AM
+Dialogue: 0,0:00:11.69,0:00:14.01,Default,,0,0,0,,for a low-tide walk and a
+Dialogue: 0,0:00:14.01,0:00:15.09,Default,,0,0,0,,poke around the tide pools.
+Dialogue: 0,0:00:15.81,0:00:17.71,Default,,0,0,0,,It’s around 50 degrees and\Ncloudy,
+Dialogue: 0,0:00:18.01,0:00:20.57,Default,,0,0,0,,with an 18 mph breeze, and
+Dialogue: 0,0:00:20.57,0:00:22.79,Default,,0,0,0,,that wind may reach 20 mph,
+Dialogue: 0,0:00:22.93,0:00:25.35,Default,,0,0,0,,so paddleboards deserve a\Nlittle extra
+Dialogue: 0,0:00:25.35,0:00:26.05,Default,,0,0,0,,caution.
+Dialogue: 0,0:00:26.55,0:00:29.13,Default,,0,0,0,,Low tide is 10:16 AM, with
+Dialogue: 0,0:00:29.13,0:00:32.53,Default,,0,0,0,,highs at 4:23 AM and 4:32
+Dialogue: 0,0:00:32.53,0:00:33.23,Default,,0,0,0,,PM.
