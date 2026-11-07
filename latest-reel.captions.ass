@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:02.23,Default,,0,0,0,,Not the prettiest beach setup\Nfor
+Dialogue: 0,0:00:02.23,0:00:05.09,Default,,0,0,0,,Marblehead on Saturday\NNovember 7th, but
+Dialogue: 0,0:00:05.09,0:00:06.83,Default,,0,0,0,,there is a usable stretch.
+Dialogue: 0,0:00:07.57,0:00:09.55,Default,,0,0,0,,Your best window is 7:30 AM
+Dialogue: 0,0:00:09.55,0:00:12.03,Default,,0,0,0,,to 11:30 AM at the Devereux
+Dialogue: 0,0:00:12.03,0:00:12.99,Default,,0,0,0,,Picnic Shelter.
+Dialogue: 0,0:00:14.03,0:00:15.91,Default,,0,0,0,,Plan on around 57 degrees,
+Dialogue: 0,0:00:16.53,0:00:18.73,Default,,0,0,0,,wind at 8 mph, and rain
+Dialogue: 0,0:00:18.73,0:00:21.47,Default,,0,0,0,,showers likely, with a 55\Npercent
+Dialogue: 0,0:00:21.47,0:00:22.17,Default,,0,0,0,,chance.
+Dialogue: 0,0:00:22.67,0:00:25.43,Default,,0,0,0,,High tide is 9:34 AM, so
+Dialogue: 0,0:00:25.43,0:00:27.35,Default,,0,0,0,,the shelter is the practical\Ncall.
+Dialogue: 0,0:00:28.37,0:00:30.35,Default,,0,0,0,,Also, patchy fog may cut down
+Dialogue: 0,0:00:30.35,0:00:32.16,Default,,0,0,0,,visibility near the water.
