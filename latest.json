@@ -1,0 +1,632 @@
+{
+  "generated_at": "2026-11-21T10:30:29.542441-05:00",
+  "location_name": "Marblehead, MA",
+  "timezone": "America/New_York",
+  "latitude": 42.5051,
+  "longitude": -70.8578,
+  "noaa_station_id": "8442645",
+  "noaa_station_label": "Salem, Salem Harbor, MA",
+  "days_to_forecast": 5,
+  "caption_target_date": "2026-11-21",
+  "caption": "Marblehead, MA beach outlook for Sat Nov 21 🌊☀️\nBest window: 11:30 AM–3:30 PM at Preston.\nLow-tide walk / tide pools. Recommended tide: Low 2:10 PM · 0.5 ft.\nWeather: Sunny, Mostly Cloudy, Mostly Sunny; temps 50°F to 61°F; wind 7 mph; little to no rain showing.\nTides: High: 7:53 AM, 8:21 PM; Low: 1:34 AM, 2:10 PM.\n\nBuilt from NOAA tides + NWS hourly weather.\n#MarbleheadMA #NorthShoreMA #BeachWeather #TideWatch",
+  "asset_version": "20261121103029",
+  "latest_jpg": "latest.jpg",
+  "latest_png": "latest.png",
+  "dated_jpg": "assets/tidegram-2026-11-21-20261121103029.jpg",
+  "dated_png": "assets/tidegram-2026-11-21-20261121103029.png",
+  "latest_reel_jpg": "latest-reel.jpg",
+  "latest_reel_png": "latest-reel.png",
+  "dated_reel_jpg": "assets/tidegram-2026-11-21-20261121103029-reel.jpg",
+  "dated_reel_png": "assets/tidegram-2026-11-21-20261121103029-reel.png",
+  "recommendations": [
+    {
+      "date": "2026-11-21",
+      "day_label": "Sat Nov 21",
+      "start": "2026-11-21T11:30:00-05:00",
+      "end": "2026-11-21T15:30:00-05:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-11-21T14:10:00-05:00",
+      "tide_height_ft": 0.486,
+      "forecast": "Sunny",
+      "temperature_f": 61,
+      "wind_speed_text": "5 mph",
+      "precip_probability": 0,
+      "score": 176.4,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-21T11:00:00-05:00",
+          "temperature_f": 59,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "2 mph"
+        },
+        {
+          "time": "2026-11-21T13:00:00-05:00",
+          "temperature_f": 61,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-11-21T15:00:00-05:00",
+          "temperature_f": 59,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "7 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-21T01:34:00-05:00",
+          "height_ft": 0.959,
+          "display_label": "Low 1:34 AM 1.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-21T07:53:00-05:00",
+          "height_ft": 9.205,
+          "display_label": "High 7:53 AM 9.2 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-21T14:10:00-05:00",
+          "height_ft": 0.486,
+          "display_label": "Low 2:10 PM 0.5 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-21T20:21:00-05:00",
+          "height_ft": 8.53,
+          "display_label": "High 8:21 PM 8.5 ft"
+        }
+      ],
+      "window_label": "11:30 AM–3:30 PM",
+      "tide_label_full": "Low 2:10 PM · 0.5 ft",
+      "daily_tides_label": "High: 7:53 AM, 8:21 PM; Low: 1:34 AM, 2:10 PM",
+      "weather": "61°F · Sunny · 5 mph"
+    },
+    {
+      "date": "2026-11-22",
+      "day_label": "Sun Nov 22",
+      "start": "2026-11-22T15:00:00-05:00",
+      "end": "2026-11-22T19:00:00-05:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-11-22T15:00:00-05:00",
+      "tide_height_ft": -0.13,
+      "forecast": "Chance Light Rain",
+      "temperature_f": 55,
+      "wind_speed_text": "7 mph",
+      "precip_probability": 34,
+      "score": 173.1,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-22T15:00:00-05:00",
+          "temperature_f": 58,
+          "forecast": "Cloudy",
+          "precip_probability": 14,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-11-22T17:00:00-05:00",
+          "temperature_f": 55,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 34,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-11-22T19:00:00-05:00",
+          "temperature_f": 54,
+          "forecast": "Heavy Rain Likely",
+          "precip_probability": 65,
+          "wind_speed_text": "6 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-22T02:21:00-05:00",
+          "height_ft": 0.756,
+          "display_label": "Low 2:21 AM 0.8 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-22T08:38:00-05:00",
+          "height_ft": 9.787,
+          "display_label": "High 8:38 AM 9.8 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-22T15:00:00-05:00",
+          "height_ft": -0.13,
+          "display_label": "Low 3:00 PM -0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-22T21:12:00-05:00",
+          "height_ft": 8.773,
+          "display_label": "High 9:12 PM 8.8 ft"
+        }
+      ],
+      "window_label": "3:00 PM–7:00 PM",
+      "tide_label_full": "Low 3:00 PM · -0.1 ft",
+      "daily_tides_label": "High: 8:38 AM, 9:12 PM; Low: 2:21 AM, 3:00 PM",
+      "weather": "55°F · Chance Light Rain · 7 mph · 34% rain"
+    },
+    {
+      "date": "2026-11-23",
+      "day_label": "Mon Nov 23",
+      "start": "2026-11-23T06:00:00-05:00",
+      "end": "2026-11-23T07:00:00-05:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-11-23T03:08:00-05:00",
+      "tide_height_ft": 0.527,
+      "forecast": "Chance Light Rain",
+      "temperature_f": 55,
+      "wind_speed_text": "14 mph",
+      "precip_probability": 48,
+      "score": 208.8,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-23T06:00:00-05:00",
+          "temperature_f": 55,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 48,
+          "wind_speed_text": "14 mph"
+        },
+        {
+          "time": "2026-11-23T07:00:00-05:00",
+          "temperature_f": 55,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 34,
+          "wind_speed_text": "12 mph"
+        },
+        {
+          "time": "2026-11-23T08:00:00-05:00",
+          "temperature_f": 56,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 37,
+          "wind_speed_text": "12 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-23T03:08:00-05:00",
+          "height_ft": 0.527,
+          "display_label": "Low 3:08 AM 0.5 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-23T09:24:00-05:00",
+          "height_ft": 10.346,
+          "display_label": "High 9:24 AM 10.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-23T15:49:00-05:00",
+          "height_ft": -0.698,
+          "display_label": "Low 3:49 PM -0.7 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-23T22:01:00-05:00",
+          "height_ft": 9.01,
+          "display_label": "High 10:01 PM 9.0 ft"
+        }
+      ],
+      "window_label": "6:00 AM–7:00 AM",
+      "tide_label_full": "Low 3:08 AM · 0.5 ft",
+      "daily_tides_label": "High: 9:24 AM, 10:01 PM; Low: 3:08 AM, 3:49 PM",
+      "weather": "55°F · Chance Light Rain · 14 mph · 48% rain"
+    },
+    {
+      "date": "2026-11-24",
+      "day_label": "Tue Nov 24",
+      "start": "2026-11-24T14:00:00-05:00",
+      "end": "2026-11-24T18:00:00-05:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-11-24T16:38:00-05:00",
+      "tide_height_ft": -1.151,
+      "forecast": "Sunny",
+      "temperature_f": 42,
+      "wind_speed_text": "10 mph",
+      "precip_probability": 0,
+      "score": 123.2,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-24T14:00:00-05:00",
+          "temperature_f": 45,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "12 mph"
+        },
+        {
+          "time": "2026-11-24T16:00:00-05:00",
+          "temperature_f": 42,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "10 mph"
+        },
+        {
+          "time": "2026-11-24T18:00:00-05:00",
+          "temperature_f": 38,
+          "forecast": "Clear",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-24T03:56:00-05:00",
+          "height_ft": 0.296,
+          "display_label": "Low 3:56 AM 0.3 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-24T10:12:00-05:00",
+          "height_ft": 10.829,
+          "display_label": "High 10:12 AM 10.8 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-24T16:38:00-05:00",
+          "height_ft": -1.151,
+          "display_label": "Low 4:38 PM -1.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-24T22:51:00-05:00",
+          "height_ft": 9.206,
+          "display_label": "High 10:51 PM 9.2 ft"
+        }
+      ],
+      "window_label": "2:00 PM–6:00 PM",
+      "tide_label_full": "Low 4:38 PM · -1.2 ft",
+      "daily_tides_label": "High: 10:12 AM, 10:51 PM; Low: 3:56 AM, 4:38 PM",
+      "weather": "42°F · Sunny · 10 mph"
+    },
+    {
+      "date": "2026-11-25",
+      "day_label": "Wed Nov 25",
+      "start": "2026-11-25T14:30:00-05:00",
+      "end": "2026-11-25T18:30:00-05:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-11-25T17:28:00-05:00",
+      "tide_height_ft": -1.434,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 44,
+      "wind_speed_text": "9 mph",
+      "precip_probability": 0,
+      "score": 116.9,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-25T14:00:00-05:00",
+          "temperature_f": 44,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-11-25T16:00:00-05:00",
+          "temperature_f": 44,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 1,
+          "wind_speed_text": "8 mph"
+        },
+        {
+          "time": "2026-11-25T18:00:00-05:00",
+          "temperature_f": 43,
+          "forecast": "Partly Cloudy",
+          "precip_probability": 2,
+          "wind_speed_text": "8 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-25T04:44:00-05:00",
+          "height_ft": 0.098,
+          "display_label": "Low 4:44 AM 0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-25T11:00:00-05:00",
+          "height_ft": 11.178,
+          "display_label": "High 11:00 AM 11.2 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-25T17:28:00-05:00",
+          "height_ft": -1.434,
+          "display_label": "Low 5:28 PM -1.4 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-25T23:41:00-05:00",
+          "height_ft": 9.331,
+          "display_label": "High 11:41 PM 9.3 ft"
+        }
+      ],
+      "window_label": "2:30 PM–6:30 PM",
+      "tide_label_full": "Low 5:28 PM · -1.4 ft",
+      "daily_tides_label": "High: 11:00 AM, 11:41 PM; Low: 4:44 AM, 5:28 PM",
+      "weather": "44°F · Mostly Sunny · 9 mph"
+    },
+    {
+      "date": "2026-11-26",
+      "day_label": "Thu Nov 26",
+      "start": "2026-11-26T06:00:00-05:00",
+      "end": "2026-11-26T09:30:00-05:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "Low",
+      "tide_time": "2026-11-26T05:34:00-05:00",
+      "tide_height_ft": -0.023,
+      "forecast": "Chance Light Rain",
+      "temperature_f": 45,
+      "wind_speed_text": "23 mph",
+      "precip_probability": 47,
+      "score": 168.6,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-26T06:00:00-05:00",
+          "temperature_f": 42,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 30,
+          "wind_speed_text": "20 mph"
+        },
+        {
+          "time": "2026-11-26T08:00:00-05:00",
+          "temperature_f": 44,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 41,
+          "wind_speed_text": "22 mph"
+        },
+        {
+          "time": "2026-11-26T09:00:00-05:00",
+          "temperature_f": 45,
+          "forecast": "Chance Light Rain",
+          "precip_probability": 47,
+          "wind_speed_text": "23 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-11-26T05:34:00-05:00",
+          "height_ft": -0.023,
+          "display_label": "Low 5:34 AM -0.0 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-26T11:51:00-05:00",
+          "height_ft": 11.338,
+          "display_label": "High 11:51 AM 11.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-26T18:19:00-05:00",
+          "height_ft": -1.523,
+          "display_label": "Low 6:19 PM -1.5 ft"
+        }
+      ],
+      "window_label": "6:00 AM–9:30 AM",
+      "tide_label_full": "Low 5:34 AM · -0.0 ft",
+      "daily_tides_label": "High: 11:51 AM; Low: 5:34 AM, 6:19 PM",
+      "weather": "45°F · Chance Light Rain · 23 mph · 47% rain"
+    }
+  ],
+  "tide_events": [
+    {
+      "time": "2026-11-21T01:34:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.959,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-21T07:53:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.205,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-21T14:10:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.486,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-21T20:21:00-05:00",
+      "event_type": "H",
+      "height_ft": 8.53,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-22T02:21:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.756,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-22T08:38:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.787,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-22T15:00:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.13,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-22T21:12:00-05:00",
+      "event_type": "H",
+      "height_ft": 8.773,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-23T03:08:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.527,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-23T09:24:00-05:00",
+      "event_type": "H",
+      "height_ft": 10.346,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-23T15:49:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.698,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-23T22:01:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.01,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-24T03:56:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.296,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-24T10:12:00-05:00",
+      "event_type": "H",
+      "height_ft": 10.829,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-24T16:38:00-05:00",
+      "event_type": "L",
+      "height_ft": -1.151,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-24T22:51:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.206,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-25T04:44:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.098,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-25T11:00:00-05:00",
+      "event_type": "H",
+      "height_ft": 11.178,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-25T17:28:00-05:00",
+      "event_type": "L",
+      "height_ft": -1.434,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-25T23:41:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.331,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-26T05:34:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.023,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-26T11:51:00-05:00",
+      "event_type": "H",
+      "height_ft": 11.338,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-26T18:19:00-05:00",
+      "event_type": "L",
+      "height_ft": -1.523,
+      "station_id": "8442645"
+    }
+  ],
+  "weather_period_count": 145,
+  "image_generation_mode": "openai_full_post",
+  "image_model": "gpt-image-2",
+  "image_size": "1088x1360",
+  "reel_image_generation_mode": "openai_reel_image",
+  "reel_image_model": "gpt-image-2",
+  "reel_image_size": "1088x1936",
+  "reel_image_final_size": "1080x1920",
+  "art_direction": "soft beach-rose green leaves near the lower edge with faded coral accent and calm sea-glass bands; Visual style profile: risograph coast: muted two- or three-ink risograph texture, tiny registration offsets, simple blocky coastal shapes, limited spot color, and crisp readable typography. Weather cue: warm sunny beach day with a soft golden sun disk, bright cream sky, and lightly sparkling sea-glass water. Rotating coastal motif: beach-rose leaves and sparse dune grass as small lower-edge accents. Card weather cues: Saturday November 21st: sunny; Sunday November 22nd: stormy; Monday November 23rd: rainy. Keep all weather, texture, and motif details minimal, quiet, and behind or above the content",
+  "sources": {
+    "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
+    "weather": "National Weather Service hourly forecast API",
+    "beach_rules": "User-provided Marblehead beach preferences in config/beaches.json"
+  },
+  "reel_generated_at": "2026-11-21T10:32:20.033612-05:00",
+  "reel_video_size": "1080x1920",
+  "reel_min_duration_seconds": 60.0,
+  "reel_voice_lead_in_seconds": 0.25,
+  "reel_script_model": "gpt-5.5",
+  "reel_audio_model": "gpt-audio-1.5",
+  "reel_voice_profile": "dockside_note",
+  "reel_voice_profile_label": "Dockside note",
+  "reel_voice": "marin",
+  "reel_voice_instructions": "Use an easy conversational delivery, lightly upbeat, with a practical local rhythm and natural pauses.",
+  "reel_background_bed": true,
+  "reel_wave_audio_placement": "after_voice",
+  "reel_wave_audio": "assets/audio/waves-public-domain.mp3",
+  "reel_wave_audio_source": "Wikimedia Commons File:Waves.ogg by Dsw4, public domain",
+  "reel_wave_audio_url": "https://commons.wikimedia.org/wiki/File:Waves.ogg",
+  "reel_burned_captions": true,
+  "reel_caption_overlay": "latest-reel.captions.ass",
+  "reel_caption_overlay_source": "reel_narration",
+  "reel_caption_timing_source": "whisper-1:word",
+  "reel_transcription_model": "whisper-1",
+  "reel_transcription_word_count": 76,
+  "reel_caption_timing_error": null,
+  "reel_draft_narration": "Good morning Marblehead, MA. Here is today's beach outlook. Saturday November 21st: Preston Beach, with the best window from 11:30 AM–3:30 PM. Expect around 61 degrees, sunny, wind 5 mph. Tide notes: high tide 7:53 AM, 8:21 PM, low tide 1:34 AM, 2:10 PM. Weather: Sunny, Mostly Cloudy, Mostly Sunny; temps 50°F to 61°F; wind 7 mph; little to no rain showing. Built from NOAA tides and National Weather Service hourly forecast data.",
+  "reel_narration": "Marblehead’s got a nice little beach window today, Saturday November 21st. Preston Beach looks best from 11:30 AM to 3:30 PM, with sunny skies, around 61 degrees, and wind at 5 mph. Low tide is the star here: 2:10 PM at 0.5 ft, so tide pools and a low-tide wander are very much on the menu. High tides are 7:53 AM and 8:21 PM. Bring a layer, and maybe shoes you don’t mind getting nosy in.",
+  "reel_caption": "Marblehead’s got a nice little beach window today, Saturday November 21st. Preston Beach looks best from 11:30 AM to 3:30 PM, with sunny skies, around 61 degrees, and wind at 5 mph. Low tide is the star here: 2:10 PM at 0.5 ft, so tide pools and a low-tide wander are very much on the menu. High tides are 7:53 AM and 8:21 PM. Bring a layer, and maybe shoes you don’t mind getting nosy in.\n\nVoiceover is AI-generated.",
+  "latest_reel_mp4": "latest-reel.mp4",
+  "latest_reel_audio_mp3": "latest-reel-audio.mp3",
+  "dated_reel_mp4": "assets/tidegram-2026-11-21-20261121103029-reel.mp4",
+  "dated_reel_audio_mp3": "assets/tidegram-2026-11-21-20261121103029-reel-audio.mp3"
+}

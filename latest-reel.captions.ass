@@ -1,0 +1,26 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,50,&H00FFFFFF,&H00FFFFFF,&H80153046,&H90153046,-1,0,0,0,100,100,0,0,3,4,1,8,92,92,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.25,0:00:01.89,Default,,0,0,0,,Marblehead’s got a nice little\Nbeach
+Dialogue: 0,0:00:01.89,0:00:04.69,Default,,0,0,0,,window today, Saturday\NNovember 21st.
+Dialogue: 0,0:00:04.85,0:00:06.87,Default,,0,0,0,,Preston Beach looks best from\N11:30
+Dialogue: 0,0:00:06.87,0:00:09.35,Default,,0,0,0,,AM to 3:30 PM, with sunny
+Dialogue: 0,0:00:09.35,0:00:11.87,Default,,0,0,0,,skies, around 61 degrees, and\Nwind
+Dialogue: 0,0:00:11.87,0:00:12.93,Default,,0,0,0,,at 5 mph.
+Dialogue: 0,0:00:13.75,0:00:15.31,Default,,0,0,0,,Low tide is the star here:
+Dialogue: 0,0:00:15.61,0:00:18.79,Default,,0,0,0,,2:10 PM at 0.5 ft, so
+Dialogue: 0,0:00:18.79,0:00:20.59,Default,,0,0,0,,tide pools and a low-tide\Nwander
+Dialogue: 0,0:00:20.59,0:00:22.05,Default,,0,0,0,,are very much on the menu.
+Dialogue: 0,0:00:22.59,0:00:24.91,Default,,0,0,0,,High tides are 7:53 AM and
+Dialogue: 0,0:00:24.91,0:00:26.19,Default,,0,0,0,,8:21 PM.
+Dialogue: 0,0:00:26.73,0:00:28.63,Default,,0,0,0,,Bring a layer, and maybe shoes
+Dialogue: 0,0:00:28.63,0:00:30.16,Default,,0,0,0,,you don’t mind getting nosy\Nin.
