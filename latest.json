@@ -1,0 +1,632 @@
+{
+  "generated_at": "2026-11-28T11:18:44.335351-05:00",
+  "location_name": "Marblehead, MA",
+  "timezone": "America/New_York",
+  "latitude": 42.5051,
+  "longitude": -70.8578,
+  "noaa_station_id": "8442645",
+  "noaa_station_label": "Salem, Salem Harbor, MA",
+  "days_to_forecast": 5,
+  "caption_target_date": "2026-11-28",
+  "caption": "Marblehead, MA beach outlook for Sat Nov 28 🌊☀️\nBest window: 12:00 PM–3:30 PM at Devereux.\nAny-tide beach visit with facilities. Recommended tide: High 1:41 PM · 11.0 ft.\nWeather: Partly Sunny, Mostly Cloudy, Slight Chance Light Rain; temps 47°F to 50°F; wind 15 mph; rain chance peaks near 18%.\nTides: High: 1:28 AM, 1:41 PM; Low: 7:23 AM, 8:08 PM.\nHeads up: Rain/threatening weather: Picnic Shelter is the sensible fallback. Paddleboard caution: wind may reach 15 mph.\n\nBuilt from NOAA tides + NWS hourly weather.\n#MarbleheadMA #NorthShoreMA #BeachWeather #TideWatch",
+  "asset_version": "20261128111844",
+  "latest_jpg": "latest.jpg",
+  "latest_png": "latest.png",
+  "dated_jpg": "assets/tidegram-2026-11-28-20261128111844.jpg",
+  "dated_png": "assets/tidegram-2026-11-28-20261128111844.png",
+  "latest_reel_jpg": "latest-reel.jpg",
+  "latest_reel_png": "latest-reel.png",
+  "dated_reel_jpg": "assets/tidegram-2026-11-28-20261128111844-reel.jpg",
+  "dated_reel_png": "assets/tidegram-2026-11-28-20261128111844-reel.png",
+  "recommendations": [
+    {
+      "date": "2026-11-28",
+      "day_label": "Sat Nov 28",
+      "start": "2026-11-28T12:00:00-05:00",
+      "end": "2026-11-28T15:30:00-05:00",
+      "beach_name": "Devereux Beach",
+      "beach_short_name": "Devereux",
+      "activity": "Any-tide beach visit with facilities",
+      "tide_label": "High",
+      "tide_time": "2026-11-28T13:41:00-05:00",
+      "tide_height_ft": 11.022,
+      "forecast": "Partly Sunny",
+      "temperature_f": 50,
+      "wind_speed_text": "13 mph",
+      "precip_probability": 2,
+      "score": 118.6,
+      "note": "Good general beach option when the weather is better than the more tide-specific windows.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-28T12:00:00-05:00",
+          "temperature_f": 49,
+          "forecast": "Partly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "15 mph"
+        },
+        {
+          "time": "2026-11-28T14:00:00-05:00",
+          "temperature_f": 49,
+          "forecast": "Partly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "14 mph"
+        },
+        {
+          "time": "2026-11-28T15:00:00-05:00",
+          "temperature_f": 50,
+          "forecast": "Partly Sunny",
+          "precip_probability": 2,
+          "wind_speed_text": "13 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-11-28T01:28:00-05:00",
+          "height_ft": 9.354,
+          "display_label": "High 1:28 AM 9.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-28T07:23:00-05:00",
+          "height_ft": 0.054,
+          "display_label": "Low 7:23 AM 0.1 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-28T13:41:00-05:00",
+          "height_ft": 11.022,
+          "display_label": "High 1:41 PM 11.0 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-28T20:08:00-05:00",
+          "height_ft": -1.197,
+          "display_label": "Low 8:08 PM -1.2 ft"
+        }
+      ],
+      "window_label": "12:00 PM–3:30 PM",
+      "tide_label_full": "High 1:41 PM · 11.0 ft",
+      "daily_tides_label": "High: 1:28 AM, 1:41 PM; Low: 7:23 AM, 8:08 PM",
+      "weather": "50°F · Partly Sunny · 13 mph · 2% rain"
+    },
+    {
+      "date": "2026-11-29",
+      "day_label": "Sun Nov 29",
+      "start": "2026-11-29T13:30:00-05:00",
+      "end": "2026-11-29T16:00:00-05:00",
+      "beach_name": "Riverhead Beach",
+      "beach_short_name": "Riverhead",
+      "activity": "High-tide paddle board",
+      "tide_label": "High",
+      "tide_time": "2026-11-29T14:40:00-05:00",
+      "tide_height_ft": 10.604,
+      "forecast": "Sunny",
+      "temperature_f": 52,
+      "wind_speed_text": "7 mph",
+      "precip_probability": 0,
+      "score": 172.5,
+      "note": "Great high-tide paddleboarding spot across from Devereux. Skip it when the tide is low or the wind is up.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-29T13:00:00-05:00",
+          "temperature_f": 52,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "7 mph"
+        },
+        {
+          "time": "2026-11-29T15:00:00-05:00",
+          "temperature_f": 52,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-11-29T16:00:00-05:00",
+          "temperature_f": 52,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "5 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-11-29T02:25:00-05:00",
+          "height_ft": 9.31,
+          "display_label": "High 2:25 AM 9.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-29T08:22:00-05:00",
+          "height_ft": 0.214,
+          "display_label": "Low 8:22 AM 0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-29T14:40:00-05:00",
+          "height_ft": 10.604,
+          "display_label": "High 2:40 PM 10.6 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-29T21:06:00-05:00",
+          "height_ft": -0.873,
+          "display_label": "Low 9:06 PM -0.9 ft"
+        }
+      ],
+      "window_label": "1:30 PM–4:00 PM",
+      "tide_label_full": "High 2:40 PM · 10.6 ft",
+      "daily_tides_label": "High: 2:25 AM, 2:40 PM; Low: 8:22 AM, 9:06 PM",
+      "weather": "52°F · Sunny · 7 mph"
+    },
+    {
+      "date": "2026-11-30",
+      "day_label": "Mon Nov 30",
+      "start": "2026-11-30T06:00:00-05:00",
+      "end": "2026-11-30T07:00:00-05:00",
+      "beach_name": "Devereux Picnic Shelter",
+      "beach_short_name": "Picnic Shelter",
+      "activity": "Sit under the Picnic Shelter",
+      "tide_label": "High",
+      "tide_time": "2026-11-30T03:25:00-05:00",
+      "tide_height_ft": 9.285,
+      "forecast": "Light Rain Likely",
+      "temperature_f": 53,
+      "wind_speed_text": "15 mph",
+      "precip_probability": 65,
+      "score": 205.4,
+      "note": "Rainy or threatening weather day: the only sensible beach move is sitting under the Picnic Shelter.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-11-30T06:00:00-05:00",
+          "temperature_f": 53,
+          "forecast": "Light Rain Likely",
+          "precip_probability": 65,
+          "wind_speed_text": "15 mph"
+        },
+        {
+          "time": "2026-11-30T07:00:00-05:00",
+          "temperature_f": 54,
+          "forecast": "Light Rain",
+          "precip_probability": 77,
+          "wind_speed_text": "18 mph"
+        },
+        {
+          "time": "2026-11-30T08:00:00-05:00",
+          "temperature_f": 55,
+          "forecast": "Light Rain",
+          "precip_probability": 84,
+          "wind_speed_text": "18 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-11-30T03:25:00-05:00",
+          "height_ft": 9.285,
+          "display_label": "High 3:25 AM 9.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-30T09:25:00-05:00",
+          "height_ft": 0.39,
+          "display_label": "Low 9:25 AM 0.4 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-11-30T15:43:00-05:00",
+          "height_ft": 10.097,
+          "display_label": "High 3:43 PM 10.1 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-11-30T22:04:00-05:00",
+          "height_ft": -0.503,
+          "display_label": "Low 10:04 PM -0.5 ft"
+        }
+      ],
+      "window_label": "6:00 AM–7:00 AM",
+      "tide_label_full": "High 3:25 AM · 9.3 ft",
+      "daily_tides_label": "High: 3:25 AM, 3:43 PM; Low: 9:25 AM, 10:04 PM",
+      "weather": "53°F · Light Rain Likely · 15 mph · 65% rain"
+    },
+    {
+      "date": "2026-12-01",
+      "day_label": "Tue Dec 1",
+      "start": "2026-12-01T08:00:00-05:00",
+      "end": "2026-12-01T12:00:00-05:00",
+      "beach_name": "Preston Beach",
+      "beach_short_name": "Preston",
+      "activity": "Low-tide walk / tide pools",
+      "tide_label": "Low",
+      "tide_time": "2026-12-01T10:30:00-05:00",
+      "tide_height_ft": 0.523,
+      "forecast": "Sunny",
+      "temperature_f": 40,
+      "wind_speed_text": "17 mph",
+      "precip_probability": 0,
+      "score": 106.0,
+      "note": "Really pleasant low-tide walk. Strongly prefer this when the tide is out and the weather is decent.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-12-01T08:00:00-05:00",
+          "temperature_f": 35,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "17 mph"
+        },
+        {
+          "time": "2026-12-01T10:00:00-05:00",
+          "temperature_f": 39,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "17 mph"
+        },
+        {
+          "time": "2026-12-01T12:00:00-05:00",
+          "temperature_f": 41,
+          "forecast": "Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "17 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-12-01T04:28:00-05:00",
+          "height_ft": 9.311,
+          "display_label": "High 4:28 AM 9.3 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-12-01T10:30:00-05:00",
+          "height_ft": 0.523,
+          "display_label": "Low 10:30 AM 0.5 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-12-01T16:48:00-05:00",
+          "height_ft": 9.589,
+          "display_label": "High 4:48 PM 9.6 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-12-01T23:04:00-05:00",
+          "height_ft": -0.129,
+          "display_label": "Low 11:04 PM -0.1 ft"
+        }
+      ],
+      "window_label": "8:00 AM–12:00 PM",
+      "tide_label_full": "Low 10:30 AM · 0.5 ft",
+      "daily_tides_label": "High: 4:28 AM, 4:48 PM; Low: 10:30 AM, 11:04 PM",
+      "weather": "40°F · Sunny · 17 mph"
+    },
+    {
+      "date": "2026-12-02",
+      "day_label": "Wed Dec 2",
+      "start": "2026-12-02T06:00:00-05:00",
+      "end": "2026-12-02T07:00:00-05:00",
+      "beach_name": "Riverhead Beach",
+      "beach_short_name": "Riverhead",
+      "activity": "High-tide paddle board",
+      "tide_label": "High",
+      "tide_time": "2026-12-02T05:31:00-05:00",
+      "tide_height_ft": 9.404,
+      "forecast": "Partly Sunny",
+      "temperature_f": 31,
+      "wind_speed_text": "6 mph",
+      "precip_probability": 0,
+      "score": 167.4,
+      "note": "Great high-tide paddleboarding spot across from Devereux. Skip it when the tide is low or the wind is up.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-12-02T06:00:00-05:00",
+          "temperature_f": 31,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-12-02T07:00:00-05:00",
+          "temperature_f": 32,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        },
+        {
+          "time": "2026-12-02T08:00:00-05:00",
+          "temperature_f": 34,
+          "forecast": "Partly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "6 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "High",
+          "time": "2026-12-02T05:31:00-05:00",
+          "height_ft": 9.404,
+          "display_label": "High 5:31 AM 9.4 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-12-02T11:37:00-05:00",
+          "height_ft": 0.558,
+          "display_label": "Low 11:37 AM 0.6 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-12-02T17:55:00-05:00",
+          "height_ft": 9.164,
+          "display_label": "High 5:55 PM 9.2 ft"
+        }
+      ],
+      "window_label": "6:00 AM–7:00 AM",
+      "tide_label_full": "High 5:31 AM · 9.4 ft",
+      "daily_tides_label": "High: 5:31 AM, 5:55 PM; Low: 11:37 AM",
+      "weather": "31°F · Partly Sunny · 6 mph"
+    },
+    {
+      "date": "2026-12-03",
+      "day_label": "Thu Dec 3",
+      "start": "2026-12-03T06:00:00-05:00",
+      "end": "2026-12-03T08:00:00-05:00",
+      "beach_name": "Riverhead Beach",
+      "beach_short_name": "Riverhead",
+      "activity": "High-tide paddle board",
+      "tide_label": "High",
+      "tide_time": "2026-12-03T06:32:00-05:00",
+      "tide_height_ft": 9.542,
+      "forecast": "Mostly Sunny",
+      "temperature_f": 39,
+      "wind_speed_text": "9 mph",
+      "precip_probability": 1,
+      "score": 165.1,
+      "note": "Great high-tide paddleboarding spot across from Devereux. Skip it when the tide is low or the wind is up.",
+      "hourly_snapshots": [
+        {
+          "time": "2026-12-03T06:00:00-05:00",
+          "temperature_f": 38,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 0,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-12-03T07:00:00-05:00",
+          "temperature_f": 39,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 1,
+          "wind_speed_text": "9 mph"
+        },
+        {
+          "time": "2026-12-03T08:00:00-05:00",
+          "temperature_f": 41,
+          "forecast": "Mostly Sunny",
+          "precip_probability": 1,
+          "wind_speed_text": "9 mph"
+        }
+      ],
+      "alternate_beaches": [],
+      "daily_tides": [
+        {
+          "label": "Low",
+          "time": "2026-12-03T00:05:00-05:00",
+          "height_ft": 0.212,
+          "display_label": "Low 12:05 AM 0.2 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-12-03T06:32:00-05:00",
+          "height_ft": 9.542,
+          "display_label": "High 6:32 AM 9.5 ft"
+        },
+        {
+          "label": "Low",
+          "time": "2026-12-03T12:44:00-05:00",
+          "height_ft": 0.485,
+          "display_label": "Low 12:44 PM 0.5 ft"
+        },
+        {
+          "label": "High",
+          "time": "2026-12-03T19:00:00-05:00",
+          "height_ft": 8.854,
+          "display_label": "High 7:00 PM 8.9 ft"
+        }
+      ],
+      "window_label": "6:00 AM–8:00 AM",
+      "tide_label_full": "High 6:32 AM · 9.5 ft",
+      "daily_tides_label": "High: 6:32 AM, 7:00 PM; Low: 12:05 AM, 12:44 PM",
+      "weather": "39°F · Mostly Sunny · 9 mph · 1% rain"
+    }
+  ],
+  "tide_events": [
+    {
+      "time": "2026-11-28T01:28:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.354,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-28T07:23:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.054,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-28T13:41:00-05:00",
+      "event_type": "H",
+      "height_ft": 11.022,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-28T20:08:00-05:00",
+      "event_type": "L",
+      "height_ft": -1.197,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-29T02:25:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.31,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-29T08:22:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.214,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-29T14:40:00-05:00",
+      "event_type": "H",
+      "height_ft": 10.604,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-29T21:06:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.873,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-30T03:25:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.285,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-30T09:25:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.39,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-30T15:43:00-05:00",
+      "event_type": "H",
+      "height_ft": 10.097,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-11-30T22:04:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.503,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-01T04:28:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.311,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-01T10:30:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.523,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-01T16:48:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.589,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-01T23:04:00-05:00",
+      "event_type": "L",
+      "height_ft": -0.129,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-02T05:31:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.404,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-02T11:37:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.558,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-02T17:55:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.164,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-03T00:05:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.212,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-03T06:32:00-05:00",
+      "event_type": "H",
+      "height_ft": 9.542,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-03T12:44:00-05:00",
+      "event_type": "L",
+      "height_ft": 0.485,
+      "station_id": "8442645"
+    },
+    {
+      "time": "2026-12-03T19:00:00-05:00",
+      "event_type": "H",
+      "height_ft": 8.854,
+      "station_id": "8442645"
+    }
+  ],
+  "weather_period_count": 145,
+  "image_generation_mode": "openai_full_post",
+  "image_model": "gpt-image-2",
+  "image_size": "1088x1360",
+  "reel_image_generation_mode": "openai_reel_image",
+  "reel_image_model": "gpt-image-2",
+  "reel_image_size": "1088x1936",
+  "reel_image_final_size": "1080x1920",
+  "art_direction": "soft foggy blue layers with a tiny buoy circle and restrained sand-colored lower edge; Visual style profile: nautical chart note: cream chart-paper texture, thin navy linework, subtle contour and current-line accents, small stamped weather icons, and a tidy field-note feeling. Weather cue: warm sunny beach day with a soft golden sun disk, bright cream sky, and lightly sparkling sea-glass water. Rotating coastal motif: a pair of paddleboards resting on warm sand as flat silhouettes in the header. Card weather cues: Saturday November 28th: sunny; Sunday November 29th: sunny; Monday November 30th: stormy. Keep all weather, texture, and motif details minimal, quiet, and behind or above the content",
+  "sources": {
+    "tides": "NOAA CO-OPS Data API predictions, interval=hilo",
+    "weather": "National Weather Service hourly forecast API",
+    "beach_rules": "User-provided Marblehead beach preferences in config/beaches.json"
+  },
+  "reel_generated_at": "2026-11-28T11:20:37.318388-05:00",
+  "reel_video_size": "1080x1920",
+  "reel_min_duration_seconds": 60.0,
+  "reel_voice_lead_in_seconds": 0.25,
+  "reel_script_model": "gpt-5.5",
+  "reel_audio_model": "gpt-audio-1.5",
+  "reel_voice_profile": "calm_coast",
+  "reel_voice_profile_label": "Calm coast",
+  "reel_voice": "cedar",
+  "reel_voice_instructions": "Use a calm, intimate, steady delivery with relaxed pacing and a peaceful coastal feel.",
+  "reel_background_bed": true,
+  "reel_wave_audio_placement": "after_voice",
+  "reel_wave_audio": "assets/audio/waves-public-domain.mp3",
+  "reel_wave_audio_source": "Wikimedia Commons File:Waves.ogg by Dsw4, public domain",
+  "reel_wave_audio_url": "https://commons.wikimedia.org/wiki/File:Waves.ogg",
+  "reel_burned_captions": true,
+  "reel_caption_overlay": "latest-reel.captions.ass",
+  "reel_caption_overlay_source": "reel_narration",
+  "reel_caption_timing_source": "whisper-1:word",
+  "reel_transcription_model": "whisper-1",
+  "reel_transcription_word_count": 54,
+  "reel_caption_timing_error": null,
+  "reel_draft_narration": "Good morning Marblehead, MA. Here is today's beach outlook. Saturday November 28th: Devereux Beach, with the best window from 12:00 PM–3:30 PM. Expect around 50 degrees, sunny, wind 13 mph. Tide notes: high tide 1:28 AM, 1:41 PM, low tide 7:23 AM, 8:08 PM. Weather: Partly Sunny, Mostly Cloudy, Slight Chance Light Rain; temps 47°F to 50°F; wind 15 mph; rain chance peaks near 18%. Heads up: Rain/threatening weather: Picnic Shelter is the sensible fallback. Paddleboard caution: wind may reach 15 mph. Built from NOAA tides and National Weather Service hourly forecast data.",
+  "reel_narration": "Marblehead has a nice, easy window today, Saturday November 28th. For Devereux Beach, aim for 12:00 PM to 3:30 PM. Expect partly sunny skies, around 50 degrees, with wind at 13 mph. High tides are 1:28 AM and 1:41 PM, with lows at 7:23 AM and 8:08 PM. A calm, workable beach day overall.",
+  "reel_caption": "Marblehead has a nice, easy window today, Saturday November 28th. For Devereux Beach, aim for 12:00 PM to 3:30 PM. Expect partly sunny skies, around 50 degrees, with wind at 13 mph. High tides are 1:28 AM and 1:41 PM, with lows at 7:23 AM and 8:08 PM. A calm, workable beach day overall.\n\nVoiceover is AI-generated.",
+  "latest_reel_mp4": "latest-reel.mp4",
+  "latest_reel_audio_mp3": "latest-reel-audio.mp3",
+  "dated_reel_mp4": "assets/tidegram-2026-11-28-20261128111844-reel.mp4",
+  "dated_reel_audio_mp3": "assets/tidegram-2026-11-28-20261128111844-reel-audio.mp3"
+}
